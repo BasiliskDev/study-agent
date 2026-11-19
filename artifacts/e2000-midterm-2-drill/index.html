@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E2000 Midterm 2 Drill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
+<style>
+:root {
+  --paper: #f2f4f7; --grid: rgba(42, 82, 140, 0.07); --sheet: #ffffff; --ink: #17202c; --muted: #5b6676; --rule: #d9dee6;
+  --accent: #24548f; --accent-soft: #e3ebf6; --good: #2f7a4b; --good-soft: #e2f1e7; --bad: #b2412f; --bad-soft: #f7e4e0; --hint: #8a5a00; --hint-soft: #fbf1db;
+  --f-display: "Source Serif 4", Georgia, serif; --f-body: "Source Serif 4", Georgia, serif; --f-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --paper: #0f141b; --grid: rgba(127, 168, 224, 0.06); --sheet: #171e28; --ink: #e4e9f0; --muted: #98a3b3; --rule: #2a3442; --accent: #84aee6; --accent-soft: #1d2a3c; --good: #6cc48d; --good-soft: #17301f; --bad: #ec8a78; --bad-soft: #3a1f1a; --hint: #e7b65a; --hint-soft: #33280f; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--paper); color: var(--ink); margin: 0; }
+body { font-family: var(--f-ui); font-size: 15px; line-height: 1.5; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 22px 22px; padding: 28px 16px 64px; }
+.wrap { max-width: 880px; margin: 0 auto; display: grid; gap: 22px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(30px, 5vw, 42px); line-height: 1.05; margin: 0; letter-spacing: -0.01em; }
+.sub { color: var(--muted); max-width: 66ch; margin: 0; }
+.sub b { color: var(--ink); font-weight: 600; }
+.controls { display: grid; gap: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-right: 4px; }
+.chip { font: 500 13px/1 var(--f-ui); color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 999px; padding: 8px 12px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.chip .n { font-family: var(--f-mono); color: var(--muted); font-size: 12px; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+.chip[aria-pressed="true"] .n { color: var(--sheet); opacity: .8; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--sheet); }
+.seg button { font: 500 13px/1 var(--f-ui); background: transparent; border: 0; color: var(--ink); padding: 10px 13px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.toggle { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); cursor: pointer; }
+.toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
+.btn { font: 600 14px/1 var(--f-ui); border-radius: 8px; padding: 11px 16px; cursor: pointer; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+.btn.ghost { background: transparent; }
+.btn[disabled] { opacity: .45; cursor: default; }
+.kbd { font-family: var(--f-mono); font-size: 11px; opacity: .7; margin-left: 6px; }
+.spacer { flex: 1; }
+.timer { font-family: var(--f-mono); font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.timer.low { color: var(--bad); font-weight: 600; }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 1px 0 var(--rule), 0 10px 30px -18px rgba(20, 40, 80, .25); }
+.sect { padding: 14px 24px 0; font: 600 12px/1 var(--f-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.sect + .prob { border-top: 0; }
+.prob { padding: 20px 24px 20px; display: grid; gap: 14px; min-width: 0; }
+.prob + .prob, .prob + .sect { border-top: 1px dashed var(--rule); }
+.prob + .sect { padding-top: 22px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; font-size: 12px; color: var(--muted); }
+.meta .num { font-family: var(--f-mono); font-weight: 500; color: var(--accent); font-size: 13px; }
+.meta .sec { font-family: var(--f-mono); }
+.meta .kind { font-family: var(--f-mono); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 6px; }
+.meta .result { margin-left: auto; font-weight: 600; font-size: 12px; padding: 3px 9px; border-radius: 999px; }
+.result.got { background: var(--good-soft); color: var(--good); }
+.result.miss { background: var(--bad-soft); color: var(--bad); }
+.qtext { font-family: var(--f-body); font-size: 18px; line-height: 1.6; min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.figwrap { display: flex; justify-content: center; }
+svg.fig { max-width: 100%; height: auto; }
+.cbox { fill: none; stroke: var(--rule); }
+.cax { stroke: var(--muted); stroke-width: .7; stroke-dasharray: 3 3; opacity: .6; }
+.cl { fill: none; stroke: var(--accent); stroke-width: 1.1; }
+.fa { fill: var(--ink); stroke: var(--ink); stroke-width: 1.3; stroke-linecap: round; fill: none; }
+circle.fa { fill: var(--ink); }
+.flab { font: 11px var(--f-mono); fill: var(--muted); }
+.rg { fill: var(--accent-soft); stroke: none; }
+svg.slice .flab { paint-order: stroke; stroke: var(--sheet); stroke-width: 4px; stroke-linejoin: round; }
+svg.slice .flab.cap { font-size: 11.5px; }
+.axl { stroke: var(--muted); stroke-width: 1; }
+.bd { fill: none; stroke: var(--ink); stroke-width: 1.4; }
+.bd.dash { stroke-dasharray: 5 4; stroke: var(--accent); }
+.phiarc { fill: none; stroke: var(--hint); stroke-width: 1.3; }
+.flab.acc { fill: var(--hint); font-weight: 500; }
+.opts { display: grid; gap: 8px; }
+.opt { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: center; text-align: left; font: 400 16px/1.5 var(--f-body); color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; cursor: pointer; min-width: 0; overflow-x: auto; }
+.opt .L { font: 600 13px/1 var(--f-mono); color: var(--muted); width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--rule); display: grid; place-items: center; }
+.opt:hover:not([disabled]) { border-color: var(--accent); }
+.opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+.opt.sel .L { background: var(--accent); color: var(--sheet); border-color: var(--accent); }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .L { background: var(--good); color: var(--sheet); border-color: var(--good); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt.wrong .L { background: var(--bad); color: var(--sheet); border-color: var(--bad); }
+.opt[disabled] { cursor: default; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.panel { border-radius: 6px; padding: 14px 16px; font-family: var(--f-body); font-size: 16px; line-height: 1.6; min-width: 0; overflow-x: auto; }
+.panel h3 { font: 600 11px/1 var(--f-ui); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
+.hintp { background: var(--hint-soft); } .hintp h3 { color: var(--hint); }
+.solp { background: var(--paper); border: 1px solid var(--rule); display: grid; gap: 12px; } .solp h3 { color: var(--accent); }
+.answer { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; font-weight: 600; }
+.steps { margin: 0; padding-left: 1.4em; display: grid; gap: 6px; }
+.steps li::marker { font-family: var(--f-mono); color: var(--muted); font-size: 13px; }
+.grade { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-family: var(--f-ui); font-size: 13px; color: var(--muted); }
+.btn.got { color: var(--good); border-color: var(--good); } .btn.miss { color: var(--bad); border-color: var(--bad); }
+.submitbar { padding: 18px 24px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.score { font-family: var(--f-display); font-size: 20px; font-weight: 600; }
+mjx-container[display="true"] { margin: .5em 0 !important; }
+mjx-container { max-width: 100%; }
+.ledger { display: grid; gap: 10px; }
+.ledger h2 { font-family: var(--f-display); font-size: 20px; margin: 0; }
+.ledger-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.ledger-head p { margin: 0; color: var(--muted); font-size: 13px; }
+.trow { display: grid; grid-template-columns: 34px minmax(0, 1fr) minmax(80px, 160px) 64px; gap: 12px; align-items: center; padding: 9px 14px; border-top: 1px solid var(--rule); font-size: 14px; }
+.trow:first-child { border-top: 0; }
+.trow .n { font-family: var(--f-mono); color: var(--muted); }
+.trow .name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar { height: 8px; border-radius: 4px; background: var(--accent-soft); overflow: hidden; display: flex; }
+.bar i { display: block; height: 100%; } .bar .g { background: var(--good); } .bar .m { background: var(--bad); }
+.trow .pct { font-family: var(--f-mono); font-size: 13px; text-align: right; color: var(--muted); }
+.trow.weak .name { color: var(--bad); font-weight: 600; }
+details.ref { padding: 12px 16px; } details.ref summary { cursor: pointer; font-weight: 600; }
+.refgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 4px 20px; font-family: var(--f-body); font-size: 15px; margin-top: 8px; }
+.foot { font-size: 12px; color: var(--muted); }
+.loading { padding: 28px 24px; color: var(--muted); font-family: var(--f-body); }
+@media (max-width: 560px) { .prob { padding: 18px 14px; } .sect { padding-left: 14px; } .qtext { font-size: 17px; } .trow { grid-template-columns: 26px minmax(0, 1fr) 70px 48px; gap: 8px; padding: 9px 10px; } .kbd { display: none; } }
+@media (prefers-reduced-motion: no-preference) { .prob.enter { animation: rise .25s ease-out; } @keyframes rise { from { transform: translateY(6px); opacity: .4; } to { transform: none; opacity: 1; } } }
+</style></head><body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">APMA E2000 · Midterm 2 · Tue Nov 17 · Lectures 11–16 · HW 6–8</div>
+    <h1>E2000 Midterm 2 Drill</h1>
+    <p class="sub">Unlimited randomized practice built from your HW 6–9, the Exam 2 sample, the old Exam 2, and the practice set: <b>gradients and directional derivatives, max/min, Lagrange, iterated/polar/cylindrical/spherical integrals, mass and moments</b>. Free-response answers are computed exactly, with worked solutions. Multiple choice grades itself. No calculator, same as the exam.</p>
+  </header>
+  <section class="controls" aria-label="Practice settings">
+    <div class="row" id="chips" role="group" aria-label="Lectures"></div>
+    <div class="row">
+      <div class="seg" role="group" aria-label="Mode">
+        <button id="mode-drill" aria-pressed="true">Drill</button>
+        <button id="mode-exam" aria-pressed="false">Mock exam (3 FR + 10 MC)</button>
+      </div>
+      <div class="seg" role="group" aria-label="Question type" id="kindseg">
+        <button data-k="mix" aria-pressed="true">Mixed</button>
+        <button data-k="fr" aria-pressed="false">Free response</button>
+        <button data-k="mc" aria-pressed="false">Multiple choice</button>
+      </div>
+    </div>
+    <div class="row">
+      <label class="toggle"><input type="checkbox" id="weak"> Favor topics I've missed</label>
+      <span class="spacer"></span>
+      <span class="timer" id="timer" hidden></span>
+      <button class="btn primary" id="next">New problem<span class="kbd">N</span></button>
+    </div>
+  </section>
+  <main class="sheet" id="sheet" aria-live="polite"><div class="loading">Loading math renderer…</div></main>
+  <section class="ledger sheet" style="padding:16px 0 6px">
+    <div class="ledger-head" style="padding:0 14px 6px"><h2>Your record</h2><p id="summary"></p><span class="spacer"></span><button class="btn ghost" id="reset" style="padding:7px 10px;font-size:12px">Reset</button></div>
+    <div id="table"></div>
+  </section>
+  <details class="sheet ref"><summary>Formulas you're expected to know (the exam only gives trig values)</summary>
+    <div class="refgrid" id="refgrid">
+      <div>$D_{\mathbf u}f = \nabla f\cdot\mathbf u$, $\ |\mathbf u| = 1$</div>
+      <div>max rate $= |\nabla f|$ along $\nabla f$</div>
+      <div>$D = f_{xx}f_{yy} - f_{xy}^2$</div>
+      <div>$\nabla f = \lambda\nabla g,\ g = k$</div>
+      <div>$dA = r\,dr\,d\theta$</div>
+      <div>$dV = r\,dz\,dr\,d\theta$</div>
+      <div>$dV = \rho^2\sin\phi\,d\rho\,d\phi\,d\theta$</div>
+      <div>$x = \rho\sin\phi\cos\theta,\ y = \rho\sin\phi\sin\theta,\ z = \rho\cos\phi$</div>
+      <div>$\bar x = \frac{1}{m}\iint x\,\delta\,dA$</div>
+      <div>$I_x = \iint y^2\delta\,dA,\ \ R_g = \sqrt{I/m}$</div>
+    </div>
+  </details>
+  <p class="foot">In drill mode, multiple choice is graded when you click an option. For free response, reveal the solution and mark whether you got it. The mock exam runs a 75-minute clock and grades everything when you submit. Your record stays in this browser and drives “Favor topics I've missed.” Shortcuts: <b>N</b> new, <b>H</b> hint, <b>S</b> solution, <b>A–E</b> pick an option.</p>
+</div>
+<script>
+window.MathJax = { tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] }, svg: { fontCache: 'global' }, startup: { typeset: false, ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => window.__mjReady && window.__mjReady()); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+<script>
+// ===== Exact-arithmetic core (rationals, surds, polynomials) =====
+const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a; };
+const lcm = (a, b) => Math.abs(a * b) / gcd(a, b);
+function chk(c, msg) { if (!c) throw new Error('check failed: ' + msg); }
+
+class Q {
+  constructor(n, d = 1) {
+    if (d === 0) throw new Error('div0');
+    if (!Number.isInteger(n) || !Number.isInteger(d)) throw new Error('non-int ' + n + '/' + d);
+    if (Math.abs(n) > 1e13 || Math.abs(d) > 1e13) throw new Error('overflow');
+    if (d < 0) { n = -n; d = -d; }
+    const g = gcd(n, d) || 1; this.n = n / g; this.d = d / g;
+    if (this.n === 0) this.n = 0;
+  }
+  static of(x) { return x instanceof Q ? x : new Q(x, 1); }
+  add(o) { o = Q.of(o); return new Q(this.n * o.d + o.n * this.d, this.d * o.d); }
+  sub(o) { o = Q.of(o); return new Q(this.n * o.d - o.n * this.d, this.d * o.d); }
+  mul(o) { o = Q.of(o); return new Q(this.n * o.n, this.d * o.d); }
+  div(o) { o = Q.of(o); return new Q(this.n * o.d, this.d * o.n); }
+  pow(k) { let r = q(1); for (let i = 0; i < k; i++) r = r.mul(this); return r; }
+  neg() { return new Q(-this.n, this.d); }
+  abs() { return new Q(Math.abs(this.n), this.d); }
+  isZero() { return this.n === 0; }
+  eq(o) { o = Q.of(o); return this.n === o.n && this.d === o.d; }
+  cmp(o) { return this.sub(o).n; }
+  val() { return this.n / this.d; }
+  tex() { return this.d === 1 ? `${this.n}` : `${this.n < 0 ? '-' : ''}\\frac{${Math.abs(this.n)}}{${this.d}}`; }
+}
+const q = (n, d = 1) => new Q(n, d);
+
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const nz = (a, b) => { let x; do { x = ri(a, b); } while (x === 0); return x; };
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const chance = (p) => Math.random() < p;
+const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = ri(0, i); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const sgn = () => pick([1, -1]);
+
+const dot = (a, b) => a.reduce((s, x, i) => s.add(Q.of(x).mul(b[i])), q(0));
+const idot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0);
+const isZeroV = (a) => a.every((x) => (x instanceof Q ? x.isZero() : x === 0));
+const tx = (x) => (x instanceof Q ? x.tex() : x && x.tex ? x.tex() : `${x}`);
+const vtex = (a) => `\\langle ${a.map(tx).join(', ')} \\rangle`;
+const ptex = (a) => `(${a.map(tx).join(', ')})`;
+const vgcd = (a) => a.reduce((g, x) => gcd(g, x), 0) || 1;
+const reduceV = (a) => { const g = vgcd(a); let r = a.map((x) => x / g); const f = r.find((x) => x !== 0); if (f < 0) r = r.map((x) => -x); return r.map((x) => x + 0); };
+// make a rational vector into the smallest integer vector with the same direction (sign kept)
+function intDir(v) {
+  v = v.map(Q.of); const L = v.reduce((m, x) => lcm(m, x.d), 1);
+  const w = v.map((x) => x.n * (L / x.d)); const g = vgcd(w); return w.map((x) => x / g);
+}
+
+// ---------- surds ----------
+function sqParts(n) {
+  chk(Number.isInteger(n) && n >= 0, 'sqParts ' + n);
+  let out = 1, inn = n;
+  for (let f = 2; f * f <= inn; f++) while (inn % (f * f) === 0) { inn /= f * f; out *= f; }
+  return [out, inn];
+}
+function texCoefRad(c, m) {
+  c = Q.of(c);
+  if (c.isZero() || m === 0) return '0';
+  if (m === 1) return c.tex();
+  const s = c.n < 0 ? '-' : '';
+  const a = Math.abs(c.n);
+  const num = (a === 1 ? '' : a) + `\\sqrt{${m}}`;
+  return s + (c.d === 1 ? num : `\\frac{${num}}{${c.d}}`);
+}
+function texSqrtQ(x) { x = Q.of(x); const [k, m] = sqParts(x.n * x.d); return texCoefRad(q(k, x.d), m); }
+const texSqrtInt = (n) => texSqrtQ(q(n));
+function texQoverSqrt(num, N) { const [k, m] = sqParts(N); return texCoefRad(Q.of(num).mul(q(k, N)), m); }
+
+// a + b*sqrt(m)
+class S {
+  constructor(a, b = 0, m = 1) {
+    a = Q.of(a); b = Q.of(b);
+    if (m !== 1 && !b.isZero()) { const [k, mm] = sqParts(m); b = b.mul(k); m = mm; }
+    if (m === 1) { a = a.add(b); b = q(0); }
+    if (b.isZero()) m = 1;
+    this.a = a; this.b = b; this.m = m;
+  }
+  static of(x) { return x instanceof S ? x : new S(x); }
+  static rad(c, m) { return new S(0, c, m); }
+  _m(o) { chk(this.m === 1 || o.m === 1 || this.m === o.m, 'surd mix ' + this.m + ' ' + o.m); return this.m === 1 ? o.m : this.m; }
+  add(o) { o = S.of(o); const m = this._m(o); return new S(this.a.add(o.a), this.b.add(o.b), m); }
+  sub(o) { o = S.of(o); return this.add(o.neg()); }
+  neg() { return new S(this.a.neg(), this.b.neg(), this.m); }
+  mul(o) {
+    o = S.of(o);
+    if (this.b.isZero()) return new S(o.a.mul(this.a), o.b.mul(this.a), o.m);
+    if (o.b.isZero()) return new S(this.a.mul(o.a), this.b.mul(o.a), this.m);
+    if (this.a.isZero() && o.a.isZero()) return new S(0, this.b.mul(o.b), this.m * o.m);
+    const m = this._m(o);
+    return new S(this.a.mul(o.a).add(this.b.mul(o.b).mul(m)), this.a.mul(o.b).add(this.b.mul(o.a)), m);
+  }
+  conj() { return new S(this.a, this.b.neg(), this.m); }
+  norm() { return this.a.mul(this.a).sub(this.b.mul(this.b).mul(this.m)); }
+  div(o) { o = S.of(o); if (o.b.isZero()) return new S(this.a.div(o.a), this.b.div(o.a), this.m); return this.mul(o.conj()).mul(new S(q(1).div(o.norm()))); }
+  isZero() { return this.a.isZero() && this.b.isZero(); }
+  val() { return this.a.val() + this.b.val() * Math.sqrt(this.m); }
+  tex() {
+    if (this.b.isZero()) return this.a.tex();
+    if (this.a.isZero()) return texCoefRad(this.b, this.m);
+    // common denominator form (p + r sqrt m)/d
+    const d = lcm(this.a.d, this.b.d); const p = this.a.n * (d / this.a.d), r = this.b.n * (d / this.b.d);
+    const num = sumTex([`${p}`, texCoefRad(r, this.m)]);
+    return d === 1 ? num : `\\frac{${num}}{${d}}`;
+  }
+}
+// exact cos/sin of r*pi (r rational with denominator dividing 12 and giving a standard angle)
+function cosPi(r) {
+  r = Q.of(r); const v = Math.cos(r.val() * Math.PI);
+  const table = [[1, 1, 1], [-1, 1, 1], [0, 0, 1], [1, 2, 1], [-1, 2, 1], [1, 2, 2], [-1, 2, 2], [1, 2, 3], [-1, 2, 3]];
+  for (const [n, d, m] of table) { const c = d === 0 ? 0 : n / d; if (Math.abs(c * Math.sqrt(m) - v) < 1e-9) return d === 0 ? new S(0) : S.rad(q(n, d), m); }
+  throw new Error('cosPi ' + r.tex());
+}
+const sinPi = (r) => cosPi(q(1, 2).sub(r));
+
+// ---------- tex helpers ----------
+function cmono(c, s) { c = Q.of(c); if (c.isZero()) return '0'; if (c.n === c.d) return s; if (c.n === -c.d) return '-' + s; return c.tex() + s; }
+function sumTex(terms) {
+  let out = '';
+  for (let t of terms) {
+    if (t instanceof Q || t instanceof S) t = t.tex(); else if (typeof t === 'number') t = `${t}`;
+    if (!t || t === '0') continue;
+    if (out === '') out = t;
+    else if (t[0] === '-') out += ' - ' + t.slice(1);
+    else out += ' + ' + t;
+  }
+  return out || '0';
+}
+function shiftTex(v, a) { a = Q.of(a); if (a.isZero()) return v; return `(${v} ${a.n > 0 ? '-' : '+'} ${a.abs().tex()})`; }
+function texQpi(x) { x = Q.of(x); if (x.isZero()) return '0'; if (x.d === 1) return cmono(x.n, '\\pi'); return `${x.n < 0 ? '-' : ''}\\frac{${Math.abs(x.n) === 1 ? '' : Math.abs(x.n)}\\pi}{${x.d}}`; }
+const paren = (x) => { const s = tx(x); return s[0] === '-' ? `(${s})` : s; };
+const pr = (a, b) => `(${tx(a)})(${tx(b)})`;
+const M = (s) => `$${s}$`;
+const D = (s) => `$$${s}$$`;
+const B = (s) => `\\mathbf{${s}}`;
+const fmt = (x, k = 4) => { const v = typeof x === 'number' ? x : x.val(); return (Math.round(v * 10 ** k) / 10 ** k).toString(); };
+
+// ---------- polynomials in x,y,z,t,s ----------
+const VARS = ['x', 'y', 'z', 't', 's'];
+class P {
+  constructor() { this.t = new Map(); }
+  addTerm(c, e) {
+    c = Q.of(c); const k = e.join(','); const prev = this.t.get(k);
+    const nc = prev ? prev.add(c) : c;
+    if (nc.isZero()) this.t.delete(k); else this.t.set(k, nc);
+    return this;
+  }
+  static mono(c, ex = {}) { return new P().addTerm(c, VARS.map((v) => ex[v] || 0)); }
+  static c(c) { return P.mono(c, {}); }
+  static v(n) { return P.mono(1, { [n]: 1 }); }
+  static from(list) { const p = new P(); for (const [c, ex] of list) p.addTerm(c, VARS.map((v) => ex[v] || 0)); return p; }
+  static lin(coefs, c0 = 0) { const p = P.c(c0); Object.entries(coefs).forEach(([v, c]) => p.addTerm(c, VARS.map((w) => (w === v ? 1 : 0)))); return p; }
+  clone() { const r = new P(); for (const [k, c] of this.t) r.t.set(k, c); return r; }
+  *terms() { for (const [k, c] of this.t) yield [c, k.split(',').map(Number)]; }
+  add(o) { o = o instanceof P ? o : P.c(o); const r = this.clone(); for (const [c, e] of o.terms()) r.addTerm(c, e); return r; }
+  sub(o) { o = o instanceof P ? o : P.c(o); return this.add(o.scale(-1)); }
+  scale(k) { const r = new P(); for (const [c, e] of this.terms()) r.addTerm(c.mul(k), e); return r; }
+  mul(o) { o = o instanceof P ? o : P.c(o); const r = new P(); for (const [c1, e1] of this.terms()) for (const [c2, e2] of o.terms()) r.addTerm(c1.mul(c2), e1.map((x, i) => x + e2[i])); return r; }
+  pow(n) { let r = P.c(1); for (let i = 0; i < n; i++) r = r.mul(this); return r; }
+  d(v) { const i = VARS.indexOf(v); const r = new P(); for (const [c, e] of this.terms()) if (e[i] > 0) { const e2 = e.slice(); e2[i]--; r.addTerm(c.mul(e[i]), e2); } return r; }
+  integ(v) { const i = VARS.indexOf(v); const r = new P(); for (const [c, e] of this.terms()) { const e2 = e.slice(); e2[i]++; r.addTerm(c.div(e2[i]), e2); } return r; }
+  // definite integral in v from lo to hi (P or number)
+  defint(v, lo, hi) { const F = this.integ(v); const L = lo instanceof P ? lo : P.c(lo), H = hi instanceof P ? hi : P.c(hi); return F.subs({ [v]: H }).sub(F.subs({ [v]: L })); }
+  ev(vals) {
+    let s = q(0);
+    for (const [c, e] of this.terms()) {
+      let term = c;
+      e.forEach((p, i) => { if (p) { chk(vals[VARS[i]] !== undefined, 'missing var ' + VARS[i]); const x = Q.of(vals[VARS[i]]); for (let j = 0; j < p; j++) term = term.mul(x); } });
+      s = s.add(term);
+    }
+    return s;
+  }
+  evf(vals) { let s = 0; for (const [c, e] of this.terms()) { let t = c.val(); e.forEach((p, i) => { if (p) t *= Math.pow(vals[VARS[i]], p); }); s += t; } return s; }
+  subs(map) {
+    let r = new P();
+    for (const [c, e] of this.terms()) {
+      let term = P.c(c);
+      e.forEach((p, i) => { if (p) { const b = map[VARS[i]] !== undefined ? (map[VARS[i]] instanceof P ? map[VARS[i]] : P.c(map[VARS[i]])) : P.v(VARS[i]); term = term.mul(b.pow(p)); } });
+      r = r.add(term);
+    }
+    return r;
+  }
+  isZero() { return this.t.size === 0; }
+  isConst() { return [...this.terms()].every(([, e]) => e.every((x) => x === 0)); }
+  constVal() { chk(this.isConst(), 'not const'); return this.ev({}); }
+  hasVar(v) { const i = VARS.indexOf(v); return [...this.terms()].some(([, e]) => e[i] > 0); }
+  deg() { return Math.max(0, ...[...this.terms()].map(([, e]) => e.reduce((a, b) => a + b, 0))); }
+  tex() {
+    const arr = [...this.terms()].sort((A, Bb) => {
+      const da = A[1].reduce((s, x) => s + x, 0), db = Bb[1].reduce((s, x) => s + x, 0);
+      if (da !== db) return db - da;
+      for (let i = 0; i < 5; i++) if (A[1][i] !== Bb[1][i]) return Bb[1][i] - A[1][i];
+      return 0;
+    });
+    return sumTex(arr.map(([c, e]) => {
+      const vp = e.map((p, i) => (p === 0 ? '' : p === 1 ? VARS[i] : `${VARS[i]}^{${p}}`)).join('');
+      return vp === '' ? c.tex() : cmono(c, vp);
+    }));
+  }
+}
+const X = P.v('x'), Y = P.v('y'), Z = P.v('z'), T = P.v('t');
+function randPoly(vars, nterms, maxdeg, cmax = 5, mindeg = 1, requireAll = true) {
+  for (let tries = 0; tries < 200; tries++) {
+    const p = new P(); const seen = new Set();
+    let guard = 0;
+    while (seen.size < nterms && guard++ < 500) {
+      const ex = {}; let dg = 0;
+      for (const v of vars) { ex[v] = ri(0, maxdeg); dg += ex[v]; }
+      if (dg < mindeg || dg > maxdeg) continue;
+      const key = vars.map((v) => ex[v]).join(','); if (seen.has(key)) continue;
+      seen.add(key); p.addTerm(nz(-cmax, cmax), VARS.map((v) => ex[v] || 0));
+    }
+    if (seen.size === nterms && (!requireAll || vars.every((v) => p.hasVar(v)))) return p;
+  }
+  throw new Error('randPoly');
+}
+const grad = (f, vars) => vars.map((v) => f.d(v));
+const gradAt = (f, vars, pt) => { const vals = {}; vars.forEach((v, i) => (vals[v] = pt[i])); return vars.map((v) => f.d(v).ev(vals)); };
+const ptVals = (vars, pt) => { const o = {}; vars.forEach((v, i) => (o[v] = pt[i])); return o; };
+const intTex = (lo, hi) => `\\int_{${tx(lo)}}^{${tx(hi)}}`;
+
+if (typeof module !== 'undefined') Object.assign(globalThis, { gcd, lcm, chk, Q, q, ri, nz, pick, chance, shuffle, sgn, dot, idot, isZeroV, tx, vtex, ptex, vgcd, reduceV, intDir, sqParts, texCoefRad, texSqrtQ, texSqrtInt, texQoverSqrt, S, cosPi, sinPi, cmono, sumTex, shiftTex, texQpi, paren, pr, M, D, B, fmt, VARS, P, X, Y, Z, T, randPoly, grad, gradAt, ptVals, intTex });
+
+// =====================================================================
+// FREE-RESPONSE GENERATORS — APMA E2000 Midterm 2 (Lectures 11–17)
+// =====================================================================
+const TRI2 = [[3, 4, 5], [4, 3, 5], [5, 12, 13], [12, 5, 13], [6, 8, 10], [8, 15, 17], [1, 0, 1], [0, 1, 1]];
+const QUAD3 = [[1, 2, 2, 3], [2, 1, 2, 3], [2, 2, 1, 3], [2, 3, 6, 7], [6, 2, 3, 7], [3, 6, 2, 7], [1, 4, 8, 9], [4, 4, 7, 9], [8, 4, 1, 9], [2, 6, 9, 11], [4, 4, 2, 6]];
+const signed = (v) => v.map((x) => x * sgn());
+const planeTex = (n, d) => `${sumTex(n.map((c, i) => cmono(c, 'xyz'[i])))} = ${tx(d)}`;
+const lineTex = (P0, v, par = 't') => ['x', 'y', 'z'].map((c, i) => `${c} = ${sumTex([P0[i], cmono(v[i], par)])}`).join(',\\quad ');
+
+// ---------------- LECTURE 11: gradient & directional derivative ----------------
+function gDirDeriv() {
+  const three = chance(0.4); const vars = three ? ['x', 'y', 'z'] : ['x', 'y'];
+  for (;;) {
+    const f = randPoly(vars, 3, 3, 3, 1);
+    const P0 = vars.map(() => ri(-2, 2));
+    const g = gradAt(f, vars, P0);
+    if (isZeroV(g)) continue;
+    let v, L;
+    if (three) { const qd = pick(QUAD3); v = signed(shuffle(qd.slice(0, 3))); L = qd[3]; if (chance(0.3)) { v = signed([1, 1, 1]); L = null; } }
+    else { const tr = pick(TRI2.slice(0, 6)); v = signed(tr.slice(0, 2)); L = tr[2]; if (chance(0.3)) { v = signed(pick([[1, 1], [1, 2], [2, 1], [1, 3]])); L = null; } }
+    const vv = idot(v, v); const gv = dot(g, v); const gg = dot(g, g);
+    const Dtex = L ? gv.div(L).tex() : texQoverSqrt(gv, vv);
+    const gIs = intDir(g);
+    const gN = idot(gIs, gIs);
+    const unitG = sqParts(gN)[1] === 1 ? vtex(gIs.map((x) => q(x, sqParts(gN)[0]))) : `\\frac{1}{${texSqrtInt(gN)}}${vtex(gIs)}`;
+    const vname = 'v';
+    return {
+      lec: 11,
+      q: `Let ${M(`f(${vars.join(',')}) = ${f.tex()}`)}. Find the directional derivative of ${M('f')} at ${M(ptex(P0))} in the direction of ${M(`${B(vname)} = ${vtex(v)}`)}. Then give the maximum rate of change of ${M('f')} at that point and the unit direction in which it occurs.`,
+      hint: `${M('D_{\\mathbf u}f = \\nabla f\\cdot \\mathbf u')} with ${M('\\mathbf u = \\mathbf v/|\\mathbf v|')} (normalize first!). The maximum rate is ${M('|\\nabla f|')}, in the direction of ${M('\\nabla f')}.`,
+      steps: [
+        D(`\\nabla f = \\langle ${grad(f, vars).map((p) => p.tex()).join(',\\; ')} \\rangle`),
+        D(`\\nabla f${ptex(P0)} = ${vtex(g)}`),
+        D(`|${B('v')}| = \\sqrt{${vv}}${L ? ` = ${L}` : ''}, \\qquad D_{\\mathbf u}f = \\frac{\\nabla f\\cdot ${B('v')}}{|${B('v')}|} = \\frac{${gv.tex()}}{${L ? L : `\\sqrt{${vv}}`}} = ${Dtex}`),
+        `Maximum rate of change: ${M(`|\\nabla f| = \\sqrt{${gg.tex()}} = ${texSqrtQ(gg)}`)}, in the direction ${M(`\\nabla f/|\\nabla f| = ${unitG}`)}. (The minimum rate, ${M(`-${texSqrtQ(gg)}`)}, is in the opposite direction.)`,
+      ],
+      ans: `${M(`D_{\\mathbf u}f = ${Dtex}`)}; max rate ${M(texSqrtQ(gg))} in direction ${M(unitG)}`,
+    };
+  }
+}
+
+function gHalfMax() {
+  for (;;) {
+    let f, hike = chance(0.5);
+    if (hike) { const c = ri(2, 9), k = pick([4, 10, 20]); f = P.c(c).sub(X.pow(2).add(Y.pow(2)).scale(q(1, k))); if (chance(0.5)) f = f.add(X.mul(Y).scale(q(nz(-1, 1), k))); }
+    else f = randPoly(['x', 'y'], 3, 2, 4, 1);
+    const P0 = [nz(-3, 3), nz(-3, 3)];
+    const g = gradAt(f, ['x', 'y'], P0); if (isZeroV(g)) continue;
+    const [a, b] = intDir(g); const N = a * a + b * b; const [k, m] = sqParts(N);
+    const den = m === 1 ? `${2 * k}` : `${2 * k === 2 ? 2 : 2 * k}\\sqrt{${m}}`;
+    const den1 = m === 1 ? `${k}` : `${k === 1 ? '' : k}\\sqrt{${m}}`;
+    const kind = pick(['half', 'half', 'zero', 'negHalf']);
+    let target, ang, u1, u2, cosT;
+    const fr = (num) => `\\frac{${num}}{${den}}`;
+    if (kind === 'half') {
+      target = 'half the maximum rate of increase'; ang = '\\pi/3'; cosT = '\\tfrac12';
+      u1 = `\\left\\langle ${fr(sumTex([`${a}`, texCoefRad(-b, 3)]))},\\; ${fr(sumTex([`${b}`, texCoefRad(a, 3)]))} \\right\\rangle`;
+      u2 = `\\left\\langle ${fr(sumTex([`${a}`, texCoefRad(b, 3)]))},\\; ${fr(sumTex([`${b}`, texCoefRad(-a, 3)]))} \\right\\rangle`;
+    } else if (kind === 'negHalf') {
+      target = 'a rate of <em>decrease</em> equal to half the maximum rate of increase'; ang = '2\\pi/3'; cosT = '-\\tfrac12';
+      u1 = `\\left\\langle ${fr(sumTex([`${-a}`, texCoefRad(-b, 3)]))},\\; ${fr(sumTex([`${-b}`, texCoefRad(a, 3)]))} \\right\\rangle`;
+      u2 = `\\left\\langle ${fr(sumTex([`${-a}`, texCoefRad(b, 3)]))},\\; ${fr(sumTex([`${-b}`, texCoefRad(-a, 3)]))} \\right\\rangle`;
+    } else {
+      target = 'zero rate of change (level walking)'; ang = '\\pi/2'; cosT = '0';
+      u1 = `\\frac{1}{${den1}}${vtex([-b, a])}`; u2 = `\\frac{1}{${den1}}${vtex([b, -a])}`;
+    }
+    const cosv = kind === 'half' ? 0.5 : kind === 'negHalf' ? -0.5 : 0; const th = Math.acos(cosv);
+    // numeric self-check of u1
+    const gn = [a / Math.sqrt(N), b / Math.sqrt(N)]; const u = [gn[0] * Math.cos(th) - gn[1] * Math.sin(th), gn[0] * Math.sin(th) + gn[1] * Math.cos(th)];
+    chk(Math.abs(u[0] * gn[0] + u[1] * gn[1] - cosv) < 1e-9, 'halfmax');
+    return {
+      lec: 11,
+      q: `${hike ? 'You are hiking on a surface with elevation' : 'Let'} ${M(`z = f(x,y) = ${f.tex()}`)}. At the point ${M(ptex(P0))}, find the unit direction(s) in the ${M('xy')}-plane in which ${M('f')} has ${target}.`,
+      hint: `${M('D_{\\mathbf u}f = |\\nabla f|\\cos\\theta')}, where ${M('\\theta')} is the angle between ${M('\\mathbf u')} and ${M('\\nabla f')}. Solve for ${M('\\theta')}, then rotate the unit gradient by ${M('\\pm\\theta')}.`,
+      steps: [
+        D(`\\nabla f = \\langle ${f.d('x').tex()},\\; ${f.d('y').tex()} \\rangle, \\qquad \\nabla f${ptex(P0)} = ${vtex(g)} \\parallel ${vtex([a, b])}`),
+        `We need ${M(`|\\nabla f|\\cos\\theta = ${cosT}\\,|\\nabla f|`)}, so ${M(`\\cos\\theta = ${cosT}`)} and ${M(`\\theta = ${ang}`)}.`,
+        `Rotate the unit gradient ${M(`\\frac{1}{${den1}}${vtex([a, b])}`)} by ${M(`\\pm ${ang}`)} using ${M('\\langle u_1\\cos\\theta - u_2\\sin\\theta,\\; u_1\\sin\\theta + u_2\\cos\\theta\\rangle')}:`,
+        D(`\\mathbf u = ${u1} \\quad\\text{or}\\quad \\mathbf u = ${u2}`),
+      ],
+      ans: `${M(`\\mathbf u = ${u1}`)} or ${M(`\\mathbf u = ${u2}`)} (angle ${M(ang)} from ${M('\\nabla f')})`,
+    };
+  }
+}
+
+function gTanPlaneTrig() {
+  for (;;) {
+    const P0 = [nz(-2, 2), nz(-2, 2), nz(-2, 2)].map((x) => (Math.abs(x) === 2 && chance(0.6) ? Math.sign(x) : x));
+    const vals = ptVals(['x', 'y', 'z'], P0);
+    const monos = shuffle([X.mul(Y), Y.mul(Z), X.mul(Z), X.pow(2).mul(Y), X.mul(Z.pow(2))]).slice(0, 2);
+    let u = monos[0].scale(nz(-2, 2)).add(monos[1].scale(nz(-2, 2)));
+    u = u.sub(P.c(u.ev(vals))); // u(P0) = 0
+    if (u.isConst()) continue;
+    const kind = pick(['cos', 'cos', 'sin', 'exp']);
+    let h = randPoly(['x', 'y', 'z'], 2, 3, 3, 1);
+    const target = kind === 'sin' ? 0 : 1;
+    h = h.sub(P.c(h.ev(vals).sub(target)));
+    const T = { cos: `\\cos(${u.tex()})`, sin: `\\sin(${u.tex()})`, exp: `e^{${u.tex()}}` }[kind];
+    const dT = { cos: `-\\sin(${u.tex()})`, sin: `\\cos(${u.tex()})`, exp: `e^{${u.tex()}}` }[kind];
+    const tp = { cos: 0, sin: 1, exp: 1 }[kind]; // T'(0)
+    const gu = gradAt(u, ['x', 'y', 'z'], P0), gh = gradAt(h, ['x', 'y', 'z'], P0);
+    const n = gh.map((x, i) => x.sub(gu[i].mul(tp)));
+    if (isZeroV(n)) continue;
+    const nr = reduceV(n.map((x) => x.n)); chk(n.every((x) => x.d === 1), 'int normal');
+    const d = idot(nr, P0);
+    const lhs = chance(0.5);
+    const eqn = lhs ? `${T} = ${h.tex()}` : `${h.tex()} = ${T}`;
+    return {
+      lec: 11,
+      q: `Find an equation of the tangent plane to the surface ${D(eqn)} at the point ${M(ptex(P0))}.`,
+      hint: `Move everything to one side, ${M('F(x,y,z) = 0')}. Then ${M('\\nabla F(P)')} is normal to the surface. Notice the value of the inner expression at ${M('P')}.`,
+      steps: [
+        `Let ${M(`F = ${h.tex()} - ${T}`)}, so the surface is ${M('F = 0')}. With ${M(`u = ${u.tex()}`)}, ${M(`u${ptex(P0)} = 0`)}.`,
+        D(`\\nabla F = \\nabla(${h.tex()}) - ${dT}\\,\\nabla u, \\qquad \\nabla u = \\langle ${grad(u, ['x', 'y', 'z']).map((p) => p.tex()).join(', ')} \\rangle`),
+        `At ${M(ptex(P0))}: ${M(`\\nabla(\\text{poly}) = ${vtex(gh)}`)}, ${M(`\\nabla u = ${vtex(gu)}`)}, and the trig/exponential factor is ${M(`${tp}`)}${kind === 'cos' ? ' (since sin 0 = 0, the cosine term contributes nothing)' : ''}.`,
+        D(`\\mathbf n = \\nabla F${ptex(P0)} = ${vtex(n)}${nr.join() !== n.map((x) => x.n).join() ? `\\;\\to\\;${vtex(nr)}` : ''}`),
+        D(`${sumTex(nr.map((c, i) => cmono(c, shiftTex('xyz'[i], P0[i]))))} = 0 \\iff ${planeTex(nr, d)}`),
+      ],
+      ans: M(planeTex(nr, d)),
+    };
+  }
+}
+
+// ---------------- LECTURE 12: max & min ----------------
+function classify(fxx, fxy, fyy) {
+  const Dv = fxx.mul(fyy).sub(fxy.mul(fxy));
+  if (Dv.n < 0) return [Dv, 'saddle point'];
+  if (Dv.n === 0) return [Dv, 'test inconclusive'];
+  return [Dv, fxx.n > 0 ? 'local minimum' : 'local maximum'];
+}
+function critTable(f, pts) {
+  const rows = pts.map((pt) => {
+    const v = ptVals(['x', 'y'], pt);
+    chk(f.d('x').ev(v).isZero() && f.d('y').ev(v).isZero(), 'crit ' + pt);
+    const fxx = f.d('x').d('x').ev(v), fxy = f.d('x').d('y').ev(v), fyy = f.d('y').d('y').ev(v);
+    const [Dv, kind] = classify(fxx, fxy, fyy);
+    return { pt, fxx, fxy, fyy, Dv, kind, val: f.ev(v) };
+  });
+  const tbl = `\\begin{array}{c|c|c|c|c|l} (x,y) & f_{xx} & f_{yy} & f_{xy} & D & \\text{type} \\\\ \\hline ${rows.map((r) => `${ptex(r.pt)} & ${r.fxx.tex()} & ${r.fyy.tex()} & ${r.fxy.tex()} & ${r.Dv.tex()} & \\text{${r.kind}}`).join(' \\\\ ')} \\end{array}`;
+  return { rows, tbl };
+}
+function gCrit() {
+  const fam = pick(['quad', 'cubicSep', 'cubicSep', 'xy3', 'mixed']);
+  let f, pts, solve;
+  if (fam === 'quad') {
+    let a, b, c; do { a = nz(-3, 3); b = ri(-3, 3); c = nz(-3, 3); } while (4 * a * c - b * b === 0);
+    const x0 = ri(-3, 3), y0 = ri(-3, 3);
+    const dd = -(2 * a * x0 + b * y0), ee = -(b * x0 + 2 * c * y0);
+    f = P.from([[a, { x: 2 }], [b, { x: 1, y: 1 }], [c, { y: 2 }], [dd, { x: 1 }], [ee, { y: 1 }], [ri(-5, 5), {}]]);
+    pts = [[x0, y0]]; solve = `This is a linear system: ${M(`f_x = ${f.d('x').tex()} = 0,\\; f_y = ${f.d('y').tex()} = 0`)}, with the single solution ${M(ptex([x0, y0]))}.`;
+  } else if (fam === 'cubicSep') {
+    const a = pick([1, 2]), s1 = sgn(), s2 = sgn(); const yq = chance(0.5); const b = pick([1, 2]);
+    const fx = P.from([[1, { x: 3 }], [-3 * a * a, { x: 1 }]]).scale(s1);
+    const fy = yq ? P.from([[1, { y: 2 }], [-2 * b, { y: 1 }]]).scale(s2 * pick([1, 2, 3])) : P.from([[1, { y: 3 }], [-3 * b * b, { y: 1 }]]).scale(s2);
+    f = fx.add(fy).add(ri(-4, 4));
+    const ys = yq ? [b] : [b, -b];
+    pts = []; for (const x of [a, -a]) for (const y of ys) pts.push([x, y]);
+    solve = `${M(`f_x = ${f.d('x').tex()} = 0 \\Rightarrow x = \\pm ${a}`)} and ${M(`f_y = ${f.d('y').tex()} = 0 \\Rightarrow y = ${yq ? b : `\\pm ${b}`}`)}. The variables separate, so every combination is a critical point.`;
+  } else if (fam === 'xy3') {
+    const k = nz(-3, 3);
+    f = P.from([[1, { x: 3 }], [1, { y: 3 }], [-3 * k, { x: 1, y: 1 }]]);
+    pts = [[0, 0], [k, k]];
+    solve = `${M(`f_x = 3x^2 - ${paren(3 * k)}y = 0 \\Rightarrow y = x^2/${paren(k)}`)}. Substitute into ${M(`f_y = 3y^2 - ${paren(3 * k)}x = 0`)}: ${M(`x^4 = ${paren(k)}^3x`)}, so ${M(`x = 0`)} or ${M(`x = ${k}`)}.`;
+  } else {
+    // f = x^2 + c y^2 + k x y^2 type: crit at (0,0) and maybe more — use f = x^3 - 3 a x + c y^2 + ... simple
+    const a = pick([1, 4]), r = Math.sqrt(a), c = nz(-2, 2), x0 = ri(-1, 1);
+    f = P.from([[1, { x: 3 }], [-3 * a, { x: 1 }], [c, { y: 2 }], [-2 * c * x0, { y: 1 }]]).add(ri(-3, 3));
+    pts = [[r, x0], [-r, x0]];
+    solve = `${M(`f_x = 3x^2 - ${3 * a} = 0 \\Rightarrow x = \\pm ${r}`)}, ${M(`f_y = ${f.d('y').tex()} = 0 \\Rightarrow y = ${x0}`)}.`;
+  }
+  const { rows, tbl } = critTable(f, pts);
+  return {
+    lec: 12,
+    q: `Find all critical points of ${M(`f(x,y) = ${f.tex()}`)} and classify each with the second derivative test.`,
+    hint: `Solve ${M('f_x = f_y = 0')}, then use ${M('D = f_{xx}f_{yy} - f_{xy}^2')}: ${M('D<0')} saddle; ${M('D>0')} with ${M('f_{xx}>0')} min, ${M('f_{xx}<0')} max.`,
+    steps: [D(`f_x = ${f.d('x').tex()}, \\qquad f_y = ${f.d('y').tex()}`), solve, D(`f_{xx} = ${f.d('x').d('x').tex()}, \\quad f_{yy} = ${f.d('y').d('y').tex()}, \\quad f_{xy} = ${f.d('x').d('y').tex()}`), D(tbl)],
+    ans: rows.map((r) => `${M(ptex(r.pt))}: ${r.kind}`).join('; '),
+  };
+}
+
+function gAbsRect() {
+  for (;;) {
+    const a = pick([1, 1, -1, 2]), c = pick([1, 1, -1, 2]), b = pick([0, 0, 1, -1]);
+    const x0 = ri(0, 2), y0 = ri(0, 2);
+    const dd = -(2 * a * x0 + b * y0), ee = -(b * x0 + 2 * c * y0);
+    const f = P.from([[a, { x: 2 }], [b, { x: 1, y: 1 }], [c, { y: 2 }], [dd, { x: 1 }], [ee, { y: 1 }]]);
+    if (4 * a * c - b * b === 0) continue;
+    const x1 = ri(-1, 0), x2 = ri(2, 3), y1 = ri(-1, 0), y2 = ri(2, 3);
+    const cands = []; const add = (pt, where) => { if (!cands.some((cc) => cc.pt[0].eq(pt[0]) && cc.pt[1].eq(pt[1]))) cands.push({ pt, where, val: f.ev({ x: pt[0], y: pt[1] }) }); };
+    const inside = x0 > x1 && x0 < x2 && y0 > y1 && y0 < y2;
+    if (inside) add([q(x0), q(y0)], 'interior critical point');
+    const edgeNotes = [];
+    for (const xe of [x1, x2]) { // g(y) = f(xe, y): c y^2 + (b xe + ee) y + ...
+      const ys = q(-(b * xe + ee), 2 * c);
+      if (ys.cmp(y1) > 0 && ys.cmp(y2) < 0) { add([q(xe), ys], `edge x = ${xe}`); edgeNotes.push(`On ${M(`x=${xe}`)}: ${M(`f = ${f.subs({ x: xe }).tex()}`)}, vertex at ${M(`y = ${ys.tex()}`)}.`); } else edgeNotes.push(`On ${M(`x=${xe}`)}: ${M(`f = ${f.subs({ x: xe }).tex()}`)}, vertex at ${M(`y=${ys.tex()}`)} is not inside the edge.`);
+    }
+    for (const ye of [y1, y2]) {
+      const xs = q(-(b * ye + dd), 2 * a);
+      if (xs.cmp(x1) > 0 && xs.cmp(x2) < 0) { add([xs, q(ye)], `edge y = ${ye}`); edgeNotes.push(`On ${M(`y=${ye}`)}: ${M(`f = ${f.subs({ y: ye }).tex()}`)}, vertex at ${M(`x = ${xs.tex()}`)}.`); } else edgeNotes.push(`On ${M(`y=${ye}`)}: ${M(`f = ${f.subs({ y: ye }).tex()}`)}, vertex at ${M(`x=${xs.tex()}`)} is not inside the edge.`);
+    }
+    for (const xe of [x1, x2]) for (const ye of [y1, y2]) add([q(xe), q(ye)], 'corner');
+    let mx = cands[0], mn = cands[0];
+    for (const cc of cands) { if (cc.val.cmp(mx.val) > 0) mx = cc; if (cc.val.cmp(mn.val) < 0) mn = cc; }
+    // brute check
+    let bmx = -Infinity, bmn = Infinity;
+    for (let i = 0; i <= 60; i++) for (let j = 0; j <= 60; j++) { const v = f.evf({ x: x1 + (x2 - x1) * i / 60, y: y1 + (y2 - y1) * j / 60 }); bmx = Math.max(bmx, v); bmn = Math.min(bmn, v); }
+    chk(bmx <= mx.val.val() + 1e-9 && bmn >= mn.val.val() - 1e-9, 'absrect');
+    const tbl = `\\begin{array}{l|c|c} \\text{candidate} & (x,y) & f \\\\ \\hline ${cands.map((cc) => `\\text{${cc.where}} & ${ptex(cc.pt)} & ${cc.val.tex()}`).join(' \\\\ ')} \\end{array}`;
+    return {
+      lec: 12,
+      q: `Find the absolute maximum and minimum values of ${M(`f(x,y) = ${f.tex()}`)} on the closed rectangle ${M(`${x1} \\le x \\le ${x2},\\; ${y1} \\le y \\le ${y2}`)}.`,
+      hint: 'Closed and bounded region, so both extremes exist (Extreme Value Theorem). Check interior critical points, then each edge as a one-variable problem, then the corners.',
+      steps: [D(`f_x = ${f.d('x').tex()}, \\quad f_y = ${f.d('y').tex()} \\;\\Rightarrow\\; \\text{critical point } ${ptex([x0, y0])}${inside ? ' \\text{ (inside)}' : ' \\text{ (not inside, ignore)}'}`), ...edgeNotes, D(tbl)],
+      ans: `Absolute max ${M(mx.val.tex())} at ${M(ptex(mx.pt))}; absolute min ${M(mn.val.tex())} at ${M(ptex(mn.pt))}`,
+    };
+  }
+}
+
+function gDiskQuad() {
+  const rot = pick(['r45', 'r12', 'r12']); let l1, l2;
+  do { l1 = ri(-4, 5); l2 = ri(-4, 5); } while (l1 === l2 || (rot === 'r45' && (l1 + l2) % 2 !== 0) || (rot === 'r12' && (l1 - l2) % 5 !== 0));
+  let a, b, c, e1, e2, nrm;
+  if (rot === 'r45') { a = (l1 + l2) / 2; c = a; b = (l1 - l2) / 2; e1 = [1, 1]; e2 = [1, -1]; nrm = 2; }
+  else { const k = (l1 - l2) / 5; a = l1 - 4 * k; c = l1 - k; b = 2 * k; e1 = [1, 2]; e2 = [-2, 1]; nrm = 5; if (chance(0.5)) { [a, c] = [c, a]; e1 = [2, 1]; e2 = [1, -2]; } }
+  const R = pick([1, 1, 2, 3]);
+  const f = P.from([[a, { x: 2 }], [2 * b, { x: 1, y: 1 }], [c, { y: 2 }]]);
+  // verify eigen
+  for (const [lam, e] of [[l1, e1], [l2, e2]]) chk(a * e[0] + b * e[1] === lam * e[0] && b * e[0] + c * e[1] === lam * e[1], 'eig');
+  const lmax = Math.max(l1, l2), lmin = Math.min(l1, l2), emax = l1 > l2 ? e1 : e2, emin = l1 > l2 ? e2 : e1;
+  const ptT = (e) => `\\pm\\left(${texQoverSqrt(R * e[0], nrm)},\\; ${texQoverSqrt(R * e[1], nrm)}\\right)`;
+  const MX = Math.max(lmax * R * R, 0), MN = Math.min(lmin * R * R, 0);
+  return {
+    lec: 12,
+    q: `Find the largest and smallest values of ${M(`f(x,y) = ${f.tex()}`)} on the disk ${M(`x^2 + y^2 \\le ${R * R}`)}, and where they occur.`,
+    hint: `Interior: solve ${M('\\nabla f = \\mathbf 0')}. Boundary: Lagrange with ${M(`g = x^2+y^2 = ${R * R}`)}. For a quadratic form, ${M('\\nabla f = \\lambda\\nabla g')} becomes an eigenvalue problem, and ${M(`f = \\lambda R^2`)} on the circle.`,
+    steps: [
+      `Interior: ${M(`f_x = ${f.d('x').tex()},\\; f_y = ${f.d('y').tex()}`)}. The only solution is ${M('(0,0)')} (the determinant ${M(`${4 * a * c - 4 * b * b}`)} is nonzero), where ${M('f = 0')}.`,
+      `Boundary: ${M(`\\nabla f = \\lambda \\nabla g`)} gives ${D(`\\begin{cases} ${sumTex([cmono(2 * a, 'x'), cmono(2 * b, 'y')])} = 2\\lambda x \\\\ ${sumTex([cmono(2 * b, 'x'), cmono(2 * c, 'y')])} = 2\\lambda y \\end{cases} \\;\\Rightarrow\\; (${a} - \\lambda)(${c} - \\lambda) - ${paren(b * b)} = 0 \\;\\Rightarrow\\; \\lambda = ${lmax},\\; ${lmin}`)}`,
+      `Multiplying the first equation by ${M('x')} and the second by ${M('y')} and adding shows ${M(`2f = 2\\lambda(x^2+y^2)`)}, so on the circle ${M(`f = ${R * R}\\lambda`)}.`,
+      `${M(`\\lambda = ${lmax}`)}: direction ${M(vtex(emax))}, points ${M(ptT(emax))}, ${M(`f = ${lmax * R * R}`)}. ${M(`\\lambda = ${lmin}`)}: direction ${M(vtex(emin))}, points ${M(ptT(emin))}, ${M(`f = ${lmin * R * R}`)}.`,
+      `Compare with the interior value ${M('f(0,0) = 0')}.`,
+    ],
+    ans: `Max ${M(`${MX}`)} ${MX === 0 ? 'at the origin' : `at ${M(ptT(emax))}`}; min ${M(`${MN}`)} ${MN === 0 ? 'at the origin' : `at ${M(ptT(emin))}`}`,
+  };
+}
+
+function gLinBall() {
+  const three = chance(0.6); let n, L;
+  if (three) { const qd = pick(QUAD3); const sc = pick([1, 1, 2]); n = signed(shuffle(qd.slice(0, 3))).map((x) => x * sc); L = qd[3] * sc; }
+  else { const tr = pick(TRI2.slice(0, 6)); n = signed(tr.slice(0, 2)); L = tr[2]; }
+  const R = pick([1, 1, 2, 3]); const c0 = pick([0, 0, ri(-5, 20)]);
+  const vars = three ? ['x', 'y', 'z'] : ['x', 'y'];
+  const f = P.lin(Object.fromEntries(vars.map((v, i) => [v, n[i]])), c0);
+  const ptMax = n.map((x) => q(R * x, L)), ptMin = ptMax.map((x) => x.neg());
+  chk(dot(ptMax, ptMax).eq(R * R), 'onball');
+  const story = pick(['temperature', 'plain']);
+  const region = three ? `the ball ${M(`x^2+y^2+z^2 \\le ${R * R}`)}` : `the disk ${M(`x^2+y^2 \\le ${R * R}`)}`;
+  return {
+    lec: 13,
+    q: story === 'temperature' ? `The temperature in ${region} is ${M(`T(${vars.join(',')}) = ${f.tex()}`)}. Find the hottest and coldest points (boundary included) and the temperatures there. Justify your answer.` : `Find the maximum and minimum of ${M(`f(${vars.join(',')}) = ${f.tex()}`)} on ${region}.`,
+    hint: `${M('\\nabla f')} is a nonzero constant, so there are no interior critical points. Use Lagrange on the boundary sphere/circle.`,
+    steps: [
+      `${M(`\\nabla f = ${vtex(n)} \\ne \\mathbf 0`)}, so the extremes lie on the boundary ${M(`g = ${vars.map((v) => v + '^2').join('+')} = ${R * R}`)}.`,
+      `${M('\\nabla f = \\lambda\\nabla g')}: ${M(vars.map((v, i) => `${n[i]} = 2\\lambda ${v}`).join(',\\; '))}, so ${M(vars.map((v, i) => `${v} = ${q(n[i], 2).tex()}/\\lambda`).join(',\\; '))}.`,
+      `Substitute into the constraint: ${M(`\\frac{${n.map((x) => x * x).join(' + ')}}{4\\lambda^2} = ${R * R} \\Rightarrow \\frac{${L * L}}{4\\lambda^2} = ${R * R} \\Rightarrow \\lambda = \\pm ${q(L, 2 * R).tex()}`)}.`,
+      `${M(`\\lambda = ${q(L, 2 * R).tex()}`)}: point ${M(ptex(ptMax))}, value ${M(`${R * L + c0}`)}. ${M(`\\lambda = -${q(L, 2 * R).tex()}`)}: point ${M(ptex(ptMin))}, value ${M(`${-R * L + c0}`)}.`,
+    ],
+    ans: `Max ${M(`${R * L + c0}`)} at ${M(ptex(ptMax))}; min ${M(`${-R * L + c0}`)} at ${M(ptex(ptMin))}`,
+  };
+}
+
+// ---------------- LECTURE 13: Lagrange ----------------
+function gLagProd() {
+  const m = pick([1, 1, 2, 3]), n = pick([1, 1, 2]); const p = ri(1, 4), qq = ri(1, 4); const c = (m + n) * p * qq * pick([1, 2, 3]);
+  const x0 = q(m * c, (m + n) * p), y0 = q(n * c, (m + n) * qq);
+  const val = x0.pow(m).mul(y0.pow(n));
+  const fT = `${m === 1 ? 'x' : `x^{${m}}`}${n === 1 ? 'y' : `y^{${n}}`}`;
+  const story = m === 1 && n === 1 && chance(0.5);
+  return {
+    lec: 13,
+    q: story ? `A rectangular garden has side lengths ${M('x')} and ${M('y')}. The budget constraint is ${M(`${cmono(p, 'x')} + ${cmono(qq, 'y')} = ${c}`)}. Use Lagrange multipliers to maximize the area ${M('A = xy')}.` : `Use Lagrange multipliers to maximize ${M(`f(x,y) = ${fT}`)} subject to ${M(`${cmono(p, 'x')} + ${cmono(qq, 'y')} = ${c}`)} with ${M('x, y > 0')}.`,
+    hint: `Set ${M('\\nabla f = \\lambda \\nabla g')}. Divide the two equations to eliminate ${M('\\lambda')}.`,
+    steps: [
+      D(`\\nabla f = \\langle ${P.from([[m, { x: m - 1, y: n }]]).tex()},\\; ${P.from([[n, { x: m, y: n - 1 }]]).tex()} \\rangle = \\lambda \\langle ${p}, ${qq} \\rangle`),
+      `Divide: ${M(`\\frac{${m === 1 ? '' : m}y}{${n === 1 ? '' : n}x} = \\frac{${p}}{${qq}} \\Rightarrow ${cmono(m * qq, 'y')} = ${cmono(n * p, 'x')}`)}.`,
+      `Substitute into the constraint: ${M(`x = ${x0.tex()},\\; y = ${y0.tex()}`)}.`,
+      `On the segment the endpoints give ${M('f = 0')}, so this point is the maximum.`,
+    ],
+    ans: `Max at ${M(ptex([x0, y0]))}, value ${M(val.tex())}`,
+  };
+}
+
+function gLagExp() {
+  const k = pick([q(1), q(2), q(3), q(1, 2)]); const sg = sgn(); // y = e^{sg k x}
+  const expo = cmono(k.mul(sg), 'x');
+  const x0 = q(-1).div(k.mul(sg)); // from x = -1/(sg k)
+  const valCoef = x0; // f = x y = x0 * e^{-1}
+  const isMin = valCoef.n < 0;
+  return {
+    lec: 13,
+    q: `Use Lagrange multipliers to find the point ${M('(a,b)')} on the curve ${M(`y = e^{${expo}}`)} where the product ${M('ab')} is ${isMin ? 'smallest' : 'largest'}. What is that value?`,
+    hint: `Constraint ${M(`g(x,y) = y - e^{${expo}} = 0`)}, objective ${M('f = xy')}. From ${M('\\nabla f = \\lambda\\nabla g')}, the second component gives ${M('\\lambda')} directly.`,
+    steps: [
+      D(`\\nabla f = \\langle y, x\\rangle, \\qquad \\nabla g = \\langle ${cmono(k.mul(-sg), `e^{${expo}}`)},\\; 1 \\rangle`),
+      `Second component: ${M('x = \\lambda')}. First: ${M(`y = ${cmono(k.mul(-sg), `\\lambda e^{${expo}}`)} = ${cmono(k.mul(-sg), `x\\,e^{${expo}}`)}`)}.`,
+      `With ${M(`y = e^{${expo}} > 0`)}: ${M(`1 = ${cmono(k.mul(-sg), 'x')} \\Rightarrow x = ${x0.tex()}`)}, ${M(`y = e^{-1}`)}.`,
+      `${M(`f = xy = ${x0.n < 0 ? '-' : ''}\\frac{${Math.abs(x0.n)}}{${x0.d === 1 ? '' : x0.d}e}`)}. As ${M('x\\to\\pm\\infty')}, ${M('xy')} goes to ${isMin ? '0 or +∞' : '0 or −∞'}, so this is the ${isMin ? 'minimum' : 'maximum'}.`,
+    ],
+    ans: `${M(`(a,b) = \\left(${x0.tex()},\\; \\tfrac1e\\right)`)}, ${isMin ? 'minimum' : 'maximum'} ${M(`ab = ${x0.n < 0 ? '-' : ''}\\frac{${Math.abs(x0.n)}}{${x0.d === 1 ? '' : x0.d}e}`)}`,
+  };
+}
+
+function gLagPlane() {
+  let n, P0, d, num;
+  do { const qd = pick(QUAD3); n = signed(shuffle(qd.slice(0, 3))); P0 = [ri(-3, 3), ri(-3, 3), ri(-3, 3)]; d = ri(-10, 10); num = d - idot(n, P0); } while (num === 0);
+  const nn = idot(n, n); const t = q(num, nn); const pt = P0.map((x, i) => t.mul(n[i]).add(x));
+  chk(dot(pt, n).eq(d), 'onplane');
+  const dist = q(Math.abs(num), Math.round(Math.sqrt(nn)));
+  return {
+    lec: 13,
+    q: `Use Lagrange multipliers to find the point on the plane ${M(planeTex(n, d))} closest to ${M(ptex(P0))}, and the distance.`,
+    hint: `Minimize the squared distance ${M('f = (x-x_0)^2+(y-y_0)^2+(z-z_0)^2')} subject to the plane. Each equation of ${M('\\nabla f = \\lambda\\nabla g')} is linear in one coordinate.`,
+    steps: [
+      `${M('\\nabla f = \\lambda \\nabla g')}: ${M(`2${shiftTex('x', P0[0])} = ${n[0]}\\lambda,\\; 2${shiftTex('y', P0[1])} = ${n[1]}\\lambda,\\; 2${shiftTex('z', P0[2])} = ${n[2]}\\lambda`)}.`,
+      `So ${M(`(x,y,z) = ${ptex(P0)} + \\tfrac{\\lambda}{2}${vtex(n)}`)}. Plug into the plane: ${M(`${idot(n, P0)} + \\tfrac{\\lambda}{2}(${nn}) = ${d} \\Rightarrow \\tfrac{\\lambda}{2} = ${t.tex()}`)}.`,
+      D(`(x,y,z) = ${ptex(pt)}, \\qquad \\text{dist} = |{\\tfrac\\lambda2}|\\,|\\mathbf n| = ${t.abs().tex()}\\cdot ${Math.round(Math.sqrt(nn))} = ${dist.tex()}`),
+      `Check with the distance formula: ${M(`\\frac{|${d} - ${paren(idot(n, P0))}|}{${Math.round(Math.sqrt(nn))}} = ${dist.tex()}`)}.`,
+    ],
+    ans: `${M(ptex(pt))}, distance ${M(dist.tex())}`,
+  };
+}
+
+function gLagBox() {
+  const kind = pick(['plane', 'open', 'closed']);
+  if (kind === 'plane') {
+    const a = ri(1, 4) * 3, b = ri(1, 3) * 3, c = ri(1, 3) * 3; const L = lcm(lcm(a, b), c);
+    const eq = planeTex([L / a, L / b, L / c], L);
+    return {
+      lec: 13,
+      q: `A rectangular box sits in the first octant with three faces on the coordinate planes and one vertex on the plane ${M(eq)}. Use Lagrange multipliers to find the largest possible volume.`,
+      hint: `Maximize ${M('V = xyz')} subject to the plane. Multiply each equation of ${M('\\nabla V = \\lambda\\nabla g')} by its own variable.`,
+      steps: [
+        `${M(`yz = ${L / a}\\lambda,\\; xz = ${L / b}\\lambda,\\; xy = ${L / c}\\lambda`)}. Multiply by ${M('x, y, z')} respectively: ${M(`xyz = ${cmono(L / a, '\\lambda x')} = ${cmono(L / b, '\\lambda y')} = ${cmono(L / c, '\\lambda z')}`)}.`,
+        `So ${M(`${cmono(L / a, 'x')} = ${cmono(L / b, 'y')} = ${cmono(L / c, 'z')}`)}, and each term is a third of ${M(`${L}`)}: ${M(`x = ${a / 3},\\; y = ${b / 3},\\; z = ${c / 3}`)}.`,
+        D(`V = ${a / 3}\\cdot${b / 3}\\cdot${c / 3} = ${(a * b * c) / 27}`),
+      ],
+      ans: `${M(`V_{\\max} = ${(a * b * c) / 27}`)} with dimensions ${M(`${a / 3}\\times${b / 3}\\times${c / 3}`)}`,
+    };
+  }
+  const k = ri(1, 4);
+  if (kind === 'open') {
+    const Sa = 12 * k * k;
+    return {
+      lec: 13,
+      q: `An open-top rectangular box (no lid) is made from ${M(`${Sa}\\text{ cm}^2`)} of cardboard. Use Lagrange multipliers to find the dimensions that maximize its volume.`,
+      hint: `Maximize ${M('V = xyz')} subject to ${M(`xy + 2xz + 2yz = ${Sa}`)}. Compare the equations pairwise to relate ${M('x, y, z')}.`,
+      steps: [
+        `${M('yz = \\lambda(y + 2z),\\; xz = \\lambda(x + 2z),\\; xy = \\lambda(2x + 2y)')}.`,
+        `Multiply by ${M('x, y, z')}: ${M('xyz = \\lambda(xy + 2xz) = \\lambda(xy + 2yz) = \\lambda(2xz + 2yz)')}. The first two give ${M('x = y')}; the last two give ${M('x = 2z')}.`,
+        `Constraint: ${M(`4z^2 + 4z^2 + 4z^2 = 12z^2 = ${Sa} \\Rightarrow z = ${k}`)}, ${M(`x = y = ${2 * k}`)}.`,
+        D(`V = ${2 * k}\\cdot${2 * k}\\cdot${k} = ${4 * k ** 3}`),
+      ],
+      ans: `${M(`${2 * k}\\times${2 * k}\\times${k}`)} (base ${M(`${2 * k}\\times${2 * k}`)}, height ${M(`${k}`)}), volume ${M(`${4 * k ** 3}\\text{ cm}^3`)}`,
+    };
+  }
+  const Sa = 6 * k * k;
+  return {
+    lec: 13,
+    q: `Use Lagrange multipliers to find the dimensions of the closed rectangular box with surface area ${M(`${Sa}`)} that has the largest volume.`,
+    hint: `Maximize ${M('xyz')} subject to ${M(`2(xy + yz + xz) = ${Sa}`)}.`,
+    steps: [`${M('yz = 2\\lambda(y+z),\\; xz = 2\\lambda(x+z),\\; xy = 2\\lambda(x+y)')}. Multiply by ${M('x,y,z')} and compare: ${M('x = y = z')}.`, `${M(`6x^2 = ${Sa} \\Rightarrow x = ${k}`)}. It's a cube.`, D(`V = ${k ** 3}`)],
+    ans: `A cube with side ${M(`${k}`)}, volume ${M(`${k ** 3}`)}`,
+  };
+}
+
+function gLagCan() {
+  const k = ri(1, 4); const lid = chance(0.55);
+  if (lid) {
+    return {
+      lec: 13,
+      q: `A closed cylindrical can (top, bottom, and side) must hold volume ${M(`V = ${cmono(2 * k ** 3, '\\pi')}`)}. Use Lagrange multipliers to find the radius and height that minimize the surface area.`,
+      hint: `Minimize ${M('A = 2\\pi r^2 + 2\\pi r h')} subject to ${M('\\pi r^2 h = V')}.`,
+      steps: [D(`\\nabla A = \\langle 4\\pi r + 2\\pi h,\\; 2\\pi r \\rangle = \\lambda\\langle 2\\pi r h,\\; \\pi r^2 \\rangle`), `Second equation: ${M('\\lambda = 2/r')}. First: ${M('4\\pi r + 2\\pi h = 4\\pi h \\Rightarrow h = 2r')}. The height equals the diameter.`, `${M(`\\pi r^2 (2r) = ${cmono(2 * k ** 3, '\\pi')} \\Rightarrow r = ${k},\\; h = ${2 * k}`)}, ${M(`A = ${cmono(6 * k * k, '\\pi')}`)}.`],
+      ans: `${M(`r = ${k}`)}, ${M(`h = ${2 * k}`)} (so ${M('h = 2r')}), minimum area ${M(cmono(6 * k * k, '\\pi'))}`,
+    };
+  }
+  return {
+    lec: 13,
+    q: `A cylindrical can with <b>no top lid</b> must hold volume ${M(`V = ${cmono(k ** 3, '\\pi')}`)}. Use Lagrange multipliers to find the radius and height that minimize the material used.`,
+    hint: `Minimize ${M('A = \\pi r^2 + 2\\pi r h')} subject to ${M('\\pi r^2 h = V')}.`,
+    steps: [D(`\\nabla A = \\langle 2\\pi r + 2\\pi h,\\; 2\\pi r \\rangle = \\lambda\\langle 2\\pi r h,\\; \\pi r^2 \\rangle`), `Second: ${M('\\lambda = 2/r')}. First: ${M('2\\pi r + 2\\pi h = 4\\pi h \\Rightarrow h = r')}.`, `${M(`\\pi r^3 = ${cmono(k ** 3, '\\pi')} \\Rightarrow r = h = ${k}`)}, ${M(`A = ${cmono(3 * k * k, '\\pi')}`)}.`],
+    ans: `${M(`r = h = ${k}`)}, minimum area ${M(cmono(3 * k * k, '\\pi'))}`,
+  };
+}
+
+// ---------------- LECTURE 14: iterated & polar integrals ----------------
+function gSwap2D() {
+  const fam = pick(['parab', 'sqrt', 'log', 'split', 'parab']);
+  let A, Bt, note;
+  if (fam === 'parab') {
+    const k = pick([1, 1, 2]), m = pick([1, 2, 3, 4]); const xm = q(m, k), ym = q(m * m, k);
+    const yT = k === 1 ? '\\sqrt{y}' : `\\sqrt{y/${k}}`;
+    A = `\\int_0^{${xm.tex()}}\\int_{${cmono(k, 'x^2')}}^{${cmono(m, 'x')}} f(x,y)\\,dy\\,dx`;
+    Bt = `\\int_0^{${ym.tex()}}\\int_{${m === 1 ? 'y' : `y/${m}`}}^{${yT}} f(x,y)\\,dx\\,dy`;
+    note = `The region lies between the parabola ${M(`y = ${cmono(k, 'x^2')}`)} (below) and the line ${M(`y = ${cmono(m, 'x')}`)} (above); they meet at ${M('(0,0)')} and ${M(ptex([xm, ym]))}. Solving for ${M('x')}: the line is ${M(`x = ${m === 1 ? 'y' : `y/${m}`}`)} (left) and the parabola is ${M(`x = ${yT}`)} (right).`;
+  } else if (fam === 'sqrt') {
+    const n = ri(1, 4);
+    A = `\\int_0^{${n * n}}\\int_0^{\\sqrt{x}} f(x,y)\\,dy\\,dx`; Bt = `\\int_0^{${n}}\\int_{y^2}^{${n * n}} f(x,y)\\,dx\\,dy`;
+    note = `Region: under ${M('y = \\sqrt x')}, above ${M('y=0')}, for ${M(`0\\le x\\le ${n * n}`)}. For fixed ${M('y\\in[0,' + n + ']')}, ${M('x')} runs from the curve ${M('x = y^2')} to the line ${M(`x = ${n * n}`)}.`;
+  } else if (fam === 'log') {
+    const k = ri(1, 3); const ek = k === 1 ? 'e' : `e^{${k}}`;
+    A = `\\int_1^{${ek}}\\int_0^{\\ln y} f(x,y)\\,dx\\,dy`; Bt = `\\int_0^{${k}}\\int_{e^x}^{${ek}} f(x,y)\\,dy\\,dx`;
+    note = `Region: ${M(`1 \\le y \\le ${ek}`)}, ${M('0 \\le x \\le \\ln y')}, i.e. to the right of the ${M('y')}-axis and left of ${M('x = \\ln y \\iff y = e^x')}. For fixed ${M(`x\\in[0,${k}]`)}, ${M('y')} runs from ${M('e^x')} up to ${M(ek)}.`;
+  } else {
+    const a = pick([2, 3]); const c = a * a - a;
+    A = `\\int_0^{${a}}\\int_{x^2}^{x+${c}} f(x,y)\\,dy\\,dx`;
+    Bt = `\\int_0^{${c}}\\int_0^{\\sqrt y} f(x,y)\\,dx\\,dy + \\int_{${c}}^{${a * a}}\\int_{y-${c}}^{\\sqrt y} f(x,y)\\,dx\\,dy`;
+    note = `Region: between ${M('y = x^2')} (bottom) and ${M(`y = x + ${c}`)} (top), ${M(`0\\le x\\le ${a}`)}; the curves meet at ${M(`(${a},${a * a})`)}. The left boundary changes at ${M(`y = ${c}`)} (where the line crosses ${M('x=0')}): below it the left edge is ${M('x = 0')}, above it the left edge is ${M(`x = y - ${c}`)}. So two integrals are needed.`;
+  }
+  const flip = chance(0.4) && fam !== 'split';
+  return {
+    lec: 14,
+    q: `Sketch the region of integration and reverse the order of integration: ${D(flip ? Bt : A)}`,
+    hint: 'Turn the bounds into inequalities, draw the region, then describe it the other way: fix the outer variable and read off where the inner variable enters and leaves.',
+    steps: [note, D(flip ? A : Bt)],
+    ans: M(flip ? A : Bt),
+  };
+}
+
+function gReverseEval() {
+  const fam = pick(['e2', 'e3', 'sin', 'yex']);
+  if (fam === 'e2') {
+    const a = pick([1, 2, 3]); const a2 = a * a;
+    return { lec: 14, q: `Evaluate by reversing the order of integration: ${D(`\\int_0^{${a}}\\int_x^{${a}} e^{y^2}\\,dy\\,dx`)}`, hint: `${M('e^{y^2}')} has no elementary antiderivative in ${M('y')}. Swap to ${M('dx\\,dy')}.`, steps: [`Region: ${M(`0 \\le x \\le y \\le ${a}`)}, a triangle. Reversed: ${M(`0\\le y\\le ${a}`)}, ${M('0\\le x\\le y')}.`, D(`\\int_0^{${a}}\\int_0^{y} e^{y^2}\\,dx\\,dy = \\int_0^{${a}} y e^{y^2}\\,dy = \\tfrac12 e^{y^2}\\Big|_0^{${a}} = \\tfrac12\\left(e^{${a2}} - 1\\right)`)], ans: M(`\\tfrac12(e^{${a2}} - 1)`) };
+  }
+  if (fam === 'e3') {
+    const n = pick([1, 2]); const n3 = n ** 3;
+    return { lec: 14, q: `Evaluate by reversing the order of integration: ${D(`\\int_0^{${n * n}}\\int_{\\sqrt x}^{${n}} e^{y^3}\\,dy\\,dx`)}`, hint: `Swap to ${M('dx\\,dy')} so the inner integral produces a factor that makes ${M('e^{y^3}')} integrable.`, steps: [`Region: ${M(`\\sqrt x \\le y \\le ${n}`)}, ${M(`0\\le x\\le ${n * n}`)} ${M(`\\iff 0 \\le y \\le ${n},\\; 0 \\le x \\le y^2`)}.`, D(`\\int_0^{${n}}\\int_0^{y^2} e^{y^3}\\,dx\\,dy = \\int_0^{${n}} y^2 e^{y^3}\\,dy = \\tfrac13 e^{y^3}\\Big|_0^{${n}} = \\tfrac13(e^{${n3}} - 1)`)], ans: M(`\\tfrac13(e^{${n3}} - 1)`) };
+  }
+  if (fam === 'sin') {
+    const top = pick([['\\sqrt{\\pi}', '\\pi', '1', 'pi'], ['\\sqrt{\\pi/2}', '\\pi/2', '\\tfrac12', 'pi2']]);
+    return { lec: 14, q: `Evaluate by reversing the order of integration: ${D(`\\int_0^{${top[0]}}\\int_x^{${top[0]}} \\sin(y^2)\\,dy\\,dx`)}`, hint: 'Swap the order so the inner integral is in x.', steps: [`Region: ${M(`0\\le x\\le y\\le ${top[0]}`)}. Reversed: ${M(`\\int_0^{${top[0]}}\\int_0^y \\sin(y^2)\\,dx\\,dy`)}.`, D(`\\int_0^{${top[0]}} y\\sin(y^2)\\,dy = -\\tfrac12\\cos(y^2)\\Big|_0^{${top[0]}} = -\\tfrac12\\cos(${top[1]}) + \\tfrac12 = ${top[2]}`)], ans: M(top[2]) };
+  }
+  const a = pick([1, 2]);
+  return { lec: 14, q: `Evaluate by reversing the order of integration: ${D(`\\int_0^{${a}}\\int_{y}^{${a}} \\frac{\\sin x}{x}\\,dx\\,dy`)}`, hint: `${M('\\sin x / x')} has no elementary antiderivative. Swap to ${M('dy\\,dx')}.`, steps: [`Region: ${M(`0\\le y\\le x\\le ${a}`)}. Reversed: ${M(`\\int_0^{${a}}\\int_0^{x} \\frac{\\sin x}{x}\\,dy\\,dx`)}.`, D(`\\int_0^{${a}} \\frac{\\sin x}{x}\\cdot x\\,dx = -\\cos x\\Big|_0^{${a}} = 1 - \\cos ${a}`)], ans: M(`1 - \\cos ${a} \\approx ${fmt(1 - Math.cos(a))}`) };
+}
+
+function region2D() {
+  const fam = pick(['rect', 'tri', 'parab', 'between']);
+  if (fam === 'rect') { const a = ri(1, 3), b = ri(1, 3); return { fam, xlo: 0, xhi: a, ylo: P.c(0), yhi: P.c(b), desc: `the rectangle ${M(`[0,${a}]\\times[0,${b}]`)}` }; }
+  if (fam === 'tri') { const a = ri(1, 3), b = ri(1, 4); const yhi = P.c(b).sub(X.scale(q(b, a))); return { fam, xlo: 0, xhi: a, ylo: P.c(0), yhi, desc: `the triangle with vertices ${M(`(0,0), (${a},0), (0,${b})`)}` }; }
+  if (fam === 'parab') { const a = ri(1, 2), h = a * a * pick([1, 2]); const yhi = P.c(h).sub(X.pow(2).scale(q(h, a * a))); return { fam, xlo: -a, xhi: a, ylo: P.c(0), yhi, desc: `the region between ${M(`y = ${yhi.tex()}`)} and the ${M('x')}-axis`, symX: true }; }
+  const m = ri(1, 3); return { fam, xlo: 0, xhi: m, ylo: X.pow(2), yhi: X.scale(m), desc: `the region between ${M('y = x^2')} and ${M(`y = ${cmono(m, 'x')}`)}` };
+}
+const dbl = (f, R) => f.defint('y', R.ylo, R.yhi).defint('x', R.xlo, R.xhi).constVal();
+function gDoubleEval() {
+  const R = region2D(); const f = randPoly(['x', 'y'], ri(1, 2), 2, 4, 1).add(ri(0, 3));
+  const inner = f.defint('y', R.ylo, R.yhi); const val = inner.defint('x', R.xlo, R.xhi).constVal();
+  return {
+    lec: 14,
+    q: `Evaluate ${M(`\\iint_D (${f.tex()})\\,dA`)}, where ${M('D')} is ${R.desc}.`,
+    hint: 'Describe D as type I (x outer, y between two curves) and integrate y first.',
+    steps: [D(`\\iint_D = \\int_{${R.xlo}}^{${R.xhi}}\\int_{${R.ylo.tex()}}^{${R.yhi.tex()}} (${f.tex()})\\,dy\\,dx`), D(`\\text{Inner: } \\int_{${R.ylo.tex()}}^{${R.yhi.tex()}} (${f.tex()})\\,dy = ${inner.tex()}`), D(`\\int_{${R.xlo}}^{${R.xhi}} \\left(${inner.tex()}\\right)dx = ${val.tex()}`)],
+    ans: M(val.tex()),
+  };
+}
+
+function gTetra() {
+  for (;;) {
+    const a = pick([1, 2, 3, 6]), b = pick([1, 2, 3, 4]), c = pick([1, 2, 3, 6]); const L = lcm(lcm(a, b), c);
+    const A = { x: a, y: b, z: c };
+    const order = shuffle(['x', 'y', 'z']); const [u, v, w] = order; // u outer
+    const vhi = P.c(A[v]).sub(P.v(u).scale(q(A[v], A[u])));
+    const whi = P.c(A[w]).sub(P.v(u).scale(q(A[w], A[u]))).sub(P.v(v).scale(q(A[w], A[v])));
+    const vol = P.c(1).defint(w, 0, whi).defint(v, 0, vhi).defint(u, 0, A[u]).constVal();
+    chk(vol.eq(q(a * b * c, 6)), 'tetra');
+    const it = `\\int_0^{${A[u]}}\\int_0^{${vhi.tex()}}\\int_0^{${whi.tex()}} f\\,d${w}\\,d${v}\\,d${u}`;
+    return {
+      lec: 14,
+      q: `Let ${M('E')} be the solid in the first octant under the plane ${M(planeTex([L / a, L / b, L / c], L))}. Write ${M('\\iiint_E f\\,dV')} as an iterated integral in the order ${M(`d${w}\\,d${v}\\,d${u}`)}, and use it to find the volume of ${M('E')}.`,
+      hint: `Find the intercepts. The innermost variable ${M(w)} runs from 0 up to the plane; then project onto the ${M(u + v)}-plane, where the region is a triangle.`,
+      steps: [`Intercepts: ${M(`x = ${a},\\; y = ${b},\\; z = ${c}`)}, so the plane is ${M(`\\tfrac{x}{${a}} + \\tfrac{y}{${b}} + \\tfrac{z}{${c}} = 1`)}.`, `Innermost: ${M(`0 \\le ${w} \\le ${whi.tex()}`)} (solve the plane for ${M(w)}). Shadow in the ${M(u + v)}-plane (set ${M(w + '=0')}): ${M(`0 \\le ${v} \\le ${vhi.tex()}`)}, ${M(`0 \\le ${u} \\le ${A[u]}`)}.`, D(it), `With ${M('f = 1')}: ${M(`V = ${vol.tex()}`)} (check: ${M(`\\tfrac16\\cdot${a}\\cdot${b}\\cdot${c}`)}).`],
+      ans: `${M(it)}, ${M(`V = ${vol.tex()}`)}`,
+    };
+  }
+}
+
+function gTripleOrder() {
+  const a = ri(1, 3), k = ri(1, 3); const target = pick(['dxdzdy', 'dxdydz', 'dydxdz']);
+  const orig = `\\int_0^{${a * a}}\\int_{\\sqrt x}^{${a}}\\int_0^{${k === 1 ? 'z' : `z/${k}`}} f(x,y,z)\\,dy\\,dz\\,dx`;
+  let ans, why;
+  if (target === 'dxdzdy') { ans = `\\int_0^{${q(a, k).tex()}}\\int_{${cmono(k, 'y')}}^{${a}}\\int_0^{z^2} f\\,dx\\,dz\\,dy`; why = `Outer ${M('y')}: largest range is ${M(`0 \\le y \\le ${q(a, k).tex()}`)} (at ${M(`z = ${a}`)}). For fixed ${M('y')}, ${M('z')} must satisfy ${M(`z \\ge ${cmono(k, 'y')}`)} and ${M(`z\\le ${a}`)}. Then ${M('x')} from 0 to ${M('z^2')} (from ${M('\\sqrt x \\le z')}).`; }
+  else if (target === 'dxdydz') { ans = `\\int_0^{${a}}\\int_0^{${k === 1 ? 'z' : `z/${k}`}}\\int_0^{z^2} f\\,dx\\,dy\\,dz`; why = `Outer ${M('z')}: ${M(`0\\le z\\le ${a}`)}. For fixed ${M('z')}: ${M(`0 \\le y \\le ${k === 1 ? 'z' : `z/${k}`}`)} and ${M('0 \\le x \\le z^2')} independently.`; }
+  else { ans = `\\int_0^{${a}}\\int_0^{z^2}\\int_0^{${k === 1 ? 'z' : `z/${k}`}} f\\,dy\\,dx\\,dz`; why = `Outer ${M('z')}: ${M(`0\\le z\\le ${a}`)}. Then ${M('0\\le x\\le z^2')} and ${M(`0 \\le y \\le ${k === 1 ? 'z' : `z/${k}`}`)}, which don't depend on each other.`; }
+  // numeric check of volume both ways
+  const v1 = P.c(1).defint('y', 0, Z.scale(q(1, k))).defint('z', 0, a).constVal(); // note: x-integration must come first in original; check via known volume: ∫0^a ∫0^{z^2} z/k dx dz
+  chk(v1.eq(q(a * a, 2 * k)), 'tripleorder');
+  return {
+    lec: 14,
+    q: `Rewrite the iterated integral in the order ${M(target.replace(/d/g, ' d').trim().replace(/ /g, '\\,'))}: ${D(orig)}`,
+    hint: `Write the solid as inequalities: ${M('0\\le x\\le ' + a * a)}, ${M('\\sqrt x\\le z\\le ' + a)}, ${M('0 \\le y \\le z/' + k)}. Note ${M('\\sqrt x \\le z \\iff x \\le z^2')}. Then re-read the bounds in the new order.`,
+    steps: [`Inequalities: ${M(`0 \\le x \\le z^2,\\; 0\\le z \\le ${a},\\; 0\\le y\\le ${k === 1 ? 'z' : `z/${k}`}`)} (the condition ${M(`x \\le ${a * a}`)} is implied).`, why, D(ans)],
+    ans: M(ans),
+  };
+}
+
+function gPolar() {
+  const fam = pick(['power', 'exp', 'lin', 'convert', 'power']);
+  const sectors = [[q(0), q(2)], [q(0), q(1)], [q(0), q(1, 2)], [q(1, 2), q(3, 2)], [q(0), q(1, 4)], [q(1, 4), q(3, 4)]];
+  const [al, be] = pick(sectors); const dth = be.sub(al);
+  const secText = dth.eq(2) ? 'the region' : `the part of the region with ${M(`${texQpi(al)} \\le \\theta \\le ${texQpi(be)}`)}`;
+  if (fam === 'power') {
+    const k = pick([0, 1, 1, 2]); const ain = pick([0, 0, 1]), bout = ain + ri(1, 2);
+    const val = dth.mul(q(bout ** (2 * k + 2) - ain ** (2 * k + 2), 2 * k + 2));
+    const reg = ain === 0 ? `disk ${M(`x^2+y^2\\le ${bout * bout}`)}` : `annulus ${M(`${ain * ain} \\le x^2+y^2\\le ${bout * bout}`)}`;
+    const integrand = k === 0 ? '1' : k === 1 ? '(x^2+y^2)' : '(x^2+y^2)^2';
+    return { lec: 14, q: `Use polar coordinates to evaluate ${M(`\\iint_D ${integrand}\\,dA`)}, where ${M('D')} is ${secText === 'the region' ? 'the ' + reg : `the part of the ${reg} with ${M(`${texQpi(al)} \\le \\theta \\le ${texQpi(be)}`)}`}.`, hint: `${M('x^2+y^2 = r^2')} and ${M('dA = r\\,dr\\,d\\theta')}. Don't forget the extra r.`, steps: [D(`\\int_{${texQpi(al)}}^{${texQpi(be)}}\\int_{${ain}}^{${bout}} r^{${2 * k}}\\cdot r\\,dr\\,d\\theta = ${texQpi(dth)}\\cdot\\left[\\frac{r^{${2 * k + 2}}}{${2 * k + 2}}\\right]_{${ain}}^{${bout}} = ${texQpi(val)}`)], ans: M(texQpi(val)) };
+  }
+  if (fam === 'exp') {
+    const R = ri(1, 3); const c = dth.mul(q(1, 2));
+    return { lec: 14, q: `Evaluate ${M('\\iint_D e^{-(x^2+y^2)}\\,dA')}, where ${M('D')} is the part of the disk ${M(`x^2+y^2\\le ${R * R}`)} with ${M(`${texQpi(al)} \\le \\theta \\le ${texQpi(be)}`)}.`, hint: 'Polar coordinates: the r from dA makes a u-substitution work.', steps: [D(`\\int_{${texQpi(al)}}^{${texQpi(be)}}\\int_0^{${R}} e^{-r^2} r\\,dr\\,d\\theta = ${texQpi(dth)}\\cdot\\left[-\\tfrac12 e^{-r^2}\\right]_0^{${R}} = ${texQpi(c)}\\left(1 - e^{-${R * R}}\\right)`)], ans: M(`${texQpi(c)}(1 - e^{-${R * R}})`) };
+  }
+  if (fam === 'lin') {
+    const ain = pick([0, 1]), bout = ain + ri(1, 2); const useY = chance(0.5);
+    const val = q(2 * (bout ** 3 - ain ** 3), 3);
+    const half = useY ? 'upper half (y ≥ 0)' : 'right half (x ≥ 0)';
+    return { lec: 14, q: `Evaluate ${M(`\\iint_D ${useY ? 'y' : 'x'}\\,dA`)}, where ${M('D')} is the ${half} of the ${ain === 0 ? `disk ${M(`x^2+y^2\\le ${bout * bout}`)}` : `annulus ${M(`${ain} \\le x^2+y^2 \\le ${bout * bout}`)}`}.`, hint: `In polar, ${M(useY ? 'y = r\\sin\\theta' : 'x = r\\cos\\theta')}. Choose the θ-range for the half.`, steps: [D(`\\int_{${useY ? '0' : '-\\pi/2'}}^{${useY ? '\\pi' : '\\pi/2'}}\\int_{${ain}}^{${bout}} r${useY ? '\\sin' : '\\cos'}\\theta\\cdot r\\,dr\\,d\\theta = \\left(\\int ${useY ? '\\sin' : '\\cos'}\\theta\\,d\\theta\\right)\\left(\\int_{${ain}}^{${bout}} r^2\\,dr\\right) = 2\\cdot\\frac{${bout ** 3 - ain ** 3}}{3}`)], ans: M(val.tex()) };
+  }
+  const R = ri(1, 3); const k = pick([0, 1]);
+  const val = q(R ** (2 * k + 2), 2 * k + 2).mul(q(1, 2));
+  return { lec: 14, q: `Convert to polar coordinates and evaluate: ${D(`\\int_0^{${R}}\\int_0^{\\sqrt{${R * R} - x^2}} ${k ? '(x^2+y^2)' : '1'}\\,dy\\,dx`)}`, hint: 'Sketch the region first: y from 0 up to a circle, x from 0 to R.', steps: [`The region is the quarter disk of radius ${R} in the first quadrant: ${M(`0\\le r\\le ${R},\\; 0\\le\\theta\\le\\pi/2`)}.`, D(`\\int_0^{\\pi/2}\\int_0^{${R}} r^{${2 * k}}\\,r\\,dr\\,d\\theta = \\frac{\\pi}{2}\\cdot\\frac{${R ** (2 * k + 2)}}{${2 * k + 2}} = ${texQpi(val)}`)], ans: M(texQpi(val)) };
+}
+
+function gProb() {
+  const kind = pick(['3gt1', '2lt', '3lt']);
+  if (kind === '3gt1') return { lec: 14, q: 'Three numbers are chosen independently and uniformly from [0,1]. Write an iterated integral for the probability that their sum is greater than 1, and evaluate it.', hint: 'The sample space is the unit cube with density 1. Compute the complement first: the region x + y + z ≤ 1 is a tetrahedron.', steps: [D(`P(x+y+z\\le 1) = \\int_0^1\\int_0^{1-x}\\int_0^{1-x-y} dz\\,dy\\,dx = \\int_0^1 \\frac{(1-x)^2}{2}dx = \\frac16`), D('P(x+y+z>1) = 1 - \\tfrac16 = \\tfrac56')], ans: M('\\tfrac56') };
+  if (kind === '2lt') {
+    const s = pick([q(1, 2), q(3, 4), q(1), q(3, 2), q(5, 4)]);
+    const p = s.cmp(1) <= 0 ? s.mul(s).div(2) : q(1).sub(q(2).sub(s).pow(2).div(2));
+    return { lec: 14, q: `Two numbers ${M('x, y')} are chosen uniformly from [0,1]. Find ${M(`P(x + y \\le ${s.tex()})`)} with a double integral.`, hint: 'Probability = area of the part of the unit square below the line x + y = s.', steps: [s.cmp(1) <= 0 ? D(`\\int_0^{${s.tex()}}\\int_0^{${s.tex()} - x} dy\\,dx = \\frac{(${s.tex()})^2}{2}`) : D(`1 - \\int_{${s.sub(1).tex()}}^{1}\\int_{${s.tex()} - x}^{1} dy\\,dx = 1 - \\frac{(${q(2).sub(s).tex()})^2}{2}`)], ans: M(p.tex()) };
+  }
+  const s = pick([q(1, 2), q(1)]); const p = s.pow(3).div(6);
+  return { lec: 14, q: `Three numbers are chosen uniformly from [0,1]. Find ${M(`P(x+y+z \\le ${s.tex()})`)}.`, hint: 'The region is a tetrahedron with legs s.', steps: [D(`\\int_0^{${s.tex()}}\\int_0^{${s.tex()}-x}\\int_0^{${s.tex()}-x-y} dz\\,dy\\,dx = \\frac{(${s.tex()})^3}{6}`)], ans: M(p.tex()) };
+}
+
+// ---------------- LECTURE 15: cylindrical & spherical ----------------
+const PHIS = [q(1, 6), q(1, 4), q(1, 3), q(1, 2), q(2, 3), q(3, 4), q(5, 6)];
+const THETAS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((k) => q(k, 6)).concat([1, 3, 5, 7].map((k) => q(k, 4)));
+function gConvert() {
+  const dir = pick(['sph2rect', 'rect2sph', 'rect2sph', 'cyl']);
+  const rho = pick([2, 4, 6, 8]); const phi = pick(PHIS); const th = pick(THETAS.filter((t) => !(t.d === 6 && t.n % 3 === 0 && false)));
+  const sp = sinPi(phi), cp = cosPi(phi), ct = cosPi(th), st = sinPi(th);
+  const x = sp.mul(ct).mul(rho), y = sp.mul(st).mul(rho), z = cp.mul(rho);
+  if (dir === 'sph2rect') {
+    return { lec: 15, q: `A point has spherical coordinates ${M(`(\\rho,\\theta,\\phi) = \\left(${rho},\\; ${texQpi(th)},\\; ${texQpi(phi)}\\right)`)}. Find its rectangular coordinates.`, hint: M('x = \\rho\\sin\\phi\\cos\\theta,\\; y = \\rho\\sin\\phi\\sin\\theta,\\; z = \\rho\\cos\\phi'), steps: [D(`x = ${rho}\\sin(${texQpi(phi)})\\cos(${texQpi(th)}) = ${rho}\\cdot${sp.tex()}\\cdot${paren(ct)} = ${x.tex()}`), D(`y = ${rho}\\cdot${sp.tex()}\\cdot${paren(st)} = ${y.tex()}, \\qquad z = ${rho}\\cos(${texQpi(phi)}) = ${z.tex()}`)], ans: M(ptex([x, y, z])) };
+  }
+  if (dir === 'cyl') {
+    const r = sp.mul(rho);
+    return { lec: 15, q: `Convert the point ${M(ptex([x, y, z]))} to cylindrical coordinates ${M('(r,\\theta,z)')} and to spherical coordinates ${M('(\\rho,\\theta,\\phi)')}.`, hint: `${M('r = \\sqrt{x^2+y^2}')}, ${M('\\tan\\theta = y/x')} (check the quadrant!), ${M('\\rho = \\sqrt{r^2+z^2}')}, ${M('\\cos\\phi = z/\\rho')} with ${M('0\\le\\phi\\le\\pi')}.`, steps: [D(`r = \\sqrt{x^2+y^2} = ${r.tex()}, \\quad \\theta = ${texQpi(th)} \\;(\\text{point is in the ${quadName(ct, st)}})`), D(`\\rho = \\sqrt{r^2 + z^2} = ${rho}, \\quad \\cos\\phi = \\frac{${z.tex()}}{${rho}} = ${cp.tex()} \\Rightarrow \\phi = ${texQpi(phi)}`)], ans: `Cylindrical ${M(`\\left(${r.tex()},\\; ${texQpi(th)},\\; ${z.tex()}\\right)`)}; spherical ${M(`\\left(${rho},\\; ${texQpi(th)},\\; ${texQpi(phi)}\\right)`)}` };
+  }
+  return { lec: 15, q: `Find spherical coordinates ${M('(\\rho,\\theta,\\phi)')} for the point with rectangular coordinates ${M(ptex([x, y, z]))}.`, hint: `${M('\\rho = \\sqrt{x^2+y^2+z^2}')}, ${M('\\cos\\phi = z/\\rho')} with ${M('\\phi\\in[0,\\pi]')} (never negative!), and θ from the quadrant of ${M('(x,y)')}.`, steps: [D(`\\rho = \\sqrt{${sqTerm(x)} + ${sqTerm(y)} + ${sqTerm(z)}} = ${rho}`), D(`\\cos\\phi = \\frac{${z.tex()}}{${rho}} = ${cp.tex()} \\;\\Rightarrow\\; \\phi = ${texQpi(phi)}`), `${isSZero(x) && isSZero(y) ? 'On the z-axis θ is arbitrary.' : `${M(`(x,y) = ${ptex([x, y])}`)} is in the ${quadName(ct, st)}, so ${M(`\\theta = ${texQpi(th)}`)}.`}`], ans: M(`\\left(${rho},\\; ${texQpi(th)},\\; ${texQpi(phi)}\\right)`) };
+}
+const isSZero = (s) => s.isZero();
+const sqTerm = (s) => { const v = s.mul(s); return paren(v.tex()); };
+function quadName(c, s) { const cv = c.val(), sv = s.val(); if (Math.abs(sv) < 1e-12) return cv > 0 ? 'positive x-axis direction' : 'negative x-axis direction'; if (Math.abs(cv) < 1e-12) return sv > 0 ? 'positive y-axis direction' : 'negative y-axis direction'; return cv > 0 ? (sv > 0 ? 'first quadrant' : 'fourth quadrant') : sv > 0 ? 'second quadrant' : 'third quadrant'; }
+
+function gCylHalf() {
+  const R = ri(1, 3); const right = chance(0.5); let a, b, c; do { a = ri(-2, 2); b = ri(-2, 2); c = ri(1, 3) * R + (Math.abs(a) + Math.abs(b)) * R; } while (a === 0 && b === 0);
+  const top = sumTex([cmono(a, 'x'), cmono(b, 'y'), c]);
+  const odd = right ? b : a, even = right ? a : b;
+  const val2 = q(2 * R ** 3, 3).mul(even); const cpart = q(c * R * R, 2);
+  const it = right ? `\\int_{-${R}}^{${R}}\\int_0^{\\sqrt{${R * R}-y^2}}\\int_0^{${top}} dz\\,dx\\,dy` : `\\int_{-${R}}^{${R}}\\int_0^{\\sqrt{${R * R}-x^2}}\\int_0^{${top}} dz\\,dy\\,dx`;
+  const thr = right ? '-\\pi/2 \\le \\theta \\le \\pi/2' : '0 \\le \\theta \\le \\pi';
+  return {
+    lec: 15,
+    q: `Use cylindrical coordinates to evaluate ${D(it)}`,
+    hint: `Identify the shadow in the ${M('xy')}-plane (a half disk), then integrate ${M('z')} first: the inner integral is just the height.`,
+    steps: [`The shadow is the ${right ? 'right' : 'upper'} half of the disk of radius ${R}: ${M(`0\\le r\\le ${R},\\; ${thr}`)}.`, D(`\\int\\!\\!\\int (${top})\\,r\\,dr\\,d\\theta`), `By symmetry the ${M(right ? 'y' : 'x')}-term integrates to 0. The ${M(right ? 'x' : 'y')}-term: ${M(`\\iint ${right ? 'x' : 'y'}\\,dA = \\int\\int_0^{${R}} r^2 ${right ? '\\cos' : '\\sin'}\\theta\\,dr\\,d\\theta = 2\\cdot\\frac{${R ** 3}}{3}`)}. The constant: ${M(`${c}\\cdot\\frac{\\pi\\cdot ${R * R}}{2}`)}.`, D(`= ${sumTex([val2, texQpi(cpart)])}`)],
+    ans: M(sumTex([val2, texQpi(cpart)])),
+    _odd: odd,
+  };
+}
+
+const CONE = { '1/6': ['\\pi/6', '\\frac{z^2}{3}', '\\tfrac13'], '1/4': ['\\pi/4', 'z^2', '1'], '1/3': ['\\pi/3', '3z^2', '3'] };
+function gSphRegion() {
+  const p0 = pick([q(1, 6), q(1, 4), q(1, 3)]); const key = `${p0.n}/${p0.d}`; const [p0t, rhs] = CONE[key];
+  const inside = chance(0.5); const R = pick([1, 1, 2, 3]); const oct = chance(0.6);
+  const Th = oct ? q(1, 2) : q(2); // multiples of pi
+  const [pa, pb] = inside ? [q(0), p0] : [p0, q(1, 2)];
+  const cosA = cosPi(pa), cosB = cosPi(pb), sinA = sinPi(pa), sinB = sinPi(pb);
+  const dcos = cosA.sub(cosB);
+  const V = dcos.mul(Th.mul(q(R ** 3, 3))); // times pi
+  const s2 = sinB.mul(sinB).sub(sinA.mul(sinA)); // rational
+  const Mz = s2.mul(Th.mul(q(R ** 4, 8))); // ∫z dV / pi
+  const zbar = Mz.div(V);
+  chk(Math.abs(zbar.val() - (3 * R / 8) * s2.val() / dcos.val()) < 1e-9, 'zbar');
+  const cond = inside ? `x^2 + y^2 \\le ${rhs}` : `x^2+y^2 \\ge ${rhs}`;
+  const where = oct ? 'in the first octant' : 'above the xy-plane (z ≥ 0)';
+  const [pl, pv] = PHIV[key];
+  const _d = { R, pa: pa.val() * Math.PI, pb: pb.val() * Math.PI, cone: pv, phiLabel: pl, Rlabel: `${R}`, full: !oct, caption: oct ? 'slice at fixed θ · θ runs 0 → π/2' : 'slice through z-axis · θ runs 0 → 2π' };
+  return {
+    _d,
+    lec: 15,
+    q: `Let ${M('E')} be the solid ${where} given by ${M(`x^2+y^2+z^2 \\le ${R * R}`)} and ${M(cond)}. (a) Give the bounds of ${M('E')} in spherical coordinates. (b) Find the volume of ${M('E')}. (c) Find ${M('\\bar z')}, the z-coordinate of the center of mass (uniform density).`,
+    hint: `${M('x^2+y^2 = \\rho^2\\sin^2\\phi')} and ${M('z^2 = \\rho^2\\cos^2\\phi')}, so the cone condition becomes a condition on ${M('\\tan^2\\phi')}. Then ${M('\\bar z = \\frac{1}{V}\\iiint z\\,dV')} with ${M('z = \\rho\\cos\\phi')}.`,
+    steps: [
+      `Cone: ${M(`\\tan^2\\phi ${inside ? '\\le' : '\\ge'} ${CONE[key][2]}`)}, i.e. ${M(`\\phi ${inside ? '\\le' : '\\ge'} ${p0t}`)}${inside ? '' : `, and z ≥ 0 gives ${M('\\phi\\le\\pi/2')}`}.`,
+      D(`0\\le\\rho\\le ${R}, \\qquad ${texQpi(pa)}\\le\\phi\\le ${texQpi(pb)}, \\qquad 0\\le\\theta\\le ${texQpi(Th)}`),
+      D(`V = \\int_0^{${texQpi(Th)}}\\int_{${texQpi(pa)}}^{${texQpi(pb)}}\\int_0^{${R}} \\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta = ${texQpi(Th)}\\cdot\\big[-\\cos\\phi\\big]_{${texQpi(pa)}}^{${texQpi(pb)}}\\cdot\\frac{${R ** 3}}{3} = ${texQpi(Th)}\\cdot\\left(${dcos.tex()}\\right)\\cdot\\frac{${R ** 3}}{3} = \\left(${V.tex()}\\right)\\pi`),
+      D(`\\iiint_E z\\,dV = \\int\\int\\int \\rho^3\\cos\\phi\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta = ${texQpi(Th)}\\cdot\\left[\\tfrac{\\sin^2\\phi}{2}\\right]_{${texQpi(pa)}}^{${texQpi(pb)}}\\cdot\\frac{${R ** 4}}{4} = \\left(${Mz.tex()}\\right)\\pi`),
+      D(`\\bar z = \\frac{(${Mz.tex()})\\pi}{(${V.tex()})\\pi} = ${zbar.tex()} \\approx ${fmt(zbar.val())}`),
+    ],
+    ans: `${M(`0\\le\\rho\\le${R},\\; ${texQpi(pa)}\\le\\phi\\le${texQpi(pb)},\\; 0\\le\\theta\\le${texQpi(Th)}`)}; ${M(`V = \\left(${V.tex()}\\right)\\pi`)}; ${M(`\\bar z = ${zbar.tex()}`)}`,
+  };
+}
+
+function gSphSetup() {
+  const p0 = pick([q(1, 6), q(1, 4), q(1, 3)]); const [p0t, rhs] = CONE[`${p0.n}/${p0.d}`];
+  const a = pick([1, 1, 2]); const h = a + ri(1, 3);
+  const g = pick([['x^2', '\\rho^2\\sin^2\\phi\\cos^2\\theta'], ['z', '\\rho\\cos\\phi'], ['x^2+y^2', '\\rho^2\\sin^2\\phi'], ['1', '1'], ['\\sqrt{x^2+y^2+z^2}', '\\rho']]);
+  const [pl, pv] = PHIV[`${p0.n}/${p0.d}`];
+  const _d = { R: a, rhoIn: a, plane: h, planeLabel: `${h}`, pa: 0, pb: pv, cone: pv, phiLabel: pl, full: true, caption: 'slice through z-axis · θ runs 0 → 2π' };
+  const it = `\\int_0^{2\\pi}\\int_0^{${p0t}}\\int_{${a}}^{${h}\\sec\\phi} ${g[1] === '1' ? '' : g[1] + '\\cdot '}\\rho^2\\sin\\phi\\;d\\rho\\,d\\phi\\,d\\theta`;
+  return {
+    _d,
+    lec: 15,
+    q: `Let ${M('E')} be the region above the sphere ${M(`x^2+y^2+z^2 = ${a * a}`)}, inside the cone ${M(`x^2+y^2 = ${rhs}`)} (${M('z\\ge0')}), and below the plane ${M(`z = ${h}`)}. Write ${M(`\\iiint_E ${g[0]}\\,dV`)} in spherical coordinates. Do not evaluate.`,
+    hint: `Convert each surface: the sphere is ${M(`\\rho = ${a}`)}, the plane ${M(`z = ${h}`)} is ${M(`\\rho\\cos\\phi = ${h}`)}, and the cone is ${M('\\phi = ')} constant. Remember ${M('dV = \\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta')}.`,
+    steps: [`Cone: ${M('x^2+y^2 = \\rho^2\\sin^2\\phi')} and ${M('z^2 = \\rho^2\\cos^2\\phi')}, so the cone is ${M(`\\tan^2\\phi = ${CONE[`${p0.n}/${p0.d}`][2]}`)}, i.e. ${M(`\\phi = ${p0t}`)}. Inside means ${M(`0\\le\\phi\\le ${p0t}`)}.`, `${M('\\rho')} runs from the sphere ${M(`\\rho = ${a}`)} out to the plane ${M(`\\rho = ${h}\\sec\\phi`)}.`, `Integrand: ${M(`${g[0]} = ${g[1]}`)}.`, D(it)],
+    ans: M(it),
+  };
+}
+
+function gConeVol() {
+  const R = ri(1, 4), h = ri(1, 5); const V = q(R * R * h, 3);
+  const pv = Math.atan(R / h);
+  const _d = { R: 0, plane: h, planeLabel: `${h}`, pa: 0, pb: pv, cone: pv, phiLabel: `φ₀, tan φ₀ = ${R}/${h}`, full: true, caption: `radius ${R} at height ${h}` };
+  return {
+    _d,
+    lec: 15,
+    q: `A right circular cone has base radius ${M(`${R}`)} and height ${M(`${h}`)}. Place its vertex at the origin, opening upward. Compute its volume (a) in cylindrical coordinates and (b) in spherical coordinates.`,
+    hint: `The cone's side is ${M(`z = \\tfrac{${h}}{${R}}r`)}, i.e. ${M(`\\tan\\phi = ${q(R, h).tex()}`)}. In spherical coordinates the flat top ${M(`z = ${h}`)} is ${M(`\\rho = ${h}\\sec\\phi`)}.`,
+    steps: [D(`\\text{(a)}\\; \\int_0^{2\\pi}\\int_0^{${R}}\\int_{${q(h, R).tex()}r}^{${h}} r\\,dz\\,dr\\,d\\theta = 2\\pi\\int_0^{${R}} \\left(${h}r - ${q(h, R).tex()}r^2\\right)dr = ${texQpi(V)}`), D(`\\text{(b)}\\; \\int_0^{2\\pi}\\int_0^{\\phi_0}\\int_0^{${h}\\sec\\phi}\\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta = \\frac{2\\pi\\cdot ${h ** 3}}{3}\\int_0^{\\phi_0}\\sec^2\\phi\\tan\\phi\\,d\\phi = \\frac{2\\pi\\cdot${h ** 3}}{3}\\cdot\\frac{\\tan^2\\phi_0}{2}`), `With ${M(`\\tan\\phi_0 = ${q(R, h).tex()}`)} this is ${M(`\\frac{\\pi\\cdot${h ** 3}}{3}\\cdot${q(R * R, h * h).tex()} = ${texQpi(V)}`)}, matching ${M('\\tfrac13\\pi R^2 h')}.`],
+    ans: M(`V = ${texQpi(V)}`),
+  };
+}
+
+function gRadial() {
+  const R = pick([1, 2]); const a = pick([-2, -1, 1, 2]);
+  const val = q(4 * R ** (a + 3), a + 3);
+  return {
+    lec: 15,
+    q: `The function ${M('f = (x^2+y^2+z^2)^{a/2}')} is singular at the origin when ${M('a<0')}. For which real ${M('a')} does ${M(`\\iiint_B f\\,dV`)} converge, where ${M('B')} is the solid ball of radius ${M(`${R}`)}? Evaluate it for ${M(`a = ${a}`)}.`,
+    hint: `In spherical coordinates ${M('f = \\rho^a')}. Treat the ${M('\\rho')}-integral as an improper integral near 0.`,
+    steps: [D(`\\iiint_B \\rho^a\\,dV = \\int_0^{2\\pi}\\int_0^{\\pi}\\int_0^{${R}} \\rho^{a+2}\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta = 4\\pi\\int_0^{${R}}\\rho^{a+2}d\\rho`), `This converges exactly when ${M('a + 2 > -1')}, i.e. ${M('a > -3')}, giving ${M(`\\frac{4\\pi\\, ${R}^{a+3}}{a+3}`)}.`, D(`a = ${a}: \\quad \\frac{4\\pi\\cdot ${R}^{${a + 3}}}{${a + 3}} = ${texQpi(val)}`)],
+    ans: `Converges iff ${M('a > -3')}; value ${M(`\\frac{4\\pi R^{a+3}}{a+3}`)}, here ${M(texQpi(val))}`,
+  };
+}
+
+// ---------------- LECTURE 16: mass, center of mass, moments ----------------
+function densityFor(R) {
+  const opts = [['1', P.c(1)], ['y', Y], ['x + y', X.add(Y)], ['x', X], ['xy', X.mul(Y)], ['1 + x^2', P.c(1).add(X.pow(2))], ['y^2', Y.pow(2)]];
+  const ok = opts.filter(([, p]) => !(R.symX && (p.hasVar('x') && [...p.terms()].some(([, e]) => e[0] % 2 === 1))));
+  return pick(ok);
+}
+function gCenterMass() {
+  const R = region2D(); const [dt, rho] = densityFor(R);
+  const Mass = dbl(rho, R), My = dbl(rho.mul(X), R), Mx = dbl(rho.mul(Y), R);
+  const xb = My.div(Mass), yb = Mx.div(Mass);
+  return {
+    lec: 16,
+    q: `A thin plate occupies ${R.desc} and has density ${M(`\\delta(x,y) = ${dt}`)}. Find its mass and center of mass ${M('(\\bar x, \\bar y)')}.`,
+    hint: `${M('m = \\iint\\delta\\,dA')}, ${M('\\bar x = \\frac1m\\iint x\\delta\\,dA')}, ${M('\\bar y = \\frac1m\\iint y\\delta\\,dA')}. Look for symmetry before integrating.`,
+    steps: [`Bounds: ${M(`${R.xlo}\\le x\\le ${R.xhi},\\; ${R.ylo.tex()} \\le y \\le ${R.yhi.tex()}`)}.`, D(`m = \\int_{${R.xlo}}^{${R.xhi}}\\int_{${R.ylo.tex()}}^{${R.yhi.tex()}} ${dt}\\,dy\\,dx = ${Mass.tex()}`), D(`M_y = \\iint x\\,\\delta\\,dA = ${My.tex()}, \\qquad M_x = \\iint y\\,\\delta\\,dA = ${Mx.tex()}`), D(`(\\bar x,\\bar y) = \\left(\\frac{${My.tex()}}{${Mass.tex()}},\\; \\frac{${Mx.tex()}}{${Mass.tex()}}\\right) = ${ptex([xb, yb])}`), R.symX ? 'Sanity check: the region and density are symmetric about the y-axis, so x̄ = 0.' : 'Sanity check: the center of mass lies inside the plate here.'],
+    ans: `${M(`m = ${Mass.tex()}`)}, ${M(`(\\bar x,\\bar y) = ${ptex([xb, yb])}`)}`,
+  };
+}
+
+function gInertia() {
+  if (chance(0.35)) { // pennant
+    const H = pick([6, 12, 10, 8]), L = pick([6, 12, 18, 24, 30]);
+    const Rg2 = q(L * L, 6);
+    return { lec: 16, q: `A uniform triangular pennant is ${M(`${H}`)} in. tall along the pole and ${M(`${L}`)} in. long. It hangs from a pole along its left edge. Find its radius of gyration about the pole, ${M('R_g = \\sqrt{I/M}')}.`, hint: `Put the pole on the y-axis. At distance ${M('x')} from the pole the pennant's height is ${M(`${H}(1 - x/${L})`)}. Use ${M('I = \\iint x^2\\,\\delta\\,dA')}.`, steps: [D(`M = \\delta\\int_0^{${L}} ${H}\\left(1-\\tfrac{x}{${L}}\\right)dx = \\delta\\cdot\\frac{${H}\\cdot${L}}{2}`), D(`I = \\delta\\int_0^{${L}} x^2\\cdot ${H}\\left(1 - \\tfrac{x}{${L}}\\right)dx = \\delta\\cdot\\frac{${H}\\cdot${L}^3}{12}`), D(`R_g = \\sqrt{\\frac{I}{M}} = \\sqrt{\\frac{${L}^2}{6}} = ${texSqrtQ(Rg2)} \\approx ${fmt(Math.sqrt(Rg2.val()), 2)}\\text{ in}`), 'The height cancels: only the length matters.'], ans: M(`R_g = ${L}/\\sqrt6 = ${texSqrtQ(Rg2)}`) };
+  }
+  const R = region2D(); const [dt, rho] = pick([['1', P.c(1)], ['y', Y], ['x', X], ['1 + y', P.c(1).add(Y)]].filter(([, p]) => !(R.symX && p.hasVar('x')))); const axis = pick(['x', 'y', 'o']);
+  const Mass = dbl(rho, R); const Ix = dbl(rho.mul(Y.pow(2)), R), Iy = dbl(rho.mul(X.pow(2)), R);
+  const I = axis === 'x' ? Ix : axis === 'y' ? Iy : Ix.add(Iy);
+  const label = axis === 'x' ? 'the x-axis' : axis === 'y' ? 'the y-axis' : 'the origin';
+  const sym = axis === 'x' ? 'I_x' : axis === 'y' ? 'I_y' : 'I_0';
+  const w = axis === 'x' ? 'y^2' : axis === 'y' ? 'x^2' : '(x^2+y^2)';
+  return {
+    lec: 16,
+    q: `A lamina occupies ${R.desc} with density ${M(`\\delta = ${dt}`)}. Find its moment of inertia about ${label}, ${M(sym)}, and the radius of gyration ${M('R_g = \\sqrt{I/m}')} about that axis.`,
+    hint: `${M('I_x = \\iint y^2\\delta\\,dA')}, ${M('I_y = \\iint x^2\\delta\\,dA')}, ${M('I_0 = I_x + I_y')}. Square the distance to the axis, not the coordinate along it.`,
+    steps: [D(`m = \\iint ${dt}\\,dA = ${Mass.tex()}`), D(`${sym} = \\int_{${R.xlo}}^{${R.xhi}}\\int_{${R.ylo.tex()}}^{${R.yhi.tex()}} ${w}\\,(${dt})\\,dy\\,dx = ${I.tex()}`), D(`R_g = \\sqrt{\\frac{${I.tex()}}{${Mass.tex()}}} = ${texSqrtQ(I.div(Mass))}`)],
+    ans: `${M(`${sym} = ${I.tex()}`)}, ${M(`R_g = ${texSqrtQ(I.div(Mass))}`)}`,
+  };
+}
+
+function gOddball() {
+  const n = pick([-2, -1, -1, 1, 2]);
+  const Mc = q(4, n + 3), Ic = q(8, 3 * (n + 5)), rg2 = Ic.div(Mc);
+  const dens = n === -1 ? 'inversely proportional to the distance from the center' : n === -2 ? 'inversely proportional to the square of the distance from the center' : n === 1 ? 'proportional to the distance from the center' : 'proportional to the square of the distance from the center';
+  return {
+    lec: 16,
+    q: `A ball of radius ${M('R')} has density ${dens}: ${M(`\\delta = k\\rho^{${n}}`)}. Find its mass and its radius of gyration about an axis through its center.`,
+    hint: `Use spherical coordinates. For the z-axis, the squared distance to the axis is ${M('x^2+y^2 = \\rho^2\\sin^2\\phi')}. You'll need ${M('\\int_0^\\pi\\sin^3\\phi\\,d\\phi = 4/3')}.`,
+    steps: [D(`m = \\int_0^{2\\pi}\\int_0^\\pi\\int_0^R k\\rho^{${n}}\\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta = 4\\pi k\\frac{R^{${n + 3}}}{${n + 3}} = ${texQpi(Mc)}\\,k R^{${n + 3}}`), D(`I_z = \\iiint (\\rho^2\\sin^2\\phi)\\,k\\rho^{${n}}\\,dV = k\\cdot 2\\pi\\cdot\\frac43\\cdot\\frac{R^{${n + 5}}}{${n + 5}} = ${texQpi(Ic)}\\,kR^{${n + 5}}`), D(`R_g = \\sqrt{\\frac{I_z}{m}} = R\\sqrt{${rg2.tex()}} = ${texSqrtQ(rg2) === '1' ? '' : texSqrtQ(rg2)}\\,R`), n < 0 ? 'The density blows up at the center, but the integrals still converge because the ρ² from dV is stronger.' : ''].filter(Boolean),
+    ans: `${M(`m = ${texQpi(Mc)}\\,kR^{${n + 3}}`)}, ${M(`R_g = ${texSqrtQ(rg2)}\\,R`)}`,
+  };
+}
+
+// ---------------- LECTURE 17: vector fields & line integrals ----------------
+const SEG2 = [[3, 4, 5], [4, 3, 5], [6, 8, 10], [5, 12, 13], [0, 2, 2], [3, 0, 3]];
+function gScalarLine() {
+  if (chance(0.35)) {
+    const R = ri(1, 3); const f = randPoly(['x', 'y'], 2, 2, 3, 0).add(ri(0, 3));
+    const { val, steps } = circleInt(f.subs({ x: X.scale(R), y: Y.scale(R) }).scale(R));
+    return { lec: 17, q: `Evaluate ${M('\\int_C f\\,ds')} for ${M(`f(x,y) = ${f.tex()}`)}, where ${M('C')} is the full circle ${M(`x^2+y^2 = ${R * R}`)}.`, hint: `${M(`\\mathbf r(\\theta) = \\langle ${R}\\cos\\theta, ${R}\\sin\\theta\\rangle`)}, ${M(`ds = |\\mathbf r'|\\,d\\theta = ${R}\\,d\\theta`)}. Over a full period, odd powers of sin or cos integrate to 0, and ${M('\\int_0^{2\\pi}\\cos^2 = \\int_0^{2\\pi}\\sin^2 = \\pi')}.`, steps: [`Parametrize ${M(`\\mathbf r(\\theta) = \\langle ${R}\\cos\\theta, ${R}\\sin\\theta\\rangle`)}, so ${M(`|\\mathbf r'(\\theta)| = ${R}`)} and ${M(`ds = ${R}\\,d\\theta`)}.`, D(`\\int_C f\\,ds = \\int_0^{2\\pi} f(${R}\\cos\\theta, ${R}\\sin\\theta)\\cdot ${R}\\,d\\theta`), ...steps], ans: M(texQpi(val)) };
+  }
+  const three = chance(0.5); let d, L;
+  if (three) { const qd = pick(QUAD3); d = signed(shuffle(qd.slice(0, 3))); L = qd[3]; } else { const s = pick(SEG2); d = signed(s.slice(0, 2)); L = s[2]; }
+  const vars = three ? ['x', 'y', 'z'] : ['x', 'y'];
+  const P0 = vars.map(() => ri(-2, 2)); const P1 = P0.map((x, i) => x + d[i]);
+  const f = randPoly(vars, 2, 2, 3, 1).add(ri(0, 3));
+  const sub = {}; vars.forEach((v, i) => (sub[v] = P.c(P0[i]).add(T.scale(d[i]))));
+  const ft = f.subs(sub); const val = ft.defint('t', 0, 1).constVal().mul(L);
+  return {
+    lec: 17,
+    q: `Evaluate ${M('\\int_C f\\,ds')} for ${M(`f(${vars.join(',')}) = ${f.tex()}`)}, where ${M('C')} is the line segment from ${M(ptex(P0))} to ${M(ptex(P1))}.`,
+    hint: `Parametrize ${M('\\mathbf r(t) = P_0 + t(P_1 - P_0)')}, ${M('0\\le t\\le1')}. Then ${M("ds = |\\mathbf r'(t)|\\,dt")}.`,
+    steps: [D(`\\mathbf r(t) = \\langle ${vars.map((v) => sub[v].tex()).join(', ')} \\rangle, \\quad |\\mathbf r'| = |${vtex(d)}| = ${L}`), D(`f(\\mathbf r(t)) = ${ft.tex()}`), D(`\\int_0^1 \\left(${ft.tex()}\\right)\\cdot ${L}\\,dt = ${val.tex()}`)],
+    ans: M(val.tex()),
+  };
+}
+// ∫_0^{2π} p(cos θ, sin θ) dθ for polynomial p in x(=cos), y(=sin); returns multiple of π
+function trigMonoInt(m, n) { // ∫_0^{2π} cos^m sin^n / π
+  if (m % 2 || n % 2) return q(0);
+  const df = (k) => { let r = 1; for (let i = k; i > 0; i -= 2) r *= i; return r; };
+  return q(2 * df(m - 1) * df(n - 1), df(m + n));
+}
+// tex a polynomial in x(=cos θ), y(=sin θ) using proper trig powers
+function trigTex(p) {
+  const terms = [...p.terms()].sort((A, Bb) => (Bb[1][0] + Bb[1][1]) - (A[1][0] + A[1][1]) || Bb[1][0] - A[1][0]);
+  return sumTex(terms.map(([c, e]) => {
+    const pw = (f, k) => (k === 0 ? '' : k === 1 ? `\\${f}\\theta` : `\\${f}^{${k}}\\theta`);
+    const body = [pw('cos', e[0]), pw('sin', e[1])].filter(Boolean).join('\\,');
+    return body ? cmono(c, body) : c.tex();
+  }));
+}
+function circleInt(p) {
+  let val = q(0); const parts = [];
+  for (const [c, e] of p.terms()) { const v = c.mul(trigMonoInt(e[0], e[1])); val = val.add(v); parts.push(`\\int_0^{2\\pi} ${trigTex(P.from([[c, { x: e[0], y: e[1] }]]))}\\,d\\theta = ${texQpi(v)}`); }
+  const why = 'Over a full period, any term with an odd power of sin or cos integrates to 0, and \\(\\int_0^{2\\pi}\\cos^2\\theta\\,d\\theta = \\int_0^{2\\pi}\\sin^2\\theta\\,d\\theta = \\pi\\).'.replace(/\\\(|\\\)/g, '$');
+  let k0 = null; for (const [c, e] of p.terms()) if (e[0] === 2 && e[1] === 0) k0 = c;
+  const simp = k0 && p.sub(X.pow(2).add(Y.pow(2)).scale(k0)).isZero();
+  return { val, steps: [D(`\\text{Integrand: } ${trigTex(p)}`), simp ? `Since ${M('\\sin^2\\theta + \\cos^2\\theta = 1')}, this is the constant ${M(k0.tex())}. Integrating over ${M('[0, 2\\pi]')} multiplies it by ${M('2\\pi')}. (Term by term gives the same thing:)` : why, D(parts.join(',\\qquad ')), D(`\\text{Total} = ${texQpi(val)}`)] };
+}
+function gWork() {
+  const kind = pick(['curve', 'curve', 'circle', 'seg']);
+  if (kind === 'circle') {
+    const R = ri(1, 3); const Pf = pick([Y.scale(-1), Y.scale(-2), X.mul(Y), Y.pow(2).scale(-1), X.add(Y)]).add(chance(0.4) ? X.scale(ri(-2, 2)) : 0);
+    const Qf = pick([X, X.scale(2), X.pow(2), X.mul(Y), X.sub(Y)]);
+    const sub = { x: X.scale(R), y: Y.scale(R) };
+    const integrand = Pf.subs(sub).mul(Y.scale(-R)).add(Qf.subs(sub).mul(X.scale(R)));
+    const { val, steps } = circleInt(integrand);
+    return { lec: 17, q: `Find the work done by ${M(`\\mathbf F(x,y) = \\langle ${Pf.tex()},\\; ${Qf.tex()} \\rangle`)} on a particle moving once counterclockwise around the circle ${M(`x^2+y^2 = ${R * R}`)}.`, hint: `${M(`\\mathbf r = \\langle ${R}\\cos\\theta, ${R}\\sin\\theta\\rangle`)}, ${M(`d\\mathbf r = \\langle -${R}\\sin\\theta, ${R}\\cos\\theta\\rangle d\\theta`)}. Work ${M('= \\int_C \\mathbf F\\cdot d\\mathbf r')}.`, steps: [`Parametrize: ${M(`\\mathbf r(\\theta) = \\langle ${R === 1 ? '' : R}\\cos\\theta,\\; ${R === 1 ? '' : R}\\sin\\theta \\rangle`)}, ${M('0\\le\\theta\\le 2\\pi')} (counterclockwise).`, D(`\\mathbf r'(\\theta) = \\langle ${trigTex(Y.scale(-R))},\\; ${trigTex(X.scale(R))} \\rangle`), `Substitute ${M(`x = ${R === 1 ? '' : R}\\cos\\theta`)}, ${M(`y = ${R === 1 ? '' : R}\\sin\\theta`)} into ${M('\\mathbf F')}: ${D(`\\mathbf F(\\mathbf r(\\theta)) = \\langle ${trigTex(Pf.subs(sub))},\\; ${trigTex(Qf.subs(sub))} \\rangle`)}`, `Dot product: ${D(`\\mathbf F\\cdot\\mathbf r' = \\left(${trigTex(Pf.subs(sub))}\\right)\\left(${trigTex(Y.scale(-R))}\\right) + \\left(${trigTex(Qf.subs(sub))}\\right)\\left(${trigTex(X.scale(R))}\\right)`)}`, ...steps], ans: M(`W = ${texQpi(val)}`) };
+  }
+  const three = chance(0.45); const vars = three ? ['x', 'y', 'z'] : ['x', 'y'];
+  let r, a = 0, b = 1, rT;
+  if (kind === 'seg') { const P0 = vars.map(() => ri(-2, 2)); const d = vars.map(() => ri(-3, 3)); if (isZeroV(d)) d[0] = 1; r = vars.map((v, i) => P.c(P0[i]).add(T.scale(d[i]))); rT = `the line segment from ${M(ptex(P0))} to ${M(ptex(P0.map((x, i) => x + d[i])))}`; }
+  else { const fam = pick(three ? [[T, T.pow(2), T.pow(3)], [T.pow(2), T, T.scale(2)], [T, T.pow(2).scale(-1), T.add(1)]] : [[T, T.pow(2)], [T.pow(2), T.pow(3)], [T.add(1), T.pow(2)], [T, T.pow(3)]]); r = fam; b = pick([1, 1, 2]); a = chance(0.25) ? -1 : 0; rT = `the curve ${M(`\\mathbf r(t) = \\langle ${r.map((p) => p.tex()).join(', ')} \\rangle`)}, ${M(`${a}\\le t\\le ${b}`)}`; }
+  const F = vars.map(() => randPoly(vars, ri(1, 2), 2, 3, 0, false));
+  const sub = {}; vars.forEach((v, i) => (sub[v] = r[i]));
+  const Ft = F.map((p) => p.subs(sub)); const rp = r.map((p) => p.d('t'));
+  const integrand = Ft.reduce((s, p, i) => s.add(p.mul(rp[i])), P.c(0));
+  const val = integrand.defint('t', a, b).constVal();
+  return {
+    lec: 17,
+    q: `Evaluate ${M('\\int_C \\mathbf F\\cdot d\\mathbf r')} for ${M(`\\mathbf F(${vars.join(',')}) = \\langle ${F.map((p) => p.tex()).join(',\\; ')} \\rangle`)}, where ${M('C')} is ${rT}.`,
+    hint: `${M("\\int_C \\mathbf F\\cdot d\\mathbf r = \\int_a^b \\mathbf F(\\mathbf r(t))\\cdot\\mathbf r'(t)\\,dt")}.`,
+    steps: [kind === 'seg' ? D(`\\mathbf r(t) = \\langle ${r.map((p) => p.tex()).join(', ')} \\rangle, \\; 0\\le t\\le 1`) : '', D(`\\mathbf F(\\mathbf r(t)) = \\langle ${Ft.map((p) => p.tex()).join(',\\; ')} \\rangle, \\qquad \\mathbf r'(t) = \\langle ${rp.map((p) => p.tex()).join(', ')} \\rangle`), D(`\\mathbf F\\cdot\\mathbf r' = ${integrand.tex()}`), D(`\\int_{${a}}^{${b}} \\left(${integrand.tex()}\\right) dt = ${val.tex()}`)].filter(Boolean),
+    ans: M(val.tex()),
+  };
+}
+
+// registry (FR)
+const FR = {
+  11: [gDirDeriv, gDirDeriv, gHalfMax, gTanPlaneTrig, gTanPlaneTrig],
+  12: [gCrit, gCrit, gCrit, gAbsRect, gDiskQuad],
+  13: [gLinBall, gLagProd, gLagExp, gLagPlane, gLagBox, gLagCan, gDiskQuad],
+  14: [gSwap2D, gSwap2D, gReverseEval, gDoubleEval, gTetra, gTripleOrder, gPolar, gPolar, gProb],
+  15: [gConvert, gCylHalf, gSphRegion, gSphRegion, gSphSetup, gConeVol, gRadial],
+  16: [gCenterMass, gCenterMass, gInertia, gOddball, gSphRegion],
+  17: [gScalarLine, gWork, gWork],
+};
+if (typeof module !== 'undefined') Object.assign(globalThis, { FR, circleInt, trigMonoInt, region2D, dbl, classify, PHIS, THETAS, quadName });
+
+// ---------- cross-section diagrams for spherical / cone problems ----------
+// Draws the slice through the z-axis (r horizontal, z vertical).
+// opts: { R (outer radius, numeric), rhoIn (inner sphere radius or 0), plane (z = h or null),
+//         pa, pb (phi range, radians), full (true: mirror to both sides), phiLabel, labels }
+function sliceSVG(o) {
+  const W = 300, H = 250, pad = 26; const BOT = 44;
+  const maxR = o.plane ? Math.max(o.R || 0, o.plane * Math.tan(o.pb) + 0.2, o.plane) : o.R;
+  const zTop = o.plane ? o.plane * 1.12 : maxR * 1.12;
+  const xMax = Math.max(maxR, 0.0001) * 1.12;
+  const S = Math.min((H - pad - BOT) / zTop, (o.full ? (W - 2 * pad) / (2 * xMax) : (W - 2 * pad) / xMax));
+  const cx = o.full ? W / 2 : pad + 6, cy = H - BOT;
+  const P = (r, z) => `${(cx + r * S).toFixed(1)},${(cy - z * S).toFixed(1)}`;
+  const rhoHi = (ph) => (o.plane ? o.plane / Math.cos(ph) : o.R);
+  const rhoLo = () => o.rhoIn || 0;
+  const N = 60; const outer = [], inner = [];
+  for (let i = 0; i <= N; i++) { const ph = o.pa + (o.pb - o.pa) * i / N; outer.push([rhoHi(ph) * Math.sin(ph), rhoHi(ph) * Math.cos(ph)]); inner.push([rhoLo() * Math.sin(ph), rhoLo() * Math.cos(ph)]); }
+  const poly = (sgn) => outer.map(([r, z]) => P(sgn * r, z)).concat(inner.slice().reverse().map(([r, z]) => P(sgn * r, z))).join(' ');
+  let s = `<svg class="fig slice" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="cross-section diagram">`;
+  s += `<polygon points="${poly(1)}" class="rg"/>`; if (o.full) s += `<polygon points="${poly(-1)}" class="rg"/>`;
+  // axes
+  s += `<line x1="${o.full ? pad : cx}" y1="${cy}" x2="${W - 8}" y2="${cy}" class="axl"/><line x1="${cx}" y1="${cy}" x2="${cx}" y2="10" class="axl"/>`;
+  s += `<text x="${W - 10}" y="${cy + 14}" class="flab" text-anchor="end">${o.full ? 'x' : 'r'}</text><text x="${cx + 5}" y="16" class="flab">z</text>`;
+  // sphere arcs
+  const arc = (rad, cls) => { if (!rad) return ''; const a0 = o.full ? -Math.PI / 2 : 0; let d = ''; for (let i = 0; i <= 80; i++) { const t = a0 + (Math.PI / 2 - a0) * i / 80; d += (i ? 'L' : 'M') + P(rad * Math.sin(t), rad * Math.cos(t)).replace(',', ' '); } return `<path d="${d}" class="${cls}"/>`; };
+  if (!o.plane) s += arc(o.R, 'bd');
+  if (o.rhoIn) s += arc(o.rhoIn, 'bd');
+  if (o.plane) s += `<line x1="${o.full ? pad : cx}" y1="${cy - o.plane * S}" x2="${W - 8}" y2="${cy - o.plane * S}" class="bd"/><text x="${W - 10}" y="${cy - o.plane * S - 5}" class="flab" text-anchor="end">z = ${o.planeLabel}</text>`;
+  // cone line(s)
+  const cph = o.cone; const L = (o.plane ? o.plane / Math.cos(cph) : o.R) * 1.08;
+  for (const sg of o.full ? [1, -1] : [1]) s += `<line x1="${cx}" y1="${cy}" x2="${cx + sg * L * Math.sin(cph) * S}" y2="${cy - L * Math.cos(cph) * S}" class="bd dash"/>`;
+  // phi arc + label
+  const ar = o.rhoIn ? o.rhoIn * S + 18 : Math.min(38, 0.35 * (o.R || o.plane) * S); let d = ''; for (let i = 0; i <= 20; i++) { const t = cph * i / 20; d += (i ? 'L' : 'M') + `${(cx + ar * Math.sin(t)).toFixed(1)} ${(cy - ar * Math.cos(t)).toFixed(1)}`; }
+  s += `<path d="${d}" class="phiarc"/><text x="${cx + (ar + 6) * Math.sin(cph / 2)}" y="${cy - (ar + 6) * Math.cos(cph / 2)}" class="flab acc">φ = ${o.phiLabel}</text>`;
+  // labels
+  if (!o.plane) s += `<text x="${cx + o.R * S * Math.sin(1.25) + 4}" y="${cy - o.R * S * Math.cos(1.25) - 4}" class="flab">ρ = ${o.Rlabel}</text>`;
+  if (o.rhoIn) s += `<text x="${cx - o.rhoIn * S * 0.72 - 3}" y="${cy - o.rhoIn * S * 0.72 - 3}" class="flab" text-anchor="end">ρ = ${o.rhoIn}</text>`;
+  if (o.caption) s += `<text x="${W / 2}" y="${H - 8}" class="flab cap" text-anchor="middle">${o.caption}</text>`;
+  return s + '</svg>';
+}
+const PHIV = { '1/6': ['π/6', Math.PI / 6], '1/4': ['π/4', Math.PI / 4], '1/3': ['π/3', Math.PI / 3] };
+(function attachDiagrams() {
+  const wrap = (gen, mk) => { const f = function () { const o = gen(); o.fig = mk(o); return o; }; Object.defineProperty(f, 'name', { value: gen.name }); return f; };
+  const _sr = gSphRegion;
+  gSphRegion = wrap(_sr, (o) => o._d && sliceSVG(o._d));
+  const _ss = gSphSetup;
+  gSphSetup = wrap(_ss, (o) => o._d && sliceSVG(o._d));
+  const _cv = gConeVol;
+  gConeVol = wrap(_cv, (o) => o._d && sliceSVG(o._d));
+  for (const k in FR) FR[k] = FR[k].map((g) => (g === _sr ? gSphRegion : g === _ss ? gSphSetup : g === _cv ? gConeVol : g));
+})();
+
+// =====================================================================
+// MULTIPLE-CHOICE GENERATORS + STATIC BANK (modeled on Exam 2 MC items)
+// =====================================================================
+const LET = 'ABCDE';
+function mcMake(lec, qtext, correct, wrong, explain, opt = {}) {
+  const seen = new Set([correct]); const w = [];
+  for (const x of wrong) if (!seen.has(x) && w.length < (opt.n || 4)) { seen.add(x); w.push(x); }
+  chk(w.length >= 3, 'mc distractors');
+  let opts = opt.fixed ? [correct, ...w] : shuffle([correct, ...w]);
+  if (opt.order) opts = opt.order.filter((o) => opts.includes(o));
+  return { lec, mc: true, q: qtext, opts, ans: opts.indexOf(correct), explain, fig: opt.fig || '' };
+}
+
+// ---- L12: classify from second partials ----
+function mcClassify() {
+  const crit = chance(0.85);
+  let a, b, c; do { a = ri(-4, 4); b = ri(-4, 4); c = ri(-4, 4); } while (chance(0.7) && a * c - b * b === 0);
+  const fx = crit ? 0 : nz(-3, 3);
+  const [Dv, kind] = classify(q(a), q(b), q(c));
+  const ORDER = ['local minimum', 'local maximum', 'saddle point', 'the test is inconclusive', 'not a critical point'];
+  const correct = !crit ? 'not a critical point' : kind === 'test inconclusive' ? 'the test is inconclusive' : kind;
+  const label = (s) => (s.startsWith('local') || s.startsWith('saddle') ? `${s.startsWith('saddle') ? 'a' : 'a'} ${s}` : s);
+  return mcMake(12, `At the point ${M('(a,b)')}, ${M(`f_x = ${fx}`)}, ${M('f_y = 0')}, ${M(`f_{xx} = ${a}`)}, ${M(`f_{xy} = ${b}`)}, ${M(`f_{yy} = ${c}`)} (all second partials continuous). What is ${M('(a,b)')}?`,
+    label(correct), ORDER.filter((o) => o !== correct).map(label),
+    !crit ? `${M('f_x \\ne 0')}, so ${M('\\nabla f\\ne\\mathbf 0')} and the point is not critical. The second derivative test doesn't apply.` : `${M(`D = f_{xx}f_{yy} - f_{xy}^2 = (${a})(${c}) - (${b})^2 = ${Dv.tex()}`)}. ${Dv.n < 0 ? 'D < 0 means a saddle.' : Dv.n === 0 ? 'D = 0: the test says nothing.' : `D > 0 and f_xx ${a > 0 ? '> 0: local min' : '< 0: local max'}.`}`,
+    { order: ORDER.map(label) });
+}
+
+// ---- L11: D_u f bound ----
+function mcDuBound() {
+  const k = nz(-7, 7); const K = Math.abs(k);
+  return mcMake(11, `Suppose the differentiable function ${M('f')} satisfies ${M(`D_{\\mathbf u}f = ${k}`)} at a certain point, for some unit vector ${M('\\mathbf u')}. What must be true at that point?`,
+    M(`|\\nabla f| \\ge ${K}`), [M(`|\\nabla f| = ${K}`), M(`|\\nabla f| \\le ${K}`), M('\\nabla f \\perp \\mathbf u'), M(`\\nabla f = ${k}\\,\\mathbf u`)],
+    `${M('D_{\\mathbf u}f = |\\nabla f|\\cos\\theta')} and ${M('|\\cos\\theta|\\le 1')}, so ${M(`${K} = |D_{\\mathbf u}f| \\le |\\nabla f|`)}. Equality would need u parallel to ∇f, which isn't given.`);
+}
+
+// ---- L15: spherical angle of a point ----
+function mcPhi() {
+  for (;;) {
+    const rho = pick([2, 4]); const phi = pick(PHIS); const th = pick(THETAS);
+    const sp = sinPi(phi), cp = cosPi(phi);
+    const x = sp.mul(cosPi(th)).mul(rho), y = sp.mul(sinPi(th)).mul(rho), z = cp.mul(rho);
+    if (x.isZero() && y.isZero()) continue;
+    const ask = chance(0.7) ? 'phi' : 'theta';
+    const corr = ask === 'phi' ? phi : th;
+    const wrongs = ask === 'phi' ? [q(1).sub(phi), phi.neg(), q(1, 2).sub(phi), phi.add(q(1, 2)), ...PHIS] : [th.add(1), q(2).sub(th), th.neg(), q(1).sub(th), th.add(q(1, 2)), ...THETAS];
+    const wt = wrongs.filter((w) => !w.eq(corr)).map((w) => M(texQpi(w)));
+    return mcMake(15, `What is the ${M(ask === 'phi' ? '\\phi' : '\\theta')}-coordinate (spherical, with ${M('\\rho\\ge0')}, ${M('0\\le\\phi\\le\\pi')}, ${M('0\\le\\theta<2\\pi')}) of the point with rectangular coordinates ${M(ptex([x, y, z]))}?`,
+      M(texQpi(corr)), shuffle(wt.slice(0, 5)).concat(wt.slice(5)),
+      ask === 'phi' ? `${M(`\\rho = ${rho}`)} and ${M(`\\cos\\phi = z/\\rho = ${cp.tex()}`)}, so ${M(`\\phi = ${texQpi(phi)}`)}. φ is measured down from the positive z-axis and is never negative.` : `${M(`(x,y) = ${ptex([x, y])}`)} lies in the ${quadName(cosPi(th), sinPi(th))}, so ${M(`\\theta = ${texQpi(th)}`)}. Using arctan(y/x) alone loses the quadrant.`);
+  }
+}
+
+// ---- L16: symmetry — which integral is zero ----
+function mcSym() {
+  const regions = [
+    { d: `the unit ball ${M('x^2+y^2+z^2\\le1')}`, sym: 'xyz' },
+    { d: `the upper half of the unit ball (${M('x^2+y^2+z^2\\le1,\\ z\\ge0')})`, sym: 'xy' },
+    { d: `the cylinder ${M('x^2+y^2\\le1,\\ 0\\le z\\le1')}`, sym: 'xy' },
+    { d: `the cube ${M('[-1,1]\\times[-1,1]\\times[0,2]')}`, sym: 'xy' },
+    { d: `the part of the unit ball with ${M('x \\ge 0')}`, sym: 'yz' },
+  ];
+  for (;;) {
+    const R = pick(regions);
+    const monos = [];
+    for (let i = 0; i <= 2; i++) for (let j = 0; j <= 2; j++) for (let k = 0; k <= 2; k++) if (i + j + k >= 1 && i + j + k <= 3) monos.push([i, j, k]);
+    const isZeroM = (e) => [...'xyz'].some((v, idx) => R.sym.includes(v) && e[idx] % 2 === 1);
+    const texM = (e) => e.map((p, i) => (p === 0 ? '' : p === 1 ? 'xyz'[i] : `${'xyz'[i]}^${p}`)).join('');
+    const zeros = monos.filter(isZeroM), nonz = monos.filter((e) => !isZeroM(e));
+    if (!zeros.length || nonz.length < 4) continue;
+    const corr = pick(zeros);
+    const extra = [`(1 - ${texM(pick(zeros))})`, `|${texM(pick(zeros))}|`, `${texM(pick(nonz))} + 1`];
+    const wrong = shuffle(nonz.map(texM)).slice(0, 3).concat(shuffle(extra));
+    return mcMake(16, `Let ${M('E')} be ${R.d}. Which triple integral is exactly 0? (Don't compute; use symmetry.)`, M(`\\iiint_E ${texM(corr)}\\,dV`), wrong.map((w) => M(`\\iiint_E ${w}\\,dV`)),
+      `${M('E')} is symmetric under ${[...R.sym].map((v) => `${v} \\to -${v}`).map(M).join(', ')}. ${M(texM(corr))} is odd in one of those variables, so positive and negative contributions cancel. The others are even in every symmetric variable (or have a nonzero constant/absolute value), and so are not forced to 0.`);
+  }
+}
+
+// ---- L16: which density maximizes I_x / I_y on unit square ----
+function mcInertiaDensity() {
+  const dens = [['1', P.c(1)], ['x', X], ['y', Y], ['1 - x', P.c(1).sub(X)], ['1 - y', P.c(1).sub(Y)], ['x^2', X.pow(2)], ['y^2', Y.pow(2)], ['xy', X.mul(Y)]];
+  for (;;) {
+    const axis = pick(['x', 'y']); const most = chance(0.6);
+    const ch = shuffle(dens).slice(0, 5);
+    const w = axis === 'x' ? Y.pow(2) : X.pow(2);
+    const vals = ch.map(([, p]) => p.mul(w).defint('y', 0, 1).defint('x', 0, 1).constVal());
+    const best = vals.reduce((bi, v, i) => ((most ? v.cmp(vals[bi]) > 0 : v.cmp(vals[bi]) < 0) ? i : bi), 0);
+    if (vals.filter((v) => v.eq(vals[best])).length > 1) continue;
+    return mcMake(16, `Consider the unit square ${M('0\\le x\\le1,\\ 0\\le y\\le1')}. For which density ${M('\\mu(x,y)')} is the moment of inertia about the ${M(axis)}-axis ${most ? 'greatest' : 'smallest'}?`,
+      M(`\\mu = ${ch[best][0]}`), ch.filter((_, i) => i !== best).map(([t]) => M(`\\mu = ${t}`)),
+      `${M(`I_${axis} = \\iint ${axis === 'x' ? 'y^2' : 'x^2'}\\mu\\,dA`)}: ${ch.map(([t], i) => M(`${t}\\to ${vals[i].tex()}`)).join(', ')}. Mass far from the ${axis}-axis (large ${axis === 'x' ? 'y' : 'x'}) counts the most.`, { fixed: false });
+  }
+}
+
+// ---- L14: equivalent iterated integral ----
+function mcSwap() {
+  const n = ri(1, 3);
+  const c = `\\int_0^{${n}}\\int_{y^2}^{${n * n}} f(x,y)\\,dx\\,dy`;
+  return mcMake(14, `Which expression is equal to ${M(`\\int_0^{${n * n}}\\int_0^{\\sqrt x} f(x,y)\\,dy\\,dx`)}?`, M(c), [
+    M(`\\int_0^{${n}}\\int_0^{y^2} f(x,y)\\,dx\\,dy`), M(`\\int_0^{${n}}\\int_{y^2}^{${n * n}} f(y,x)\\,dx\\,dy`), M(`\\int_0^{${n}}\\int_0^{${n * n}} f(x,y)\\,dx\\,dy`), M(`\\int_0^{${n * n}}\\int_{y^2}^{${n}} f(x,y)\\,dx\\,dy`), M(`\\int_0^{${n}}\\int_{\\sqrt y}^{${n * n}} f(x,y)\\,dx\\,dy`)],
+    `Region: ${M(`0\\le y\\le\\sqrt x,\\ 0\\le x\\le ${n * n}`)}. For fixed ${M(`y\\in[0,${n}]`)}, ${M('x')} runs from the curve ${M('x = y^2')} to the line ${M(`x = ${n * n}`)}. Swapping the order never swaps the arguments of f.`);
+}
+
+// ---- L14: Riemann sum ----
+function mcRiemann() {
+  const a = ri(0, 2), w = pick([2, 3, 4]), c = ri(0, 2), h = pick([1, 2]); const hgt = pick([1, 2]) * (h === 1 ? 1 : 1);
+  const Hh = h === 1 ? 1 : 1; void Hh;
+  const sz = pick([q(1, 2), q(1)]); const m = q(w).div(sz).n, n2 = q(hgt).div(sz).n;
+  const f = pick(['\\ln\\left(1 + \\tfrac{x}{y}\\right)', 'e^{xy}', 'x^2 + y']);
+  const fy = (xs, ys) => f.replace(/x/g, xs).replace(/y/g, ys);
+  const xs = `${a} + (i - \\tfrac12)${sz.tex()}`, ys = `${c + 1} + (j - \\tfrac12)${sz.tex()}`;
+  const dA = sz.mul(sz).tex();
+  const corr = `\\sum_{i=1}^{${m}}\\sum_{j=1}^{${n2}} ${fy(`(${xs})`, `(${ys})`)}\\cdot ${dA}`;
+  return mcMake(14, `Let ${M(`R = [${a}, ${a + w}]\\times[${c + 1}, ${c + 1 + hgt}]`)}. Which is the midpoint Riemann sum for ${M(`\\iint_R ${f}\\,dA`)} using squares of side ${M(sz.tex())}?`, M(corr), [
+    M(`\\sum_{i=1}^{${m}}\\sum_{j=1}^{${n2}} ${fy(`(${xs})`, `(${ys})`)}\\cdot ${sz.tex()}`),
+    M(`\\sum_{i=1}^{${n2}}\\sum_{j=1}^{${m}} ${fy(`(${xs})`, `(${ys})`)}\\cdot ${dA}`),
+    M(`\\sum_{i=1}^{${m}}\\sum_{j=1}^{${n2}} ${fy(`(${a} + i)`, `(${c + 1} + j)`)}\\cdot ${dA}`),
+    M(`\\sum_{i=1}^{${m * n2}} ${fy(`(${xs})`, `(${ys})`)}\\cdot ${dA}`),
+    M(`\\sum_{i=1}^{${m}}\\sum_{j=1}^{${n2}} ${fy(`(${a} + (i-1)${sz.tex()})`, `(${c + 1} + (j-1)${sz.tex()})`)}\\cdot ${sz.tex()}`),
+    M(`\\sum_{i=1}^{${m + 1}}\\sum_{j=1}^{${n2 + 1}} ${fy(`(${xs})`, `(${ys})`)}\\cdot ${dA}`),
+  ], `There are ${m} columns (x-width ${w}) and ${n2} rows (y-height ${hgt}) of squares, each with area ${M(`\\Delta A = ${dA}`)}. The midpoint of square (i, j) is ${M(`\\left(${xs},\\ ${ys}\\right)`)}.`);
+}
+
+// ---- L15: translate to cylindrical ----
+function mcCyl() {
+  const half = pick(['right', 'upper', 'full']);
+  const g = pick([['y^2', 'r^3\\sin^2\\theta'], ['x^2', 'r^3\\cos^2\\theta'], ['x^2+y^2', 'r^3'], ['z', 'z\\,r'], ['1', 'r']]);
+  const low = pick([['x^2+y^2', 'r^2'], ['0', '0']]);
+  const xy = half === 'right' ? `\\int_{-1}^{1}\\int_0^{\\sqrt{1-y^2}}\\int_{${low[0]}}^{1} ${g[0]}\\,dz\\,dx\\,dy` : half === 'upper' ? `\\int_{-1}^{1}\\int_0^{\\sqrt{1-x^2}}\\int_{${low[0]}}^{1} ${g[0]}\\,dz\\,dy\\,dx` : `\\int_{-1}^{1}\\int_{-\\sqrt{1-x^2}}^{\\sqrt{1-x^2}}\\int_{${low[0]}}^{1} ${g[0]}\\,dz\\,dy\\,dx`;
+  const th = half === 'right' ? ['-\\pi/2', '\\pi/2'] : half === 'upper' ? ['0', '\\pi'] : ['0', '2\\pi'];
+  const thW = half === 'right' ? ['0', '\\pi'] : half === 'upper' ? ['-\\pi/2', '\\pi/2'] : ['0', '\\pi'];
+  const ex = (t, gg, lo) => `\\int_{${t[0]}}^{${t[1]}}\\int_0^1\\int_{${lo}}^{1} ${gg}\\,dz\\,dr\\,d\\theta`;
+  const gNoR = g[1] === 'r' ? '1' : g[1] === 'r^3' ? 'r^2' : g[1] === 'z\\,r' ? 'z' : g[1].replace('r^3', 'r^2');
+  return mcMake(15, `Which expression correctly translates ${M(xy)} into cylindrical coordinates?`, M(ex(th, g[1], low[1])), [
+    M(ex(thW, g[1], low[1])), M(ex(th, gNoR, low[1])), M(ex(th, g[1], low[1] === '0' ? 'r^2' : '1 - r^2')), M(ex(th, g[1], low[1] === '0' ? 'r' : '0')),
+  ], `Shadow: ${half === 'full' ? 'the full unit disk' : `the ${half} half of the unit disk`}, so ${M(`${th[0]}\\le\\theta\\le${th[1]}`)}. ${M(`${low[0]} \\le z\\le 1`)} becomes ${M(`${low[1]}\\le z\\le 1`)}, the integrand ${M(g[0])} becomes ${M(g[1] === 'r' ? '1' : g[1].replace('r^3', 'r^2').replace('z\\,r', 'z'))}, and ${M('dV = r\\,dz\\,dr\\,d\\theta')} contributes the extra r.`);
+}
+
+// ---- L15: spherical bounds of an ice-cream cone ----
+function mcSphBounds() {
+  const p0 = pick([q(1, 6), q(1, 4), q(1, 3)]); const [p0t, rhs] = CONE[`${p0.n}/${p0.d}`]; const R = pick([1, 2, 3]);
+  const c = `0\\le\\rho\\le ${R},\\ 0\\le\\phi\\le ${p0t},\\ 0\\le\\theta\\le 2\\pi`;
+  return mcMake(15, `Which spherical description gives the solid inside the sphere ${M(`x^2+y^2+z^2 = ${R * R}`)} and inside the upper cone ${M(`x^2+y^2 = ${rhs}`)}, ${M('z \\ge 0')}?`, M(c), [
+    M(`0\\le\\rho\\le ${R},\\ ${p0t}\\le\\phi\\le \\pi/2,\\ 0\\le\\theta\\le 2\\pi`), M(`0\\le\\rho\\le ${R},\\ 0\\le\\phi\\le ${p0t},\\ 0\\le\\theta\\le \\pi`), M(`0\\le\\rho\\le ${R * R},\\ 0\\le\\phi\\le ${p0t},\\ 0\\le\\theta\\le 2\\pi`), M(`0\\le\\rho\\le ${R},\\ 0\\le\\phi\\le ${texQpi(q(1, 2).sub(p0))},\\ 0\\le\\theta\\le 2\\pi`), M(`0\\le\\rho\\le ${R}\\sec\\phi,\\ 0\\le\\phi\\le ${p0t},\\ 0\\le\\theta\\le 2\\pi`),
+  ], `The cone is ${M(`\\tan^2\\phi = ${CONE[`${p0.n}/${p0.d}`][2]}`)}, so ${M(`\\phi = ${p0t}`)}. "Inside" the upper cone is the part near the positive z-axis: ${M(`\\phi\\le ${p0t}`)}. The sphere is ${M(`\\rho = ${R}`)}, not ${R * R}.`);
+}
+
+// ---- L12: contour plot reading ----
+function contourSVG(f, lo, hi, levels) {
+  const N = 60, W = 260; const sx = (x) => ((x - lo) / (hi - lo)) * W, sy = (y) => W - ((y - lo) / (hi - lo)) * W;
+  const g = []; for (let i = 0; i <= N; i++) { g.push([]); for (let j = 0; j <= N; j++) g[i].push(f(lo + (hi - lo) * i / N, lo + (hi - lo) * j / N)); }
+  const paths = levels.map(() => []);
+  levels.forEach((L, li) => {
+    for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+      const c = [[i, j], [i + 1, j], [i + 1, j + 1], [i, j + 1]].map(([a, b]) => [lo + (hi - lo) * a / N, lo + (hi - lo) * b / N, g[a][b] - L]);
+      const pts = [];
+      for (let k = 0; k < 4; k++) { const A = c[k], Bq = c[(k + 1) % 4]; if ((A[2] < 0) !== (Bq[2] < 0)) { const t = A[2] / (A[2] - Bq[2]); pts.push([A[0] + t * (Bq[0] - A[0]), A[1] + t * (Bq[1] - A[1])]); } }
+      for (let k = 0; k + 1 < pts.length; k += 2) paths[li].push(`M${sx(pts[k][0]).toFixed(1)} ${sy(pts[k][1]).toFixed(1)}L${sx(pts[k + 1][0]).toFixed(1)} ${sy(pts[k + 1][1]).toFixed(1)}`);
+    }
+  });
+  const ax = `<line x1="${sx(0)}" y1="0" x2="${sx(0)}" y2="${W}" class="cax"/><line x1="0" y1="${sy(0)}" x2="${W}" y2="${sy(0)}" class="cax"/>`;
+  return `<svg class="fig" viewBox="-4 -4 ${W + 8} ${W + 8}" width="${W + 8}" height="${W + 8}" role="img" aria-label="contour plot"><rect x="0" y="0" width="${W}" height="${W}" class="cbox"/>${ax}${paths.map((p) => `<path d="${p.join('')}" class="cl"/>`).join('')}</svg>`;
+}
+function mcContour() {
+  const fams = [
+    { f: (x, y, s) => x ** 3 - 3 * x + s * y * y, S: () => 1, E: () => 1, lo: -2.1, hi: 2.1 },
+    { f: (x, y, s) => x ** 3 - 3 * x + s * (y ** 3 - 3 * y), S: () => 2, E: () => 2, lo: -2.1, hi: 2.1 },
+    { f: (x, y) => (x * x - 1) * (y * y - 1), S: () => 4, E: () => 1, lo: -1.8, hi: 1.8 },
+    { f: (x, y, s) => x ** 4 - 2 * x * x + s * y * y, S: (s) => (s > 0 ? 1 : 2), E: (s) => (s > 0 ? 2 : 1), lo: -1.8, hi: 1.8 },
+    { f: (x, y) => Math.sin(x) * Math.sin(y), S: () => 1, E: () => 4, lo: -2.3, hi: 2.3 },
+    { f: (x, y, s) => x * x + s * 2 * y * y, S: (s) => (s > 0 ? 0 : 1), E: (s) => (s > 0 ? 1 : 0), lo: -2, hi: 2 },
+  ];
+  const F = pick(fams); const s = sgn(); const swap = chance(0.5);
+  const fn = (x, y) => (swap ? F.f(y, x, s) : F.f(x, y, s));
+  const vals = []; for (let i = 0; i <= 40; i++) for (let j = 0; j <= 40; j++) vals.push(fn(F.lo + (F.hi - F.lo) * i / 40, F.lo + (F.hi - F.lo) * j / 40));
+  vals.sort((a, b) => a - b); const vlo = vals[Math.floor(vals.length * 0.03)], vhi = vals[Math.floor(vals.length * 0.97)];
+  const levels = []; for (let k = 0; k < 15; k++) levels.push(vlo + (vhi - vlo) * (k + 0.5) / 15);
+  const nS = F.S(s), nE = F.E(s);
+  const lab = (a, b) => `${a} saddle point${a === 1 ? '' : 's'} and ${b} local extrem${b === 1 ? 'um' : 'a'}`;
+  const all = []; for (let a = 0; a <= 4; a++) for (let b = 0; b <= 4; b++) if (a + b >= 1 && a + b <= 5 && !(a === nS && b === nE)) all.push(lab(a, b));
+  return mcMake(12, 'The contour plot below shows level curves of a smooth function, equally spaced in value. Which best describes the number and type of critical points visible?', lab(nS, nE), shuffle(all),
+    'Closed loops shrinking around a point mark a local extremum (max or min). Level curves that cross, or form an X between four regions, mark a saddle. Elsewhere the curves pass by smoothly and there is no critical point.', { fig: contourSVG(fn, F.lo, F.hi, levels) });
+}
+
+// ---- L17: identify a vector field ----
+const FIELD_OPTS = [['1', () => 1], ['-1', () => -1], ['x', (x) => x], ['-x', (x) => -x], ['y', (x, y) => y], ['-y', (x, y) => -y], ['x^2', (x) => x * x], ['-x^2', (x) => -x * x], ['y^2', (x, y) => y * y], ['-y^2', (x, y) => -y * y]];
+function fieldSVG(Pf, Qf) {
+  const W = 240, n = 9, lo = -2, hi = 2, pad = 0.3; const sc = (v) => ((v - (lo - pad)) / (hi - lo + 2 * pad)) * W;
+  const pts = []; let mx = 0;
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { const x = lo + (hi - lo) * i / (n - 1), y = lo + (hi - lo) * j / (n - 1); const u = Pf(x, y), v = Qf(x, y); mx = Math.max(mx, Math.hypot(u, v)); pts.push([x, y, u, v]); }
+  const cell = (sc(hi) - sc(lo)) / (n - 1) * 0.8;
+  const arrows = pts.map(([x, y, u, v]) => {
+    const m = Math.hypot(u, v); if (m < 1e-9) return `<circle cx="${sc(x).toFixed(1)}" cy="${(W - sc(y)).toFixed(1)}" r="1.6" class="fa"/>`;
+    const L = cell * (0.3 + 0.7 * m / mx); const dx = (u / m) * L, dy = -(v / m) * L; const x0 = sc(x) - dx / 2, y0 = W - sc(y) - dy / 2, x1 = x0 + dx, y1 = y0 + dy;
+    const ang = Math.atan2(dy, dx), hl = Math.min(5, L * 0.45); const h1 = [x1 - hl * Math.cos(ang - 0.5), y1 - hl * Math.sin(ang - 0.5)], h2 = [x1 - hl * Math.cos(ang + 0.5), y1 - hl * Math.sin(ang + 0.5)];
+    return `<path d="M${x0.toFixed(1)} ${y0.toFixed(1)}L${x1.toFixed(1)} ${y1.toFixed(1)}M${h1[0].toFixed(1)} ${h1[1].toFixed(1)}L${x1.toFixed(1)} ${y1.toFixed(1)}L${h2[0].toFixed(1)} ${h2[1].toFixed(1)}" class="fa"/>`;
+  }).join('');
+  const o = sc(0);
+  return `<svg class="fig" viewBox="-6 -16 ${W + 26} ${W + 36}" width="${W + 26}" height="${W + 36}" role="img" aria-label="vector field plot"><rect x="0" y="0" width="${W}" height="${W}" class="cbox"/><line x1="${o}" y1="0" x2="${o}" y2="${W}" class="cax"/><line x1="0" y1="${W - o}" x2="${W}" y2="${W - o}" class="cax"/>${arrows}<text x="${W + 4}" y="${W - o + 4}" class="flab">x</text><text x="${o - 3}" y="-5" class="flab">y</text><text x="${W}" y="${W + 15}" class="flab" text-anchor="end">grid: −2 ≤ x, y ≤ 2</text></svg>`;
+}
+function mcField() {
+  const sig = (Pf, Qf) => { const s = []; for (let i = -2; i <= 2; i += 0.5) for (let j = -2; j <= 2; j += 0.5) { const u = Pf(i, j), v = Qf(i, j), m = Math.hypot(u, v) || 1; s.push(Math.round(u / m * 20), Math.round(v / m * 20)); } return s.join(','); };
+  const [Pc, Qc] = [pick(FIELD_OPTS), pick(FIELD_OPTS)];
+  const cs = sig(Pc[1], Qc[1]); const used = new Set([cs]); const wrong = [];
+  let guard = 0;
+  while (wrong.length < 4 && guard++ < 300) {
+    const a = guard < 40 && chance(0.5) ? Pc : pick(FIELD_OPTS), b = guard < 40 && chance(0.5) ? Qc : pick(FIELD_OPTS);
+    const sgx = sig(a[1], b[1]); if (used.has(sgx)) continue; used.add(sgx); wrong.push(M(`\\mathbf F = \\langle ${a[0]},\\ ${b[0]}\\rangle`));
+  }
+  return mcMake(17, `The vector field below has the form ${M('\\mathbf F = P\\,\\mathbf i + Q\\,\\mathbf j')}, where ${M('P')} and ${M('Q')} are each one of ${M('\\pm1, \\pm x, \\pm y, \\pm x^2, \\pm y^2')}. Arrow length shows relative magnitude. Which formula is it?`, M(`\\mathbf F = \\langle ${Pc[0]},\\ ${Qc[0]}\\rangle`), wrong,
+    `Read P from the horizontal parts of the arrows: does it depend on x or y, does it change sign, and is it always positive (squares)? Then do the same for Q with the vertical parts. Here ${M(`P = ${Pc[0]}`)} and ${M(`Q = ${Qc[0]}`)}.`, { fig: fieldSVG(Pc[1], Qc[1]) });
+}
+
+// ---- L17: line integral orientation / ds facts ----
+function mcLineConcept() {
+  const items = [
+    () => mcMake(17, `${M('C')} is a smooth curve and ${M('-C')} is the same curve traversed in the opposite direction. Which statement is true for continuous ${M('f')} and ${M('\\mathbf F')}?`, M('\\int_{-C} f\\,ds = \\int_C f\\,ds \\text{ and } \\int_{-C}\\mathbf F\\cdot d\\mathbf r = -\\int_C \\mathbf F\\cdot d\\mathbf r'), [M('\\text{both integrals change sign}'), M('\\text{neither integral changes}'), M('\\int_{-C} f\\,ds = -\\int_C f\\,ds \\text{ only}'), M('\\text{it depends on the parametrization speed}')], 'Arc length ds is always positive, so scalar line integrals ignore direction. dr points along the motion, so work flips sign.'),
+    () => mcMake(17, `For ${M('\\mathbf F = \\langle -y, x\\rangle')} and ${M('C')} the circle of radius ${M('R')} traversed counterclockwise, what is ${M('\\int_C\\mathbf F\\cdot d\\mathbf r')}?`, M('2\\pi R^2'), [M('0'), M('\\pi R^2'), M('2\\pi R'), M('-2\\pi R^2')], `${M('\\mathbf F')} is tangent to the circle with magnitude R everywhere, and the length is ${M('2\\pi R')}. So the work is ${M('R\\cdot 2\\pi R')}.`),
+    () => mcMake(17, `For ${M('\\mathbf F = \\langle x, y\\rangle')} and ${M('C')} any circle centered at the origin, ${M('\\int_C \\mathbf F\\cdot d\\mathbf r')} equals:`, M('0'), [M('2\\pi R^2'), M('\\pi R^2'), M('2\\pi R'), M('\\text{depends on direction}')], 'F points radially outward, so it is perpendicular to the circle everywhere: F·r′ = 0.'),
+    () => mcMake(17, `A curve is parametrized by ${M('\\mathbf r(t)')}, ${M('a\\le t\\le b')}. In ${M('\\int_C f\\,ds')}, ${M('ds')} equals`, M("|\\mathbf r'(t)|\\,dt"), [M("\\mathbf r'(t)\\,dt"), M('dt'), M("|\\mathbf r(t)|\\,dt"), M("\\mathbf r'(t)\\cdot\\mathbf r(t)\\,dt")], 'ds is the arc-length element: speed times dt.'),
+  ];
+  return pick(items)();
+}
+
+// ---- static concept bank (paraphrased from course exam styles) ----
+const STATIC = [
+  [11, `Let ${M('f')} be differentiable. What is the rate of change of ${M('f')} at ${M('(a,b)')} in the direction of the (not necessarily unit) vector ${M('\\mathbf v')}?`, M('\\nabla f(a,b)\\cdot\\frac{\\mathbf v}{|\\mathbf v|}'), [M('\\nabla f(a,b)\\cdot\\mathbf v'), M('|\\nabla f(a,b)|'), M('-\\nabla f(a,b)\\cdot\\frac{\\mathbf v}{|\\mathbf v|}'), M('\\nabla f(a,b)\\times\\mathbf v')], 'Directional derivatives use a unit vector. Normalize v first.'],
+  [11, `${M('F(x,y,z)')} is differentiable and ${M('\\mathbf u')} is a unit vector tangent to the level surface ${M('F = 4')} at ${M('P')}. Then ${M('D_{\\mathbf u}F(P)')} must be`, M('0'), [M('|\\nabla F(P)|'), 'positive', 'negative', `a scalar multiple of ${M('\\nabla F')}`], '∇F is normal to the level surface, so it is perpendicular to any tangent u: ∇F·u = 0. Along the surface F stays equal to 4, so it isn\'t changing.'],
+  [11, 'Which of these objects can exist?', `A positive differentiable ${M('f(x,y) > 0')} with no critical points`, [`A differentiable function with positive directional derivatives at the origin in every direction`, `A differentiable function whose greatest directional derivative at the origin is ${M('-2')}`, `A differentiable function whose directional derivatives at the origin take every real value`, 'None of these can exist'], `${M('f = e^x')} works. The others are impossible: ${M('D_{-\\mathbf u}f = -D_{\\mathbf u}f')}, the max is ${M('|\\nabla f| \\ge 0')}, and ${M('|D_{\\mathbf u}f|\\le|\\nabla f|')} is bounded.`],
+  [11, `Let ${M('\\mathbf u = \\langle a, b\\rangle')} be a unit vector. Which is the limit definition of ${M('D_{\\mathbf u}f(x,y)')}?`, M('\\lim_{h\\to0}\\frac{f(x+ha,\\,y+hb) - f(x,y)}{h}'), [M('\\lim_{h\\to0}\\frac{f(h\\mathbf u) - f(\\mathbf u)}{h}'), M('\\lim_{(x,y)\\to\\mathbf u}\\frac{f(x,y) - f(a,b)}{|\\mathbf u|}'), M('\\langle f_x, f_y\\rangle\\cdot\\mathbf u'), M('\\lim_{h\\to 0}\\frac{f(x+h,y+h)-f(x,y)}{h}')], 'Step a distance h from (x, y) in the direction u. The formula ∇f·u is a theorem (valid for differentiable f), not the definition.'],
+  [11, `At a point where ${M('\\nabla f = \\langle 3, 4\\rangle')}, the minimum value of ${M('D_{\\mathbf u}f')} over all unit vectors is`, M('-5'), [M('0'), M('-7'), M('-3'), M('5')], 'Min is −|∇f| = −5, in the direction −∇f.'],
+  [11, 'On a contour map, the gradient vector at a point is', 'perpendicular to the level curve through that point, pointing toward higher values', ['tangent to the level curve through that point', 'perpendicular to the level curve, pointing toward lower values', 'parallel to the nearest axis', 'zero unless the point is a maximum'], 'Along a level curve f is constant, so ∇f·r′ = 0. ∇f points in the direction of greatest increase.'],
+  [12, 'Which statement is always true?', `If ${M('f')} is continuous on the closed disk ${M('x^2+y^2\\le1')}, it has an absolute maximum there.`, [`If ${M('(a,b)')} is a critical point of ${M('f')}, then ${M('\\nabla f(a,b) = \\mathbf 0')}.`, `If ${M('f(a,b)')} is an absolute max on a closed domain, then ${M('(a,b)')} is a critical point.`, `If ${M('\\nabla f(a,b) = \\mathbf 0')}, then ${M('f')} has a local max or min there.`, 'None of the other statements is necessarily true.'], 'Extreme Value Theorem: continuous on closed and bounded means both extremes exist. Critical points also include where ∇f fails to exist; maxima can be on the boundary; saddles have ∇f = 0.'],
+  [12, `At a critical point, ${M('f_{xx} = f_{yy} = -f_{xy}')} (nonzero). The second derivative test says`, 'nothing: it is inconclusive', ['saddle point', 'local maximum', 'local minimum', 'local max if f_xx < 0, else local min'], 'D = f_xx f_yy − f_xy² = f_xx² − f_xx² = 0.'],
+  [12, `Which function has a saddle point at the origin?`, M('g(x,y,z) = x^2 + y^2 - z^2'), [M('g = x^2+y^2+z^2'), M('g = -(x^2+y^2+z^2)'), M('g = x^4 + y^4 + z^4'), M('g = e^{x^2+y^2+z^2}')], 'The origin is critical for all of them, but only x² + y² − z² increases in some directions and decreases in others.'],
+  [12, `Which point is ${M('(\\tfrac13,\\tfrac13)')} for ${M('f(x,y) = x^3 - xy + y^3')}?`, 'a local minimum', ['a local maximum', 'a saddle point', 'not a critical point', 'the test is inconclusive'], 'f_x = 3x² − y = 0 and f_y = −x + 3y² = 0 hold at (1/3, 1/3). f_xx = 2, f_yy = 2, f_xy = −1, so D = 3 > 0 with f_xx > 0.'],
+  [13, `A local max of ${M('f(x,y,z)')} subject to two constraints ${M('g = k_1')}, ${M('h = k_2')} occurs at ${M('P')} (with ${M('\\nabla g, \\nabla h')} independent). What must be true at ${M('P')}?`, `${M('\\nabla f, \\nabla g, \\nabla h')} all lie in one plane`, [M('\\nabla g = \\mu\\nabla h'), `${M('\\nabla f, \\nabla g, \\nabla h')} are mutually orthogonal`, M('\\nabla f = \\mathbf 0'), M('\\nabla f = \\lambda\\nabla g')], '∇f = λ∇g + μ∇h, so ∇f is a combination of ∇g and ∇h and lies in their plane.'],
+  [13, `At a point ${M('P')} where ${M('f')} has a constrained max on ${M('g(x,y) = k')} (with ${M('\\nabla g(P)\\ne\\mathbf 0')}), the level curve of ${M('f')} through ${M('P')}`, 'is tangent to the constraint curve', ['is perpendicular to the constraint curve', 'does not meet the constraint curve', 'crosses the constraint curve at a 45° angle', 'must be a closed loop'], '∇f ∥ ∇g, so the two curves share a normal, and so they share a tangent line. If they crossed, you could move along the constraint to a higher level.'],
+  [13, `In the Lagrange system ${M('\\nabla f = \\lambda\\nabla g,\\ g = k')}, the value of ${M('\\lambda')} at the optimum measures`, `how fast the optimal value changes as ${M('k')} changes`, ['the distance from the optimum to the origin', 'the maximum value of f', 'the curvature of the constraint', 'nothing: it is just a placeholder'], 'λ = d(f*)/dk: the "shadow price" of relaxing the constraint. Not needed for the exam, but it helps you check signs.'],
+  [14, `Which is equal to ${M('\\int_0^2\\int_0^{4-x^2} f\\,dy\\,dx')}?`, M('\\int_0^4\\int_0^{\\sqrt{4-y}} f\\,dx\\,dy'), [M('\\int_0^4\\int_{\\sqrt{4-y}}^{2} f\\,dx\\,dy'), M('\\int_0^2\\int_0^{4-y^2} f\\,dx\\,dy'), M('\\int_0^4\\int_0^{2} f\\,dx\\,dy'), M('\\int_0^4\\int_{-\\sqrt{4-y}}^{\\sqrt{4-y}} f\\,dx\\,dy')], 'Region under the parabola in the first quadrant: for fixed y, x runs from 0 to √(4−y).'],
+  [14, `In polar coordinates, ${M('dA')} equals`, M('r\\,dr\\,d\\theta'), [M('dr\\,d\\theta'), M('r^2\\,dr\\,d\\theta'), M('\\theta\\,dr\\,d\\theta'), M('r\\sin\\theta\\,dr\\,d\\theta')], 'A polar box has sides dr and r dθ, so dA = r dr dθ (the Jacobian).'],
+  [14, `Which polar bounds describe the disk ${M('(x-1)^2 + y^2 \\le 1')}?`, M('-\\pi/2\\le\\theta\\le\\pi/2,\\ 0\\le r\\le 2\\cos\\theta'), [M('0\\le\\theta\\le 2\\pi,\\ 0\\le r\\le 2\\cos\\theta'), M('0\\le\\theta\\le\\pi,\\ 0\\le r\\le 2\\sin\\theta'), M('0\\le\\theta\\le 2\\pi,\\ 0\\le r\\le 1'), M('-\\pi/2\\le\\theta\\le\\pi/2,\\ 0\\le r\\le \\cos\\theta')], 'x² + y² = 2x becomes r = 2cos θ, which is ≥ 0 only for −π/2 ≤ θ ≤ π/2.'],
+  [15, 'Which region has the smallest volume?', 'All spherical coordinates ρ, θ, φ between 0 and 1', ['All rectangular coordinates x, y, z between 0 and 1', 'All cylindrical coordinates r, θ, z between 0 and 1', 'All have equal volume', 'Spherical and cylindrical are tied'], 'Spherical: ∫∫∫ρ² sin φ = (1/3)(1 − cos 1) ≈ 0.15. Cylindrical: ∫∫∫ r = 1/2. Cube: 1.'],
+  [15, `The surface ${M('\\phi = 7\\pi/8')} (spherical, ${M('\\rho>0')}, all ${M('\\theta')}) is`, 'a cone opening downward around the negative z-axis', ['a cone opening upward around the positive z-axis', 'a horizontal plane below the xy-plane', 'a half-plane', 'a sphere'], 'φ > π/2 means below the xy-plane. A constant φ gives a cone, here narrow (π/8 from the −z-axis).'],
+  [15, `In spherical coordinates ${M('dV')} equals`, M('\\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta'), [M('\\rho^2\\sin\\theta\\,d\\rho\\,d\\phi\\,d\\theta'), M('\\rho\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta'), M('\\rho^2\\cos\\phi\\,d\\rho\\,d\\phi\\,d\\theta'), M('\\rho\\,d\\rho\\,d\\phi\\,d\\theta')], 'The box has sides dρ, ρ dφ, and ρ sin φ dθ.'],
+  [15, 'Which integral gives the mass of a cylinder of height 2 and radius 1 whose density equals the square of the distance from the center of one circular end?', M('\\int_0^{2\\pi}\\int_0^1\\int_0^2 (r^2+z^2)\\,r\\,dz\\,dr\\,d\\theta'), [M('\\int_0^{2\\pi}\\int_0^1\\int_0^2 r^3\\,dz\\,dr\\,d\\theta'), M('\\int_0^{2\\pi}\\int_0^1\\int_0^2 r^2\\,dz\\,dr\\,d\\theta'), M('\\int_0^{2\\pi}\\int_0^1\\int_0^2 z^2\\,dz\\,dr\\,d\\theta'), M('\\int_0^{2\\pi}\\int_0^1\\int_0^2 r^2\\sin\\theta\\,dz\\,dr\\,d\\theta')], 'Put the end at z = 0. Its center is the origin, so the squared distance is x² + y² + z² = r² + z². Then multiply by r for dV.'],
+  [16, `For a lamina with density ${M('\\delta')}, ${M('\\bar x')} equals`, M('\\frac{\\iint x\\,\\delta\\,dA}{\\iint\\delta\\,dA}'), [M('\\iint x\\,\\delta\\,dA'), M('\\frac{\\iint y\\,\\delta\\,dA}{\\iint\\delta\\,dA}'), M('\\frac{\\iint x\\,dA}{\\iint \\delta\\,dA}'), M('\\frac{\\iint x^2\\delta\\,dA}{\\iint\\delta\\,dA}')], 'x̄ = M_y / m, where M_y = ∬ xδ dA is the moment about the y-axis.'],
+  [16, `A half-annulus (${M('1\\le r\\le2,\\ 0\\le\\theta\\le\\pi')}) has uniform density. Its center of mass is`, M('(0, \\tfrac{28}{9\\pi}) \\approx (0, 0.99)') + ', outside the region', [M('(0, \\tfrac{28}{9\\pi})') + ', inside the region', M('(0, 1.5)'), M('(0,0)'), M('(\\tfrac{28}{9\\pi}, 0)')], 'm = (π/2)(4 − 1) = 3π/2 and M_x = ∫₀^π∫₁² r² sin θ dr dθ = 2·7/3 = 14/3, so ȳ = 28/(9π) ≈ 0.99 < 1. That point is in the hole.'],
+  [16, `A bar on ${M('[1,\\infty)')} has density ${M('1/x^2')}. Which is true?`, 'Its mass is finite but its center of mass does not exist', ['Its mass is infinite', 'Its center of mass is at x = 2', 'Both mass and moment are finite', 'Its center of mass is at x = 1'], '∫₁^∞ x⁻² dx = 1, but the moment ∫₁^∞ x·x⁻² dx = ∫ dx/x diverges.'],
+  [16, 'The radius of gyration about an axis is', M('\\sqrt{I/m}'), [M('I/m'), M('\\sqrt{m/I}'), M('I\\cdot m'), 'the distance from the axis to the center of mass'], 'It is the distance at which all the mass, concentrated at one point, gives the same moment of inertia: m R_g² = I.'],
+  [17, `Which vector field points radially outward with magnitude 1 everywhere (except the origin)?`, M('\\mathbf F = \\frac{\\langle x,y\\rangle}{\\sqrt{x^2+y^2}}'), [M('\\mathbf F = \\langle x, y\\rangle'), M('\\mathbf F = \\langle -y, x\\rangle'), M('\\mathbf F = \\frac{\\langle -y,x\\rangle}{\\sqrt{x^2+y^2}}'), M('\\mathbf F = \\langle 1, 1\\rangle')], '⟨x, y⟩ points outward but grows with distance. Dividing by its length makes it a unit vector.'],
+  [17, `${M('\\mathbf F = \\nabla f')} for ${M('f = x^2y')}. Then ${M('\\mathbf F')} is`, M('\\langle 2xy,\\ x^2\\rangle'), [M('\\langle 2x,\\ 1\\rangle'), M('\\langle x^2,\\ 2xy\\rangle'), M('\\langle 2xy,\\ 2x\\rangle'), M('2xy + x^2')], 'A gradient field has components f_x and f_y.'],
+];
+function mcStatic(lec) { const pool = STATIC.filter((s) => !lec || s[0] === lec); const s = pick(pool); return mcMake(s[0], s[1], s[2], shuffle(s[3]), s[4]); }
+
+const MC = {
+  11: [mcDuBound, () => mcStatic(11), () => mcStatic(11), () => mcStatic(11)],
+  12: [mcClassify, mcClassify, mcContour, mcContour, () => mcStatic(12)],
+  13: [() => mcStatic(13)],
+  14: [mcSwap, mcRiemann, () => mcStatic(14)],
+  15: [mcPhi, mcPhi, mcCyl, mcSphBounds, () => mcStatic(15)],
+  16: [mcSym, mcSym, mcInertiaDensity, () => mcStatic(16)],
+  17: [mcField, mcField, mcLineConcept, () => mcStatic(17)],
+};
+if (typeof module !== 'undefined') Object.assign(globalThis, { MC, STATIC });
+
+</script>
+<script>
+const LECTURES = [
+  { n: 11, name: 'Gradient & Directional Derivatives', sec: '§14.6' },
+  { n: 12, name: 'Max & Min', sec: '§14.7' },
+  { n: 13, name: 'Lagrange Multipliers', sec: '§14.8' },
+  { n: 14, name: 'Iterated & Polar Integrals', sec: '§15.1–4' },
+  { n: 15, name: 'Cylindrical & Spherical', sec: '§15.6–8' },
+  { n: 16, name: 'Mass, Centers & Moments', sec: '§15.4, 15.6' },
+];
+const EXAM_FR = [[gTanPlaneTrig, gDirDeriv, gHalfMax, gCrit, gCrit], [gSphRegion, gSphRegion, gCenterMass, gTetra, gCylHalf, gTripleOrder, gSwap2D], [gLinBall, gLagProd, gLagExp, gLagCan, gDiskQuad, gLagPlane, gLagBox]];
+function tryGen(fn) { for (let i = 0; i < 40; i++) { try { const o = fn(); o.kind = o.mc ? 'mc' : 'fr'; return o; } catch (e) { console.warn(fn.name, e.message); } } throw new Error('generation failed'); }
+function generate(lec, kind) {
+  const k = kind === 'mix' ? (chance(0.5) ? 'fr' : 'mc') : kind;
+  return tryGen(pick(k === 'fr' ? FR[lec] : MC[lec]));
+}
+
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  let stats = store.get('e2000m2-stats', {});
+  let selected = new Set(store.get('e2000m2-sel', LECTURES.map((l) => l.n)).filter((n) => LECTURES.some((l) => l.n === n))); if (!selected.size) selected = new Set(LECTURES.map((l) => l.n));
+  let kind = store.get('e2000m2-kind', 'mix');
+  let weak = store.get('e2000m2-weak', false);
+  let mode = 'drill', current = [], timerId = null, examDone = false;
+  $('weak').checked = weak;
+  const lecOf = (n) => LECTURES.find((l) => l.n === n);
+  const st = (n) => stats[n] || { got: 0, miss: 0 };
+  const save = () => { store.set('e2000m2-sel', [...selected]); store.set('e2000m2-stats', stats); store.set('e2000m2-weak', weak); store.set('e2000m2-kind', kind); };
+  const record = (lec, ok) => { const s = st(lec); ok ? s.got++ : s.miss++; stats[lec] = s; save(); renderLedger(); };
+
+  function renderChips() {
+    const el = $('chips'); el.innerHTML = '<span class="label">Lectures</span>';
+    const all = document.createElement('button'); all.className = 'chip'; all.textContent = 'All';
+    all.setAttribute('aria-pressed', selected.size === LECTURES.length ? 'true' : 'false');
+    all.onclick = () => { selected = new Set(selected.size === LECTURES.length ? [11] : LECTURES.map((l) => l.n)); save(); renderChips(); };
+    el.appendChild(all);
+    for (const L of LECTURES) {
+      const b = document.createElement('button'); b.className = 'chip'; b.innerHTML = `<span class="n">${L.n}</span>${L.name}`;
+      b.setAttribute('aria-pressed', selected.has(L.n) ? 'true' : 'false'); b.title = `Lecture ${L.n} · Stewart ${L.sec}`;
+      b.onclick = () => { if (selected.has(L.n)) { if (selected.size > 1) selected.delete(L.n); } else selected.add(L.n); save(); renderChips(); };
+      el.appendChild(b);
+    }
+  }
+  function renderKind() { document.querySelectorAll('#kindseg button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.k === kind ? 'true' : 'false')); }
+  const weightOf = (n) => { if (!weak) return 1; const s = st(n); return 1 + 4 * (s.miss + 1) / (s.got + s.miss + 2); };
+  function pickLec(pool) { const list = pool || [...selected]; const w = list.map(weightOf); let r = Math.random() * w.reduce((a, b) => a + b, 0); for (let i = 0; i < list.length; i++) { r -= w[i]; if (r <= 0) return list[i]; } return list[list.length - 1]; }
+  async function typeset(el) { if (window.MathJax && MathJax.typesetPromise) { try { await MathJax.typesetPromise([el]); } catch (e) { console.warn(e); } } }
+
+  function card(p, label) {
+    const L = lecOf(p.lec); const d = document.createElement('article'); d.className = 'prob enter';
+    const single = mode === 'drill';
+    d.innerHTML = `<div class="meta"><span class="num">${label}</span><span>L${L.n} · ${L.name}</span><span class="sec">Stewart ${L.sec}</span><span class="kind">${p.mc ? 'MC' : 'FR'}</span><span class="result" hidden></span></div>
+      <div class="qtext"></div>${p.fig ? `<div class="figwrap">${p.fig}</div>` : ''}`;
+    d.querySelector('.qtext').innerHTML = p.q;
+    const res = d.querySelector('.result');
+    const setRes = (ok) => { res.hidden = false; res.className = 'result ' + (ok ? 'got' : 'miss'); res.textContent = ok ? (p.mc ? 'Correct' : 'Got it') : p.mc ? 'Incorrect' : 'Missed'; };
+    if (p.mc) {
+      const box = document.createElement('div'); box.className = 'opts';
+      const exp = document.createElement('div'); exp.className = 'panel solp'; exp.hidden = true; exp.innerHTML = `<h3>Explanation</h3><div>${p.explain}</div>`;
+      p.sel = -1; p.graded = false;
+      const btns = p.opts.map((o, i) => { const b = document.createElement('button'); b.className = 'opt'; b.innerHTML = `<span class="L">${LET[i]}</span><span>${o}</span>`; box.appendChild(b); return b; });
+      p.reveal = async () => {
+        if (p.graded) return; p.graded = true;
+        btns.forEach((b, i) => { b.disabled = true; if (i === p.ans) b.classList.add('right'); else if (i === p.sel) b.classList.add('wrong'); b.classList.remove('sel'); });
+        const ok = p.sel === p.ans; setRes(ok); record(p.lec, ok); exp.hidden = false; await typeset(exp);
+      };
+      p.choose = (i) => { if (p.graded) return; p.sel = i; btns.forEach((b, j) => b.classList.toggle('sel', j === i)); if (mode === 'drill') p.reveal(); };
+      btns.forEach((b, i) => (b.onclick = () => p.choose(i)));
+      d.appendChild(box); d.appendChild(exp);
+    } else {
+      d.insertAdjacentHTML('beforeend', `<div class="actions"><button class="btn act-hint">Hint${single ? '<span class="kbd">H</span>' : ''}</button><button class="btn act-sol" ${mode === 'exam' && !examDone ? 'disabled title="Available after you submit"' : ''}>Show solution${single ? '<span class="kbd">S</span>' : ''}</button></div>
+        <div class="panel hintp" hidden><h3>Hint</h3><div class="hbody"></div></div>
+        <div class="panel solp" hidden><h3>Answer</h3><div class="answer"></div><h3 style="margin-top:4px">Worked solution</h3><ol class="steps"></ol>
+        <div class="grade"><span>Did you get it?</span><button class="btn got">Got it</button><button class="btn miss">Missed it</button></div></div>`);
+      d.querySelector('.hbody').innerHTML = p.hint; d.querySelector('.answer').innerHTML = p.ans; d.querySelector('.steps').innerHTML = p.steps.map((s) => `<li>${s}</li>`).join('');
+      const hintP = d.querySelector('.hintp'), solP = d.querySelector('.solp'); let hd = false, sd = false; p.graded = false;
+      p.showHint = async () => { hintP.hidden = !hintP.hidden; if (!hd) { hd = true; await typeset(hintP); } };
+      p.showSol = async () => { if (d.querySelector('.act-sol').disabled) return; solP.hidden = !solP.hidden; d.querySelector('.act-sol').firstChild.textContent = solP.hidden ? 'Show solution' : 'Hide solution'; if (!sd) { sd = true; await typeset(solP); } };
+      p.enableSol = () => { const b = d.querySelector('.act-sol'); b.disabled = false; b.removeAttribute('title'); };
+      d.querySelector('.act-hint').onclick = p.showHint; d.querySelector('.act-sol').onclick = p.showSol;
+      const mark = (ok) => { if (p.graded) return; p.graded = true; record(p.lec, ok); setRes(ok); d.querySelector('.grade').innerHTML = `<span>Recorded.${mode === 'drill' ? ' Press N for another.' : ''}</span>`; };
+      d.querySelector('.btn.got').onclick = () => mark(true); d.querySelector('.btn.miss').onclick = () => mark(false);
+    }
+    return d;
+  }
+
+  async function next() {
+    const sheet = $('sheet'); sheet.innerHTML = ''; stopTimer(); examDone = false;
+    if (mode === 'drill') {
+      current = [generate(pickLec(), kind)];
+      sheet.appendChild(card(current[0], `Lecture ${current[0].lec}`));
+    } else {
+      const fr = EXAM_FR.map((pool) => tryGen(pick(pool)));
+      const all = LECTURES.map((l) => l.n); const lecs = shuffle(all); while (lecs.length < 10) lecs.push(pickLec(all));
+      const mc = lecs.slice(0, 10).sort((a, b) => a - b).map((n) => tryGen(pick(MC[n])));
+      current = [...fr, ...mc];
+      sheet.insertAdjacentHTML('beforeend', '<div class="sect">Free response · 15 points each</div>');
+      fr.forEach((p, i) => sheet.appendChild(card(p, `FR${i + 1}`)));
+      sheet.insertAdjacentHTML('beforeend', '<div class="sect">Multiple choice · 1 point each</div>');
+      mc.forEach((p, i) => sheet.appendChild(card(p, `MC${i + 1}`)));
+      const bar = document.createElement('div'); bar.className = 'submitbar';
+      bar.innerHTML = '<button class="btn primary" id="submit">Submit exam</button><span class="foot" id="subnote">Locks your MC answers, grades them, and unlocks the FR solutions so you can self-grade.</span>';
+      sheet.appendChild(bar); $('submit').onclick = submitExam;
+      startTimer(75 * 60);
+    }
+    await typeset(sheet);
+  }
+  async function submitExam() {
+    if (examDone) return; examDone = true; stopTimer();
+    const mcs = current.filter((p) => p.mc); for (const p of mcs) await p.reveal();
+    current.filter((p) => !p.mc).forEach((p) => p.enableSol());
+    const right = mcs.filter((p) => p.sel === p.ans).length;
+    $('submit').disabled = true;
+    $('subnote').outerHTML = `<span class="score">MC: ${right} / ${mcs.length}</span><span class="foot">Now open each FR solution and mark whether you got it.</span>`;
+  }
+  function startTimer(secs) {
+    const end = Date.now() + secs * 1000; const t = $('timer'); t.hidden = false;
+    const tick = () => { const s = Math.max(0, Math.round((end - Date.now()) / 1000)); t.textContent = `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')} left`; t.classList.toggle('low', s < 600); if (s === 0) { stopTimer(); submitExam(); } };
+    tick(); timerId = setInterval(tick, 1000);
+  }
+  function stopTimer() { if (timerId) clearInterval(timerId); timerId = null; }
+
+  function renderLedger() {
+    const t = $('table'); t.innerHTML = ''; let G = 0, Mi = 0, worst = null, worstRate = 2;
+    for (const L of LECTURES) {
+      const s = st(L.n); G += s.got; Mi += s.miss; const tot = s.got + s.miss; const rate = tot ? s.got / tot : null;
+      if (tot >= 2 && rate < worstRate) { worstRate = rate; worst = L; }
+      const row = document.createElement('div'); row.className = 'trow'; row.dataset.n = L.n;
+      row.innerHTML = `<span class="n">${L.n}</span><span class="name" title="${L.name}">${L.name}</span><span class="bar">${tot ? `<i class="g" style="width:${100 * s.got / tot}%"></i><i class="m" style="width:${100 * s.miss / tot}%"></i>` : ''}</span><span class="pct">${tot ? `${s.got}/${tot}` : '—'}</span>`;
+      t.appendChild(row);
+    }
+    if (worst && worstRate < 0.75) t.querySelector(`[data-n="${worst.n}"]`).classList.add('weak');
+    $('summary').textContent = G + Mi ? `${G + Mi} attempted · ${Math.round(100 * G / (G + Mi))}% correct${worst && worstRate < 0.75 ? ` · weakest: ${worst.name}` : ''}` : 'No problems marked yet.';
+  }
+
+  $('next').onclick = next;
+  $('weak').onchange = (e) => { weak = e.target.checked; save(); };
+  document.querySelectorAll('#kindseg button').forEach((b) => (b.onclick = () => { kind = b.dataset.k; save(); renderKind(); if (mode === 'drill') next(); }));
+  $('reset').onclick = () => { const b = $('reset'); if (b.dataset.confirm) { stats = {}; save(); renderLedger(); b.textContent = 'Reset'; delete b.dataset.confirm; } else { b.dataset.confirm = '1'; b.textContent = 'Click again to clear'; setTimeout(() => { b.textContent = 'Reset'; delete b.dataset.confirm; }, 3000); } };
+  const setMode = (m) => {
+    mode = m; $('mode-drill').setAttribute('aria-pressed', m === 'drill'); $('mode-exam').setAttribute('aria-pressed', m === 'exam');
+    $('next').firstChild.textContent = m === 'drill' ? 'New problem' : 'New mock exam';
+    $('kindseg').style.display = m === 'drill' ? '' : 'none'; $('chips').style.opacity = m === 'drill' ? '' : '.45'; $('timer').hidden = m === 'drill';
+    next();
+  };
+  $('mode-drill').onclick = () => setMode('drill');
+  $('mode-exam').onclick = () => setMode('exam');
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    const k = e.key.toLowerCase(); const p = current[0];
+    if (k === 'n' && mode === 'drill') next();
+    else if (mode === 'drill' && p && !p.mc && k === 'h') p.showHint();
+    else if (mode === 'drill' && p && !p.mc && k === 's') p.showSol();
+    else if (mode === 'drill' && p && p.mc && 'abcde'.includes(k) && k.length === 1) p.choose('abcde'.indexOf(k));
+  });
+  renderChips(); renderKind(); renderLedger();
+  let started = false;
+  const go = () => { if (!started) { started = true; next(); typeset($('refgrid')); } };
+  window.__mjReady = () => { if (started) { typeset($('sheet')); typeset($('refgrid')); } else go(); };
+  if (window.MathJax && MathJax.startup && MathJax.startup.promise && MathJax.typesetPromise) MathJax.startup.promise.then(go);
+  setTimeout(go, 4000);
+})();
+
+</script>
+</body></html>

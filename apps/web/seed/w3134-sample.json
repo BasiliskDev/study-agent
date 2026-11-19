@@ -1,0 +1,89 @@
+{
+  "title": "W3134 Exam 1 sample",
+  "summary": "Questions converted from the original W3134 Exam 1 drill, to try the player before connecting Canvas.",
+  "topics": ["Math review", "Recursion", "Searching", "Asymptotics", "Recurrences", "Lists & iterators"],
+  "problems": [
+    {
+      "id": "m1", "topic": "Math review", "difficulty": 1, "source": "Mathematics Review slide 2", "type": "mc",
+      "prompt": "$2^N + 2^N$ equals:",
+      "options": ["$2^{N+1}$", "$2^{2N}$", "$4^N$", "$2^{N^2}$"],
+      "correctIndex": 0,
+      "explanation": "$2^N + 2^N = 2 \\cdot 2^N = 2^{N+1}$. Adding equal powers doubles them; it does not double the exponent."
+    },
+    {
+      "id": "m2", "topic": "Math review", "difficulty": 1, "source": "Mathematics Review slide 3", "type": "mc",
+      "prompt": "Simplify $4^{\\lg n}$.",
+      "options": ["$n^2$", "$4n$", "$2n$", "$n^4$"],
+      "correctIndex": 0,
+      "explanation": "Use $a^{\\log_b x} = x^{\\log_b a}$: $4^{\\lg n} = n^{\\lg 4} = n^2$. In the same way $2^{\\lg n} = n$."
+    },
+    {
+      "id": "r1", "topic": "Recursion", "difficulty": 1, "source": "Recursion slides 3–4", "type": "mc",
+      "prompt": "```java\npublic static int factorial(int n) {\n    if (n == 0) {\n        return 1;\n    }\n    return n * factorial(n - 1);\n}\n```\n\nIn `return n * factorial(n - 1);`, what is the `n *` part called?",
+      "options": ["The pending operation", "The base case", "The accumulator", "The tail call"],
+      "correctIndex": 0,
+      "explanation": "The multiplication has to wait until the recursive call returns, so it stays pending on that stack frame. That is what makes factorial linear recursion rather than tail recursion."
+    },
+    {
+      "id": "r2", "topic": "Recursion", "difficulty": 2, "source": "Recitation 1 · RecursionExercises.java", "type": "mc",
+      "prompt": "```java\nprivate static int factorialTailHelper(int n, int result) {\n    if (n == 0) {\n        return result;\n    }\n    return factorialTailHelper(n - 1, n * result);\n}\n```\n\nWhat type of recursion is this?",
+      "options": ["Tail", "Linear", "Tree", "Mutual"],
+      "correctIndex": 0,
+      "explanation": "Nothing is left to do after the recursive call returns. The work happens in the arguments, so the answer is already known at the base case."
+    },
+    {
+      "id": "s1", "topic": "Searching", "difficulty": 2, "source": "BinarySearchWorksheet", "type": "mc",
+      "prompt": "```\nindex:  0   1   2   3   4   5   6   7   8   9  10  11  12\nvalue:  2  17  19  27  46  53  62  68  71  79  85  91  99\n```\n\nBinary search (as in `Search.java`) for 72. What does it return?",
+      "options": ["$-10$", "$-9$", "$-1$", "$9$"],
+      "correctIndex": 0,
+      "explanation": "mid 6 (62) → low 7; mid 9 (79) → high 8; mid 7 (68) → low 8; mid 8 (71) → low 9. Now low > high, so it returns $-\\text{low} - 1 = -10$."
+    },
+    {
+      "id": "s4", "topic": "Searching", "difficulty": 1, "source": "Exam 1 Fall 2025 #4.1", "type": "mc",
+      "prompt": "Which computes the middle index with no risk of `int` overflow?",
+      "options": ["`low + (high - low) / 2`", "`(low + high) / 2`", "`(low + high) >> 2`", "`high - low / 2`"],
+      "correctIndex": 0,
+      "explanation": "`low + high` can exceed `Integer.MAX_VALUE` for huge arrays. `high - low` cannot."
+    },
+    {
+      "id": "a2", "topic": "Asymptotics", "difficulty": 3, "source": "Exam 1 Fall 2025 #8", "type": "free",
+      "prompt": "Prove $3n^2 + 4n + 1 \\in \\Theta(n^2)$ with the tightest integers $c_1$, $c_2$ and a matching $n_0$.",
+      "hint": "For the lower bound, drop the positive lower-order terms. For the upper bound, ask how many extra $n^2$ the terms $4n + 1$ need once $n$ is large enough.",
+      "steps": [
+        "Lower bound: $3n^2 + 4n + 1 \\ge 3n^2$ for all $n \\ge 1$, so $c_1 = 3$.",
+        "Upper bound with $c_2 = 4$: need $3n^2 + 4n + 1 \\le 4n^2$, i.e. $n^2 - 4n - 1 \\ge 0$.",
+        "$n^2 - 4n - 1 \\ge 0$ holds when $n \\ge 2 + \\sqrt{5} \\approx 4.24$, so the smallest integer is $n_0 = 5$.",
+        "Both bounds hold for $n \\ge 5$."
+      ],
+      "answer": "$c_1 = 3$, $c_2 = 4$, $n_0 = 5$"
+    },
+    {
+      "id": "rc1", "topic": "Recurrences", "difficulty": 2, "source": "Recurrences slides", "type": "free",
+      "prompt": "Solve $T(n) = 2T(n/2) + n$, $T(1) = 1$, for $n$ a power of 2. Give a closed form and its $\\Theta$ class.",
+      "hint": "Unroll it $k$ times and look for the pattern, then stop when $n / 2^k = 1$.",
+      "steps": [
+        "Unroll: $T(n) = 2T(n/2) + n = 4T(n/4) + 2n = 8T(n/8) + 3n$.",
+        "After $k$ steps: $T(n) = 2^k T(n/2^k) + kn$.",
+        "Stop at $n/2^k = 1$, so $k = \\lg n$: $T(n) = n \\cdot T(1) + n \\lg n = n \\lg n + n$."
+      ],
+      "answer": "$T(n) = n\\lg n + n \\in \\Theta(n \\lg n)$"
+    },
+    {
+      "id": "l1", "topic": "Lists & iterators", "difficulty": 1, "source": "ArrayList slide 9", "type": "mc",
+      "prompt": "What is the cost of `ArrayList.add(element)` (append at the end) over a long run of appends?",
+      "options": ["$\\Theta(1)$ amortized", "$\\Theta(n)$ every time", "$O(\\lg n)$", "$\\Theta(1)$ every time, with no exceptions"],
+      "correctIndex": 0,
+      "explanation": "Most appends are $\\Theta(1)$. When the array is full, the resize copies all $n$ elements ($\\Theta(n)$), but that happens rarely enough to average out to $\\Theta(1)$."
+    },
+    {
+      "id": "f1", "topic": "Asymptotics", "difficulty": 1, "source": "Orders of Growth slide 5", "type": "flashcard",
+      "front": "Definition of $f(n) \\in O(g(n))$",
+      "back": "There exist positive constants $c$ and $n_0$ such that $0 \\le f(n) \\le c\\,g(n)$ for all $n \\ge n_0$."
+    },
+    {
+      "id": "f2", "topic": "Searching", "difficulty": 1, "source": "Search.java comments", "type": "flashcard",
+      "front": "`binarySearch` returned $r < 0$. Where should the key be inserted?",
+      "back": "At index $-r - 1$. Returning $-\\text{low} - 1$ keeps every not-found result negative, even when the insertion point is 0."
+    }
+  ]
+}

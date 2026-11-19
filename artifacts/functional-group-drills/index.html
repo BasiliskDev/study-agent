@@ -1,0 +1,421 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Functional Group Drills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: one working column like a lab bench — header strip, mode tabs, a single large card that changes per mode.
+   Atom colors follow the CPK convention used in molecular model kits (O red, N blue, S yellow, halogen green). */
+:root {
+  --bg: #e9eef1;
+  --grid: #d6dee3;
+  --panel: #ffffff;
+  --ink: #17232b;
+  --muted: #5b6a74;
+  --line: #cdd6dc;
+  --accent: #1d6f8f;
+  --accent-soft: #dcecf2;
+  --good: #1f7a4d;
+  --good-soft: #dff1e6;
+  --bad: #b3372b;
+  --bad-soft: #f7e1de;
+  --o: #d1322a;
+  --n: #2f56d6;
+  --s: #a77b00;
+  --x: #1f8a3a;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11181d; --grid: #1a242b; --panel: #182228; --ink: #e4ebef; --muted: #93a3ad; --line: #2a3841;
+    --accent: #5fb6d6; --accent-soft: #1b3440; --good: #5ccf8e; --good-soft: #173628; --bad: #f08476; --bad-soft: #3d1f1b;
+    --o: #ff6b5e; --n: #7d9bff; --s: #f2c94c; --x: #5fd07a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11181d; --grid: #1a242b; --panel: #182228; --ink: #e4ebef; --muted: #93a3ad; --line: #2a3841;
+  --accent: #5fb6d6; --accent-soft: #1b3440; --good: #5ccf8e; --good-soft: #173628; --bad: #f08476; --bad-soft: #3d1f1b;
+  --o: #ff6b5e; --n: #7d9bff; --s: #f2c94c; --x: #5fd07a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--ink); font: 15px/1.5 var(--body);
+  padding-inline: 16px; padding-block: 24px 56px;
+}
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 18px; }
+header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 10px 20px; }
+h1 { font: 800 clamp(28px, 6vw, 40px)/1 var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.course { font: 500 12px/1.4 var(--mono); color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font: 500 12px var(--mono); color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; background: currentColor; }
+.legend .o { color: var(--o); } .legend .n { color: var(--n); } .legend .s { color: var(--s); } .legend .x { color: var(--x); }
+
+nav { display: flex; gap: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 4px; width: fit-content; max-width: 100%; }
+nav button { font: 600 14px var(--body); border: 0; background: none; color: var(--muted); padding: 8px 16px; border-radius: 9px; cursor: pointer; }
+nav button[aria-selected="true"] { background: var(--ink); color: var(--panel); }
+button:focus-visible, .tile:focus-visible, .opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.stage { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; min-width: 0; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; font-size: 13px; color: var(--muted); }
+.bar .num { font: 600 13px var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.track { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 18px; }
+.track i { display: block; height: 100%; background: var(--accent); transition: width .25s; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { font: 500 12px var(--body); background: none; border: 0; padding: 6px 10px; color: var(--muted); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); }
+
+/* flashcard */
+.card { perspective: 1400px; cursor: pointer; }
+.card-in { position: relative; min-height: 290px; transition: transform .45s cubic-bezier(.3,.7,.3,1); transform-style: preserve-3d; }
+.card.flipped .card-in { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); display: grid; place-items: center; padding: 20px; text-align: center; }
+.face.back { transform: rotateY(180deg); background: var(--panel); }
+.face .hint { position: absolute; bottom: 12px; left: 0; right: 0; font-size: 12px; color: var(--muted); }
+.big { font: 800 clamp(30px, 7vw, 46px)/1.05 var(--display); letter-spacing: -0.02em; }
+.facts { display: grid; gap: 10px; justify-items: center; }
+
+.kv { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.chip { font: 500 13px var(--mono); background: var(--accent-soft); color: var(--ink); padding: 3px 10px; border-radius: 99px; }
+.ex { font-size: 14px; color: var(--muted); }
+.ex b { font: 600 15px var(--mono); color: var(--ink); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.btn { font: 600 14px var(--body); border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 10px 16px; border-radius: 10px; cursor: pointer; flex: 1 1 140px; }
+.btn.good { border-color: var(--good); color: var(--good); }
+.btn.bad { border-color: var(--bad); color: var(--bad); }
+.btn.primary { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.btn kbd { font: 500 11px var(--mono); opacity: .6; margin-left: 6px; }
+
+/* molecules */
+svg.mol { max-width: 100%; height: auto; overflow: visible; }
+svg.mol line { stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; }
+svg.mol text { font: 600 22px var(--mono); fill: var(--ink); }
+svg.mol .a-o { fill: var(--o); } svg.mol .a-n { fill: var(--n); } svg.mol .a-s { fill: var(--s); } svg.mol .a-x { fill: var(--x); }
+svg.mol .a-r { fill: var(--muted); }
+.cap { font: 500 12px var(--mono); color: var(--muted); }
+
+/* quiz */
+.q { display: grid; gap: 14px; }
+.prompt { font: 600 18px/1.35 var(--body); text-wrap: balance; }
+.qvis { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; place-items: center; gap: 6px; }
+
+.qvis .formula { font: 600 26px var(--mono); }
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 8px; }
+.opt { font: 500 15px var(--body); text-align: left; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; }
+.opt:hover:not([disabled]) { border-color: var(--accent); }
+.opt[disabled] { cursor: default; }
+.opt.right { background: var(--good-soft); border-color: var(--good); }
+.opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+.explain { font-size: 14px; color: var(--muted); border-left: 3px solid var(--accent); padding-left: 12px; }
+.score { font: 800 56px/1 var(--display); font-variant-numeric: tabular-nums; }
+.missed { display: grid; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
+.missed li { font-size: 14px; } .missed li b { font-weight: 600; }
+
+/* match */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 8px; }
+.tile { min-height: 96px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); display: grid; place-items: center; padding: 8px; cursor: pointer; font: 700 17px var(--display); transition: opacity .3s, transform .15s; }
+
+.tile.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+.tile.done { opacity: 0; pointer-events: none; }
+.tile.miss { border-color: var(--bad); background: var(--bad-soft); animation: shake .3s; }
+@keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+.timer { font: 600 22px var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+
+.note { font-size: 13px; color: var(--muted); }
+.note b { color: var(--ink); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .card-in, .track i, .tile { transition: none; } .tile.miss { animation: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="course">UN1403 Gen Chem · Exam 1 · Thu Oct 1</div>
+      <h1>Functional Groups</h1>
+    </div>
+    <div class="legend" aria-label="Atom colors"><span class="o">O</span><span class="n">N</span><span class="s">S</span><span class="x">Halogen (X)</span></div>
+  </header>
+
+  <nav role="tablist" aria-label="Mode">
+    <button role="tab" id="tab-cards" aria-selected="true" data-mode="cards">Flashcards</button>
+    <button role="tab" id="tab-quiz" aria-selected="false" data-mode="quiz">Quiz</button>
+    <button role="tab" id="tab-match" aria-selected="false" data-mode="match">Match</button>
+  </nav>
+
+  <section class="stage" id="stage" aria-live="polite"></section>
+
+  <p class="note">15 groups from lecture <b>2. Organic Chemistry</b>, Table 2.1. Left out because they're crossed off on the slides: monophosphate, diphosphate, imine, disulfide, sulfoxide, thioester, acid chloride.</p>
+</div>
+
+<script>
+// ---------- data ----------
+const H = 0.866;
+const G = [
+  { id: "alkene", name: "Alkene", fact: "Carbon–carbon double bond", end: "-ene", ex: "H₂C=CH₂", exName: "Ethene",
+    atoms: [[0,0,"C"],[1,0,"C"],[-0.6,-0.8,"R"],[-0.6,0.8,"R"],[1.6,-0.8,"R"],[1.6,0.8,"R"]], bonds: [[0,1,2],[0,2,1],[0,3,1],[1,4,1],[1,5,1]] },
+  { id: "alkyne", name: "Alkyne", fact: "Carbon–carbon triple bond", end: "-yne", ex: "HC≡CH", exName: "Ethyne",
+    atoms: [[-1,0,"R"],[0,0,"C"],[1,0,"C"],[2,0,"R′"]], bonds: [[0,1,1],[1,2,3],[2,3,1]] },
+  { id: "arene", name: "Arene", fact: "Aromatic (benzene) ring", end: "none", ex: "C₆H₆", exName: "Benzene",
+    atoms: Array.from({length: 6}, (_, k) => [Math.cos(Math.PI/6 + k*Math.PI/3), Math.sin(Math.PI/6 + k*Math.PI/3), ""]),
+    bonds: [[0,1,2],[1,2,1],[2,3,2],[3,4,1],[4,5,2],[5,0,1]] },
+  { id: "halide", name: "Halide", fact: "Carbon bonded to a halogen, X = F, Cl, Br, I", end: "none", ex: "CH₃Cl", exName: "Chloromethane",
+    atoms: [[0,0.5,"R"],[H,0,"X"]], bonds: [[0,1,1]], cap: "X = F, Cl, Br, I" },
+  { id: "alcohol", name: "Alcohol", fact: "–OH on a saturated carbon", end: "-ol", ex: "CH₃OH", exName: "Methanol",
+    atoms: [[0,0.5,"R"],[H,0,"O"],[2*H,0.5,"H"]], bonds: [[0,1,1],[1,2,1]] },
+  { id: "ether", name: "Ether", fact: "Oxygen between two carbons", end: "ether", ex: "CH₃OCH₃", exName: "Dimethyl ether",
+    atoms: [[0,0.5,"R"],[H,0,"O"],[2*H,0.5,"R′"]], bonds: [[0,1,1],[1,2,1]] },
+  { id: "amine", name: "Amine", fact: "Nitrogen with a lone pair bonded to carbon (NH₂, NHR or NR₂)", end: "-amine", ex: "CH₃NH₂", exName: "Methylamine",
+    atoms: [[0,0.5,"R"],[H,0,"N"],[2*H,0.5,"H"],[H,-1,"H"]], bonds: [[0,1,1],[1,2,1],[1,3,1]] },
+  { id: "nitrile", name: "Nitrile", fact: "Carbon–nitrogen triple bond", end: "-nitrile", ex: "CH₃C≡N", exName: "Ethanenitrile",
+    atoms: [[0,0,"R"],[1,0,"C"],[2,0,"N"]], bonds: [[0,1,1],[1,2,3]] },
+  { id: "thiol", name: "Thiol", fact: "–SH group, the sulfur version of an alcohol", end: "-thiol", ex: "CH₃SH", exName: "Methanethiol",
+    atoms: [[0,0.5,"R"],[H,0,"S"],[2*H,0.5,"H"]], bonds: [[0,1,1],[1,2,1]] },
+  { id: "sulfide", name: "Sulfide", fact: "Sulfur between two carbons, the sulfur version of an ether", end: "sulfide", ex: "CH₃SCH₃", exName: "Dimethyl sulfide",
+    atoms: [[0,0.5,"R"],[H,0,"S"],[2*H,0.5,"R′"]], bonds: [[0,1,1],[1,2,1]] },
+  { id: "aldehyde", name: "Aldehyde", fact: "C=O at the end of a chain, carbonyl carbon bonded to H", end: "-al", ex: "CH₃CHO", exName: "Ethanal",
+    atoms: [[0,0.5,"R"],[H,0,"C"],[H,-1,"O"],[2*H,0.5,"H"]], bonds: [[0,1,1],[1,2,2],[1,3,1]] },
+  { id: "ketone", name: "Ketone", fact: "C=O in the middle of a chain, between two carbons", end: "-one", ex: "CH₃COCH₃", exName: "Propanone (acetone)",
+    atoms: [[0,0.5,"R"],[H,0,"C"],[H,-1,"O"],[2*H,0.5,"R′"]], bonds: [[0,1,1],[1,2,2],[1,3,1]] },
+  { id: "acid", name: "Carboxylic acid", fact: "C=O with an –OH on the same carbon (–COOH)", end: "-oic acid", ex: "CH₃COOH", exName: "Ethanoic acid (acetic acid)",
+    atoms: [[0,0.5,"R"],[H,0,"C"],[H,-1,"O"],[2*H,0.5,"O"],[3*H,0,"H"]], bonds: [[0,1,1],[1,2,2],[1,3,1],[3,4,1]] },
+  { id: "ester", name: "Ester", fact: "C=O with an –O–R′ on the same carbon (–COOR′)", end: "-oate", ex: "CH₃COOCH₃", exName: "Methyl ethanoate",
+    atoms: [[0,0.5,"R"],[H,0,"C"],[H,-1,"O"],[2*H,0.5,"O"],[3*H,0,"R′"]], bonds: [[0,1,1],[1,2,2],[1,3,1],[3,4,1]] },
+  { id: "amide", name: "Amide", fact: "C=O with a nitrogen on the same carbon (–CONH₂)", end: "-amide", ex: "CH₃CONH₂", exName: "Ethanamide",
+    atoms: [[0,0.5,"R"],[H,0,"C"],[H,-1,"O"],[2*H,0.5,"N"],[3*H,0,"H"],[2*H,1.5,"H"]], bonds: [[0,1,1],[1,2,2],[1,3,1],[3,4,1],[3,5,1]] },
+];
+const BY = Object.fromEntries(G.map(g => [g.id, g]));
+// look-alikes used as quiz distractors
+const CONFUSE = {
+  alkene: ["alkyne","arene","alkyne"], alkyne: ["alkene","nitrile","arene"], arene: ["alkene","alkyne","halide"],
+  halide: ["alcohol","thiol","arene"], alcohol: ["ether","thiol","acid"], ether: ["ester","alcohol","sulfide"],
+  amine: ["amide","nitrile","alcohol"], nitrile: ["alkyne","amine","amide"], thiol: ["alcohol","sulfide","ether"],
+  sulfide: ["ether","thiol","ester"], aldehyde: ["ketone","acid","alcohol"], ketone: ["aldehyde","ester","ether"],
+  acid: ["ester","alcohol","aldehyde"], ester: ["acid","ether","ketone"], amide: ["amine","acid","ester"],
+};
+
+// ---------- helpers ----------
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("fg:" + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("fg:" + k, JSON.stringify(v)); } catch {} },
+};
+const cls = l => l === "O" ? "a-o" : l === "N" ? "a-n" : l === "S" ? "a-s" : l === "X" ? "a-x" : l.startsWith("R") ? "a-r" : "";
+
+function molSVG(g, label, k = 1) {
+  const S = 44, pad = 0.55;
+  const xs = g.atoms.map(a => a[0]), ys = g.atoms.map(a => a[1]);
+  const x0 = Math.min(...xs) - pad, y0 = Math.min(...ys) - pad;
+  const w = Math.max(...xs) - x0 + pad, h = Math.max(...ys) - y0 + pad;
+  let out = "";
+  for (const [i, j, order] of g.bonds) {
+    let [ax, ay, al] = g.atoms[i], [bx, by, bl] = g.atoms[j];
+    const dx = bx - ax, dy = by - ay, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+    const ra = al ? 0.3 : 0, rb = bl ? 0.3 : 0;
+    ax += ux * ra; ay += uy * ra; bx -= ux * rb; by -= uy * rb;
+    const offs = order === 1 ? [0] : order === 2 ? [-0.07, 0.07] : [-0.11, 0, 0.11];
+    for (const o of offs) {
+      const px = -uy * o, py = ux * o;
+      out += `<line x1="${((ax + px - x0) * S).toFixed(1)}" y1="${((ay + py - y0) * S).toFixed(1)}" x2="${((bx + px - x0) * S).toFixed(1)}" y2="${((by + py - y0) * S).toFixed(1)}"/>`;
+    }
+  }
+  for (const [x, y, l] of g.atoms) if (l) out += `<text x="${((x - x0) * S).toFixed(1)}" y="${((y - y0) * S).toFixed(1)}" text-anchor="middle" dominant-baseline="central" class="${cls(l)}">${l}</text>`;
+  return `<svg class="mol" width="${(w * S * k).toFixed(0)}" viewBox="0 0 ${(w * S).toFixed(0)} ${(h * S).toFixed(0)}" role="img" aria-label="${esc(label || "Structure")}">${out}</svg>`;
+}
+
+// ---------- modes ----------
+let mode = "cards";
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll("nav button").forEach(b => b.setAttribute("aria-selected", b.dataset.mode === m));
+  ({ cards: renderCards, quiz: startQuiz, match: startMatch })[m]();
+}
+
+// ---------- flashcards ----------
+const fc = { dir: store.get("dir", "struct"), deck: shuffle(G.map(g => g.id)), i: 0, known: new Set(), learning: new Set(), flipped: false };
+function resetCards(ids) { fc.deck = shuffle(ids || G.map(g => g.id)); fc.i = 0; fc.known = new Set(); fc.learning = new Set(); fc.flipped = false; }
+
+function renderCards() {
+  const st = $("#stage");
+  if (fc.i >= fc.deck.length) {
+    const learn = [...fc.learning];
+    st.innerHTML = `<div class="q">
+      <div class="score">${fc.known.size}<span style="font-size:24px;color:var(--muted)"> / ${fc.deck.length} known</span></div>
+      <p>${learn.length ? `Still learning: <b>${learn.map(id => BY[id].name).join(", ")}</b>` : "You knew every card in this round."}</p>
+      <div class="actions">
+        ${learn.length ? `<button class="btn primary" id="fc-again">Review the ${learn.length} still learning</button>` : ""}
+        <button class="btn" id="fc-all">Restart all 15</button>
+        <button class="btn" id="fc-quiz">Take the quiz</button>
+      </div></div>`;
+    if (learn.length) $("#fc-again").onclick = () => { resetCards(learn); renderCards(); };
+    $("#fc-all").onclick = () => { resetCards(); renderCards(); };
+    $("#fc-quiz").onclick = () => setMode("quiz");
+    return;
+  }
+  const g = BY[fc.deck[fc.i]];
+  const structFace = `<div class="facts">${molSVG(g, g.name + " structure")}${g.cap ? `<div class="cap">${g.cap}</div>` : ""}</div>`;
+  const nameFace = `<div class="big">${g.name}</div>`;
+  const detail = `<div class="facts">
+      ${fc.dir === "struct" ? nameFace : molSVG(g, g.name + " structure")}
+      <div class="kv"><span class="chip">ending: ${esc(g.end)}</span></div>
+      <div class="ex">${esc(g.fact)}</div>
+      <div class="ex">e.g. <b>${esc(g.ex)}</b> · ${esc(g.exName)}</div>
+    </div>`;
+  st.innerHTML = `
+    <div class="bar">
+      <span><span class="num">${fc.i + 1} / ${fc.deck.length}</span> · ${fc.known.size} known</span>
+      <span class="seg" role="group" aria-label="Card front">
+        <button id="dir-struct" aria-pressed="${fc.dir === "struct"}">Structure first</button>
+        <button id="dir-name" aria-pressed="${fc.dir === "name"}">Name first</button>
+      </span>
+    </div>
+    <div class="track"><i style="width:${(fc.i / fc.deck.length) * 100}%"></i></div>
+    <div class="card ${fc.flipped ? "flipped" : ""}" id="card" tabindex="0" role="button" aria-label="Flip card">
+      <div class="card-in">
+        <div class="face front">${fc.dir === "struct" ? structFace : nameFace}<div class="hint">Tap or press Space to flip</div></div>
+        <div class="face back">${detail}</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn bad" id="fc-no">Still learning<kbd>←</kbd></button>
+      <button class="btn good" id="fc-yes">Got it<kbd>→</kbd></button>
+    </div>`;
+  $("#card").onclick = flip;
+  $("#fc-no").onclick = () => answerCard(false);
+  $("#fc-yes").onclick = () => answerCard(true);
+  $("#dir-struct").onclick = () => { fc.dir = "struct"; store.set("dir", "struct"); fc.flipped = false; renderCards(); };
+  $("#dir-name").onclick = () => { fc.dir = "name"; store.set("dir", "name"); fc.flipped = false; renderCards(); };
+}
+function flip() { fc.flipped = !fc.flipped; $("#card").classList.toggle("flipped", fc.flipped); }
+function answerCard(knew) {
+  const id = fc.deck[fc.i];
+  (knew ? fc.known : fc.learning).add(id);
+  fc.i++; fc.flipped = false; renderCards();
+}
+document.addEventListener("keydown", e => {
+  if (mode !== "cards" || fc.i >= fc.deck.length || e.target.closest("button:not(#card)")) return;
+  if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
+  else if (e.key === "ArrowRight") answerCard(true);
+  else if (e.key === "ArrowLeft") answerCard(false);
+});
+
+// ---------- quiz ----------
+const qz = { list: [], i: 0, score: 0, missed: [] };
+function distractors(id, n = 3) {
+  const pool = [...new Set([...CONFUSE[id], ...shuffle(G.map(g => g.id))])].filter(x => x !== id);
+  return pool.slice(0, n);
+}
+function makeQuestion(g, type) {
+  if (type === "struct") return { g, vis: `${molSVG(g, "Mystery structure")}${g.cap ? `<div class="cap">${g.cap}</div>` : ""}`,
+    prompt: "Which functional group is this?", right: g.name, opts: shuffle([g.id, ...distractors(g.id)]).map(id => BY[id].name) };
+  if (type === "example") return { g, vis: `<div class="formula">${esc(g.ex)}</div><div class="cap">${esc(g.exName)}</div>`,
+    prompt: "Which functional group does this molecule contain?", right: g.name, opts: shuffle([g.id, ...distractors(g.id)]).map(id => BY[id].name) };
+  if (type === "ending") {
+    const wrong = shuffle(G.filter(x => x.end !== g.end)).map(x => x.end).filter((v, i, a) => a.indexOf(v) === i).slice(0, 3);
+    return { g, vis: `<div class="big">${g.name}</div>`, prompt: "What name ending goes with this group?", right: g.end, opts: shuffle([g.end, ...wrong]) };
+  }
+  // name -> structure
+  const ids = shuffle([g.id, ...distractors(g.id)]);
+  return { g, vis: `<div class="big">${g.name}</div>`, prompt: "Pick the matching structure.", right: g.id, structOpts: true, opts: ids };
+}
+function startQuiz() {
+  const types = ["struct", "example", "ending", "pick"];
+  qz.list = shuffle(G).slice(0, 12).map((g, i) => makeQuestion(g, types[i % 4]));
+  qz.list = shuffle(qz.list); qz.i = 0; qz.score = 0; qz.missed = [];
+  renderQuiz();
+}
+function renderQuiz() {
+  const st = $("#stage");
+  if (qz.i >= qz.list.length) {
+    const best = Math.max(store.get("quizBest", 0), qz.score); store.set("quizBest", best);
+    st.innerHTML = `<div class="q">
+      <div class="score">${qz.score}<span style="font-size:24px;color:var(--muted)"> / ${qz.list.length}</span></div>
+      <p class="note">Best score: <b>${best} / ${qz.list.length}</b></p>
+      ${qz.missed.length ? `<ul class="missed">${qz.missed.map(q => `<li><b>${q.g.name}</b>: ${esc(q.g.fact)} · ending ${esc(q.g.end)}</li>`).join("")}</ul>` : "<p>Perfect round.</p>"}
+      <div class="actions">
+        ${qz.missed.length ? `<button class="btn primary" id="qz-drill">Drill the ${qz.missed.length} I missed</button>` : ""}
+        <button class="btn" id="qz-again">New quiz</button>
+      </div></div>`;
+    if (qz.missed.length) $("#qz-drill").onclick = () => { resetCards([...new Set(qz.missed.map(q => q.g.id))]); setMode("cards"); };
+    $("#qz-again").onclick = startQuiz;
+    return;
+  }
+  const q = qz.list[qz.i];
+  st.innerHTML = `
+    <div class="bar"><span><span class="num">Question ${qz.i + 1} / ${qz.list.length}</span></span><span class="num">${qz.score} correct</span></div>
+    <div class="track"><i style="width:${(qz.i / qz.list.length) * 100}%"></i></div>
+    <div class="q">
+      <div class="prompt">${q.prompt}</div>
+      <div class="qvis">${q.vis}</div>
+      <div class="opts">${q.opts.map((o, k) => `<button class="opt" data-k="${k}">${q.structOpts ? molSVG(BY[o], "Option " + (k + 1), 0.62) : esc(o)}</button>`).join("")}</div>
+      <div id="qz-after"></div>
+    </div>`;
+  st.querySelectorAll(".opt").forEach(b => b.onclick = () => answerQuiz(q, +b.dataset.k));
+}
+function answerQuiz(q, k) {
+  const ok = q.opts[k] === q.right;
+  if (ok) qz.score++; else qz.missed.push(q);
+  document.querySelectorAll(".opt").forEach((b, i) => {
+    b.disabled = true;
+    if (q.opts[i] === q.right) b.classList.add("right");
+    else if (i === k) b.classList.add("wrong");
+  });
+  $("#qz-after").innerHTML = `<p class="explain"><b style="color:var(--${ok ? "good" : "bad"})">${ok ? "Correct." : "Not quite."}</b> ${q.g.name}: ${esc(q.g.fact)}. Ending ${esc(q.g.end)}, e.g. ${esc(q.g.ex)} (${esc(q.g.exName)}).</p>
+    <div class="actions"><button class="btn primary" id="qz-next">${qz.i + 1 < qz.list.length ? "Next question" : "See results"}</button></div>`;
+  $("#qz-next").onclick = () => { qz.i++; renderQuiz(); };
+  $("#qz-next").focus();
+}
+
+// ---------- match ----------
+const mt = { tiles: [], sel: null, left: 0, t0: 0, penalty: 0, timer: null };
+function startMatch() {
+  clearInterval(mt.timer);
+  const picks = shuffle(G).slice(0, 6);
+  mt.tiles = shuffle(picks.flatMap(g => [{ id: g.id, kind: "s" }, { id: g.id, kind: "n" }]));
+  mt.sel = null; mt.left = picks.length; mt.penalty = 0; mt.t0 = 0;
+  const best = store.get("matchBest", null);
+  $("#stage").innerHTML = `
+    <div class="bar"><span>Pair each structure with its name. A wrong pair adds 1 second.</span>
+      <span>${best ? `Best <span class="num">${best.toFixed(1)}s</span> · ` : ""}<span class="timer" id="mt-time">0.0s</span></span></div>
+    <div class="grid">${mt.tiles.map((t, i) => `<button class="tile" data-i="${i}">${t.kind === "s" ? molSVG(BY[t.id], "Structure", 0.62) : BY[t.id].name}</button>`).join("")}</div>
+    <div class="actions"><button class="btn" id="mt-new">Shuffle new set</button></div>`;
+  document.querySelectorAll(".tile").forEach(b => b.onclick = () => pickTile(+b.dataset.i, b));
+  $("#mt-new").onclick = startMatch;
+}
+function tick() { const s = (performance.now() - mt.t0) / 1000 + mt.penalty; const el = $("#mt-time"); if (el) el.textContent = s.toFixed(1) + "s"; return s; }
+function pickTile(i, el) {
+  if (!mt.t0) { mt.t0 = performance.now(); mt.timer = setInterval(tick, 100); }
+  document.querySelectorAll(".tile.miss").forEach(t => t.classList.remove("miss"));
+  if (mt.sel === null) { mt.sel = i; el.classList.add("sel"); return; }
+  if (mt.sel === i) { el.classList.remove("sel"); mt.sel = null; return; }
+  const a = mt.tiles[mt.sel], b = mt.tiles[i];
+  const prev = document.querySelector(`.tile[data-i="${mt.sel}"]`);
+  prev.classList.remove("sel");
+  if (a.id === b.id && a.kind !== b.kind) {
+    prev.classList.add("done"); el.classList.add("done"); mt.left--;
+    if (!mt.left) finishMatch();
+  } else {
+    mt.penalty += 1; prev.classList.add("miss"); el.classList.add("miss");
+  }
+  mt.sel = null;
+}
+function finishMatch() {
+  clearInterval(mt.timer);
+  const s = tick(), best = store.get("matchBest", null), rec = best === null || s < best;
+  if (rec) store.set("matchBest", s);
+  $("#stage").innerHTML = `<div class="q">
+    <div class="score">${s.toFixed(1)}s</div>
+    <p>${rec ? "New best time." : `Best time: <b>${best.toFixed(1)}s</b>`}${mt.penalty ? ` Includes ${mt.penalty}s of penalties.` : ""}</p>
+    <div class="actions"><button class="btn primary" id="mt-again">Play again</button></div></div>`;
+  $("#mt-again").onclick = startMatch;
+}
+
+renderCards();
+</script>
+
+</body></html>

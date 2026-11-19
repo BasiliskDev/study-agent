@@ -1,0 +1,276 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Study Dashboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* Layout: two columns on desktop (to-dos wide, schedule narrow), one column on phones. Carries over the local dashboard's look. */
+  :root {
+    --bg: #f6f5f1; --panel: #ffffff; --ink: #1c1c1a; --muted: #6b6a64; --line: #e6e3dc;
+    --accent: #2f5bea; --danger: #c93a25; --warn: #b57608; --ok: #2b8453; --exam: #7c35e8;
+    --chip: #f0eee8; --toast-bg: #1c1c1a; --toast-ink: #f6f5f1;
+    --font-ui: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-num: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --panel: #1d1d1b; --ink: #ecebe6; --muted: #9a998f; --line: #2d2d2a;
+      --accent: #7b9bff; --danger: #ff7a66; --warn: #f0b441; --ok: #5fcf8f; --exam: #b88cff;
+      --chip: #262624; --toast-bg: #ecebe6; --toast-ink: #141413; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --panel: #1d1d1b; --ink: #ecebe6; --muted: #9a998f; --line: #2d2d2a;
+    --accent: #7b9bff; --danger: #ff7a66; --warn: #f0b441; --ok: #5fcf8f; --exam: #b88cff;
+    --chip: #262624; --toast-bg: #ecebe6; --toast-ink: #141413; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font: 15px/1.45 var(--font-ui); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding-block: 28px 80px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 16px; }
+  h1 { font-size: 26px; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); margin-right: 6px; vertical-align: 1px; }
+  .live.stale { background: var(--warn); }
+  .sources { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .src { font-size: 12px; padding: 3px 9px; border-radius: 99px; background: var(--chip); color: var(--muted); }
+  .src.ok::before { content: "● "; color: var(--ok); }
+  .src.bad::before { content: "● "; color: var(--warn); }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: start; }
+  @media (min-width: 860px) { .grid { grid-template-columns: 1.6fr 1fr; } }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
+  .group + .group { margin-top: 18px; }
+  .ghead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0; }
+  h2 .n { font-family: var(--font-num); color: var(--ink); margin-left: 6px; font-variant-numeric: tabular-nums; }
+  .group.overdue h2, .group.overdue h2 .n { color: var(--danger); }
+  .group.overdue { background: color-mix(in srgb, var(--danger) 5%, transparent); border: 1px solid color-mix(in srgb, var(--danger) 22%, transparent);
+    border-radius: 10px; padding: 10px 12px; margin: -4px -6px 0; }
+  .item { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px 0; border-top: 1px solid var(--line); }
+  .group.overdue .item { grid-template-columns: minmax(0, 1fr) auto; border-top-color: color-mix(in srgb, var(--danger) 16%, transparent); }
+  .ghead + .item { border-top: none; }
+  .item input { margin: 3px 0 0; width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+  .title { font-weight: 600; overflow-wrap: anywhere; }
+  .title a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .sub { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+  .tag { font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 6px; margin-left: 6px; vertical-align: 1px; }
+  .tag.exam { background: color-mix(in srgb, var(--exam) 16%, transparent); color: var(--exam); }
+  .when { text-align: right; font-size: 13px; white-space: nowrap; }
+  .when b { display: block; font-family: var(--font-num); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .when.soon b, .group.overdue .when b { color: var(--danger); }
+  .item.done .title, .item.done .sub { opacity: .45; text-decoration: line-through; }
+  .right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  button { font: 600 12px/1 var(--font-ui); border-radius: 8px; padding: 7px 10px; cursor: pointer; border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+  button:hover { border-color: var(--muted); }
+  button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button:disabled { opacity: .5; cursor: default; }
+  .btn-done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+  .btn-done:hover { background: color-mix(in srgb, var(--ok) 10%, transparent); border-color: var(--ok); }
+  .btn-all { background: var(--danger); border-color: var(--danger); color: var(--panel); }
+  .btn-all:hover { filter: brightness(1.08); border-color: var(--danger); }
+  .confirm { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); padding: 8px 0 4px; }
+  .empty { color: var(--muted); font-size: 14px; padding: 6px 0; }
+  details.fin { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  details.fin summary { cursor: pointer; padding: 4px 0; }
+  .finrow { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); }
+  .finrow span { min-width: 0; overflow-wrap: anywhere; }
+  .finrow button { padding: 5px 8px; font-weight: 500; color: var(--muted); }
+  .ev { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 8px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .day + .ev { border-top: none; }
+  .ev .t { font-family: var(--font-num); font-size: 12px; color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
+  .ev.now .t { color: var(--accent); }
+  .ev.exam { color: var(--exam); font-weight: 600; }
+  .day { font-weight: 600; font-size: 13px; margin: 14px 0 2px; }
+  #cal h2 { margin-bottom: 4px; }
+  .notice { background: color-mix(in srgb, var(--warn) 12%, transparent); color: var(--ink); padding: 10px 14px; border-radius: 10px; margin-bottom: 16px; font-size: 14px; }
+  .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    background: var(--toast-bg); color: var(--toast-ink); border-radius: 10px; padding: 10px 12px 10px 14px; font-size: 14px;
+    display: flex; align-items: center; gap: 12px; box-shadow: 0 6px 24px rgb(0 0 0 / .25); max-width: calc(100% - 32px); z-index: 20; }
+  .toast button { background: transparent; color: inherit; border-color: color-mix(in srgb, var(--toast-ink) 40%, transparent); }
+  @media (max-width: 520px) {
+    .item { grid-template-columns: 22px minmax(0, 1fr); }
+    .group.overdue .item { grid-template-columns: minmax(0, 1fr); }
+    .when, .right { grid-column: 2; text-align: left; align-items: flex-start; }
+    .group.overdue .when, .group.overdue .right { grid-column: 1; }
+    .right { flex-direction: row; align-items: center; justify-content: space-between; width: 100%; }
+  }
+  @media (prefers-reduced-motion: no-preference) { .item, .finrow { transition: opacity .2s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>What's next</h1>
+    <div class="meta"><span id="dot" class="live stale"></span><span id="updated">Waiting for the first sync</span></div>
+  </header>
+  <div id="notice" class="notice" hidden></div>
+  <div id="sources" class="sources"></div>
+  <div class="grid">
+    <section id="todo">
+      <div class="group"><div class="ghead"><h2>To-dos</h2></div>
+        <div class="empty">Your assignments, exams and readings from Canvas, Gradescope, Aktiv, WileyPLUS, Calendar and Slack show up here after the hourly sync runs.</div></div>
+    </section>
+    <section id="cal"><h2>Schedule</h2><div class="empty">Upcoming classes and events appear here after the first sync.</div></section>
+  </div>
+</div>
+<div id="toast" class="toast" hidden role="status"><span id="toastMsg"></span><button id="toastUndo" type="button">Undo</button></div>
+
+<script>
+const TZ = "America/New_York";
+let DATA = null, DONE = {}, db = null, canWrite = true, confirmAll = false;
+let pending = Promise.resolve(), toastTimer = null, lastUndo = null;
+
+const fmtTime = d => d.toLocaleTimeString("en-US", {timeZone: TZ, hour: "numeric", minute: "2-digit"});
+const fmtDay = d => d.toLocaleDateString("en-US", {timeZone: TZ, weekday: "short", month: "short", day: "numeric"});
+const dayKey = d => d.toLocaleDateString("en-CA", {timeZone: TZ});
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeId = id => String(id).replace(/[^A-Za-z0-9_\-.~:@+]/g, "_").slice(0, 190) || "_";
+
+function rel(ms) {
+  const m = Math.round(ms / 60000), a = Math.abs(m);
+  const s = a < 60 ? `${a}m` : a < 1440 ? `${Math.floor(a/60)}h ${a%60}m` : `${Math.floor(a/1440)}d ${Math.floor((a%1440)/60)}h`;
+  return m < 0 ? `${s} ago` : `in ${s}`;
+}
+function bucket(due, now) {
+  const today = dayKey(now), d = dayKey(due), tmr = dayKey(new Date(now.getTime() + 86400000));
+  if (due < now) return "Overdue";
+  if (d === today) return "Today";
+  if (d === tmr) return "Tomorrow";
+  if (due - now < 7 * 86400000) return "This week";
+  return "Later";
+}
+const isDone = it => !!DONE[safeId(it.id)];
+
+function render() {
+  if (!DATA) return;
+  const now = new Date();
+  const upd = DATA.updated_at ? new Date(DATA.updated_at) : null;
+  document.getElementById("updated").textContent = upd ? `Synced ${fmtDay(upd)} ${fmtTime(upd)} (${rel(upd - now)})` : "Not synced yet";
+  document.getElementById("dot").classList.toggle("stale", !upd || now - upd > 2.5 * 3600000);
+  document.getElementById("sources").innerHTML = Object.entries(DATA.sources || {}).map(([k, v]) =>
+    `<span class="src ${v.ok ? "ok" : "bad"}" title="${esc(v.note)}">${esc(k)}${v.ok ? "" : " – " + esc(v.note)}</span>`).join("");
+
+  const order = ["Overdue", "Today", "Tomorrow", "This week", "Later"];
+  const groups = Object.fromEntries(order.map(k => [k, []]));
+  const finished = [];
+  for (const it of DATA.items || []) {
+    const due = new Date(it.due);
+    if (due < now && (it.status === "submitted" || isDone(it))) { finished.push(it); continue; }
+    groups[bucket(due, now)].push(it);
+  }
+  const byDue = (a, b) => new Date(a.due) - new Date(b.due);
+  let html = "";
+  for (const g of order) {
+    const list = groups[g].sort(byDue);
+    if (!list.length && g !== "Today") continue;
+    const od = g === "Overdue";
+    if (!od && confirmAll && !groups.Overdue.length) confirmAll = false;
+    html += `<div class="group ${od ? "overdue" : ""}"><div class="ghead"><h2>${g}<span class="n">${list.length}</span></h2>`;
+    if (od && canWrite && list.length > 1 && !confirmAll) html += `<button class="btn-all" type="button" id="markAll">Mark all done</button>`;
+    html += `</div>`;
+    if (od && confirmAll) html += `<div class="confirm">Mark all ${list.length} overdue items done? <button class="btn-all" type="button" id="confirmYes">Yes, mark ${list.length} done</button><button type="button" id="confirmNo">Cancel</button></div>`;
+    html += list.length ? list.map(it => itemHTML(it, now, od)).join("") : `<div class="empty">Nothing due today.</div>`;
+    html += `</div>`;
+  }
+  if (finished.length) {
+    finished.sort(byDue).reverse();
+    html += `<details class="fin" id="finished"><summary>${finished.length} finished or submitted</summary>${finished.map(it =>
+      `<div class="finrow"><span>✓ ${esc(it.course)} – ${esc(it.title)}</span>${isDone(it) && canWrite ? `<button type="button" data-undo="${esc(it.id)}">Move back</button>` : ""}</div>`).join("")}</details>`;
+  }
+  const open = document.getElementById("finished")?.open;
+  document.getElementById("todo").innerHTML = html;
+  if (open) document.getElementById("finished").open = true;
+
+  const evs = (DATA.events || []).map(e => ({...e, s: new Date(e.start), e2: new Date(e.end)}))
+    .filter(e => e.e2 > now).sort((a, b) => a.s - b.s);
+  let cal = `<h2>Schedule</h2>`, last = "";
+  for (const e of evs.slice(0, 18)) {
+    const k = dayKey(e.s);
+    if (k !== last) { cal += `<div class="day">${k === dayKey(now) ? "Today" : fmtDay(e.s)}</div>`; last = k; }
+    const cls = [e.s <= now ? "now" : "", /exam|midterm|quiz/i.test(e.title) ? "exam" : ""].join(" ");
+    cal += `<div class="ev ${cls}"><div class="t">${fmtTime(e.s)}</div><div>${esc(e.title)}${e.location ? `<div class="sub">${esc(e.location)}</div>` : ""}</div></div>`;
+  }
+  if (!evs.length) cal += `<div class="empty">No upcoming events.</div>`;
+  document.getElementById("cal").innerHTML = cal;
+  wire();
+}
+
+function itemHTML(it, now, overdue) {
+  const due = new Date(it.due), done = isDone(it) || it.status === "submitted";
+  const tags = (it.type === "exam" ? `<span class="tag exam">EXAM</span>` : "");
+  const title = it.url ? `<a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.title)}</a>` : esc(it.title);
+  const soon = !done && due - now < 24 * 3600000;
+  const body = `<div><div class="title">${title}${tags}</div><div class="sub">${esc(it.course)} · ${esc(it.source)}${it.notes ? " · " + esc(it.notes) : ""}</div></div>`;
+  const when = `<div class="when ${soon ? "soon" : ""}"><b>${rel(due - now)}</b>${fmtDay(due)} ${fmtTime(due)}</div>`;
+  if (overdue) {
+    return `<div class="item">${body}<div class="right">${when}${canWrite ? `<button class="btn-done" type="button" data-done="${esc(it.id)}">✓ Mark done</button>` : ""}</div></div>`;
+  }
+  const box = it.status === "submitted"
+    ? `<input type="checkbox" checked disabled aria-label="Submitted">`
+    : `<input type="checkbox" data-toggle="${esc(it.id)}" ${isDone(it) ? "checked" : ""} ${canWrite ? "" : "disabled"} aria-label="Mark done">`;
+  return `<div class="item ${done ? "done" : ""}">${box}${body}${when}</div>`;
+}
+
+function wire() {
+  document.querySelectorAll("[data-done]").forEach(b => b.onclick = () => setDone([b.dataset.done], true));
+  document.querySelectorAll("[data-undo]").forEach(b => b.onclick = () => setDone([b.dataset.undo], false));
+  document.querySelectorAll("input[data-toggle]").forEach(cb => cb.onchange = () => setDone([cb.dataset.toggle], cb.checked));
+  const all = document.getElementById("markAll"); if (all) all.onclick = () => { confirmAll = true; render(); };
+  const no = document.getElementById("confirmNo"); if (no) no.onclick = () => { confirmAll = false; render(); };
+  const yes = document.getElementById("confirmYes"); if (yes) yes.onclick = () => {
+    const now = new Date();
+    const ids = (DATA.items || []).filter(it => new Date(it.due) < now && it.status !== "submitted" && !isDone(it)).map(it => it.id);
+    confirmAll = false; setDone(ids, true);
+  };
+}
+
+function setDone(ids, done) {
+  if (!db || !ids.length) return;
+  const at = new Date().toISOString();
+  const prev = ids.map(id => [id, DONE[safeId(id)]]);
+  for (const id of ids) { if (done) DONE[safeId(id)] = {id, at}; else delete DONE[safeId(id)]; }
+  render();
+  lastUndo = () => setDone(ids, !done);
+  const n = ids.length;
+  showToast(done ? (n === 1 ? "Marked done" : `Marked ${n} items done`) : (n === 1 ? "Moved back to your list" : `Moved ${n} items back`));
+  for (const id of ids) {
+    const ref = db.collection("done").doc(safeId(id));
+    pending = pending.then(() => done ? ref.set({id, at}) : ref.delete()).catch(err => {
+      for (const [pid, pv] of prev) { if (pv) DONE[safeId(pid)] = pv; else delete DONE[safeId(pid)]; }
+      if (err && err.code === "invalid_argument") canWrite = false;
+      render();
+      showToast(err && err.code === "invalid_argument" ? "You can view this dashboard but not change it." : "Couldn't save that change. Check your connection and try again.", false);
+    });
+  }
+}
+
+function showToast(msg, undo = true) {
+  const t = document.getElementById("toast");
+  document.getElementById("toastMsg").textContent = msg;
+  document.getElementById("toastUndo").hidden = !undo;
+  t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 6000);
+}
+document.getElementById("toastUndo").onclick = () => { document.getElementById("toast").hidden = true; if (lastUndo) { const u = lastUndo; lastUndo = null; u(); } };
+
+function notice(msg) { const n = document.getElementById("notice"); n.textContent = msg; n.hidden = !msg; }
+
+(async () => {
+  db = await (window.claude?.use ? window.claude.use("db") : null);
+  if (!db) { notice("Open this dashboard in Claude while signed in to load your to-dos and check items off."); return; }
+  const user = await window.claude.use("user");
+  if (user && user.can && user.can("data.write") === false) canWrite = false;
+  db.doc("dash/latest").onSnapshot(snap => {
+    if (!snap.exists) return;
+    DATA = snap.data(); notice(""); render();
+  }, () => notice("Lost the live connection. Reload the page to reconnect."));
+  db.collection("done").onSnapshot(snap => {
+    const next = {};
+    for (const d of snap.docs) next[d.id] = d.data();
+    DONE = next; render();
+  });
+})();
+setInterval(render, 60000);
+</script>
+
+</body></html>

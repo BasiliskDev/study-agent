@@ -1,0 +1,20 @@
+{
+  "name": "study-agent",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "npm run dev -w @study/web",
+    "build": "npm run build -w @study/web",
+    "test": "vitest run",
+    "typecheck": "tsc -p packages/schema && tsc -p packages/canvas && npm run typecheck -w @study/web",
+    "mcp": "tsx packages/canvas/src/bin.ts",
+    "db:generate": "npm run db:generate -w @study/web"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3",
+    "vitest": "^5.1.0"
+  }
+}

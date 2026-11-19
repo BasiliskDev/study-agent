@@ -1,0 +1,1468 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>W3134 Exam 1 Drills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: one working column like an IDE pane — header strip, mode tabs, topic chips, one large stage card that changes per mode.
+   Growth-class colors run cool to hot (O(1) green → 2ⁿ red) and tint every complexity that appears in a question or answer. */
+:root {
+  --bg: #e8ecf3;
+  --dot: #c9d1de;
+  --panel: #ffffff;
+  --ink: #141b2b;
+  --muted: #586379;
+  --line: #ccd4e1;
+  --accent: #1f5fbf;
+  --accent-soft: #dde8f8;
+  --code-bg: #f3f5f9;
+  --good: #1d7a4b;
+  --good-soft: #dcf0e4;
+  --bad: #b3362c;
+  --bad-soft: #f7e0dc;
+  --g-const: #1d8a5a; --g-log: #138196; --g-sqrt: #3a6fd1; --g-lin: #5a4fd0; --g-nlog: #9a46b8; --g-poly: #c4621b; --g-exp: #c2332b;
+  --k-kw: #1f4fbf; --k-str: #2e7d3a; --k-num: #a8541a; --k-com: #7a8496;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141d; --dot: #1d2533; --panel: #161d29; --ink: #e3e8f1; --muted: #93a0b5; --line: #2a3446;
+    --accent: #6ea2ff; --accent-soft: #1c2b45; --code-bg: #111722;
+    --good: #5ccf8e; --good-soft: #163426; --bad: #f2877a; --bad-soft: #3c1f1b;
+    --g-const: #4fd08e; --g-log: #44c4d8; --g-sqrt: #6f9dff; --g-lin: #9a90ff; --g-nlog: #d18ae8; --g-poly: #f2a05a; --g-exp: #ff7b70;
+    --k-kw: #86aefc; --k-str: #8fd49b; --k-num: #f0ad6e; --k-com: #7d889c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141d; --dot: #1d2533; --panel: #161d29; --ink: #e3e8f1; --muted: #93a0b5; --line: #2a3446;
+  --accent: #6ea2ff; --accent-soft: #1c2b45; --code-bg: #111722;
+  --good: #5ccf8e; --good-soft: #163426; --bad: #f2877a; --bad-soft: #3c1f1b;
+  --g-const: #4fd08e; --g-log: #44c4d8; --g-sqrt: #6f9dff; --g-lin: #9a90ff; --g-nlog: #d18ae8; --g-poly: #f2a05a; --g-exp: #ff7b70;
+  --k-kw: #86aefc; --k-str: #8fd49b; --k-num: #f0ad6e; --k-com: #7d889c; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.3px);
+  background-size: 22px 22px;
+  color: var(--ink); font: 15px/1.55 var(--body);
+  padding-inline: 16px; padding-block: 24px 56px;
+}
+.wrap { max-width: 780px; margin: 0 auto; display: grid; gap: 16px; }
+header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 10px 20px; }
+h1 { font: 800 clamp(28px, 6vw, 40px)/1 var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.course { font: 500 12px/1.4 var(--mono); color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font: 500 12px var(--mono); color: var(--muted); max-width: 360px; }
+.legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; background: currentColor; }
+.g-const { color: var(--g-const); } .g-log { color: var(--g-log); } .g-sqrt { color: var(--g-sqrt); } .g-lin { color: var(--g-lin); }
+.g-nlog { color: var(--g-nlog); } .g-poly { color: var(--g-poly); } .g-exp { color: var(--g-exp); }
+.cx { font-family: var(--mono); font-weight: 600; font-size: .94em; white-space: nowrap; }
+
+nav { display: flex; flex-wrap: wrap; gap: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 4px; width: fit-content; max-width: 100%; }
+nav button { font: 600 14px var(--body); border: 0; background: none; color: var(--muted); padding: 8px 14px; border-radius: 9px; cursor: pointer; }
+nav button[aria-selected="true"] { background: var(--ink); color: var(--panel); }
+button:focus-visible, .opt:focus-visible, .tile:focus-visible, .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.topics { display: flex; flex-wrap: wrap; gap: 6px; }
+.topics button { font: 500 13px var(--body); border: 1px solid var(--line); background: var(--panel); color: var(--muted); padding: 5px 11px; border-radius: 99px; cursor: pointer; }
+.topics button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); border-color: var(--accent); }
+.topics .n { font: 500 11px var(--mono); opacity: .7; margin-left: 4px; }
+
+.stage { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; min-width: 0; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 14px; font-size: 13px; color: var(--muted); }
+.num { font: 600 13px var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.track { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 18px; }
+.track i { display: block; height: 100%; background: var(--accent); transition: width .25s; }
+.tag { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--accent); }
+.src { font: 400 12px var(--mono); color: var(--muted); }
+
+pre.code { margin: 0; background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font: 400 13px/1.55 var(--mono); color: var(--ink); text-align: left; tab-size: 4; }
+.kw { color: var(--k-kw); font-weight: 500; } .st { color: var(--k-str); } .nm { color: var(--k-num); } .cm { color: var(--k-com); font-style: italic; }
+code { font: 500 .92em var(--mono); background: var(--code-bg); border: 1px solid var(--line); padding: 0 4px; border-radius: 4px; }
+.opt code { background: transparent; border: 0; padding: 0; }
+
+/* flashcards */
+.card { perspective: 1400px; cursor: pointer; border-radius: 14px; }
+.card-in { position: relative; min-height: 300px; transition: transform .45s cubic-bezier(.3,.7,.3,1); transform-style: preserve-3d; display: grid; }
+.card.flipped .card-in { transform: rotateY(180deg); }
+.face { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); display: grid; align-content: center; gap: 12px; padding: 24px 20px 40px; text-align: center; min-width: 0; position: relative; }
+.face.back { transform: rotateY(180deg); background: var(--panel); text-align: left; }
+.face .hint { position: absolute; bottom: 12px; left: 0; right: 0; font-size: 12px; color: var(--muted); text-align: center; }
+.front-text { font: 700 clamp(20px, 4.4vw, 27px)/1.25 var(--display); letter-spacing: -0.01em; text-wrap: balance; }
+.back-text { font-size: 15px; }
+.back-text p { margin: 0 0 8px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.btn { font: 600 14px var(--body); border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 10px 16px; border-radius: 10px; cursor: pointer; flex: 1 1 150px; }
+.btn.good { border-color: var(--good); color: var(--good); }
+.btn.bad { border-color: var(--bad); color: var(--bad); }
+.btn.primary { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.btn kbd { font: 500 11px var(--mono); opacity: .6; margin-left: 6px; }
+.btn[disabled] { opacity: .45; cursor: default; }
+
+/* quiz */
+.q { display: grid; gap: 14px; min-width: 0; }
+.prompt { font: 600 17px/1.45 var(--body); text-wrap: pretty; }
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 8px; }
+.opt { font: 500 15px/1.4 var(--body); text-align: left; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; cursor: pointer; display: flex; gap: 10px; align-items: baseline; min-width: 0; overflow-wrap: anywhere; }
+.opt .letter { font: 600 12px var(--mono); color: var(--muted); flex: none; }
+.opt:hover:not([disabled]) { border-color: var(--accent); }
+.opt[disabled] { cursor: default; }
+.opt.chosen { border-color: var(--accent); background: var(--accent-soft); }
+.opt.right { background: var(--good-soft); border-color: var(--good); }
+.opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+.explain { font-size: 14.5px; color: var(--ink); border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; margin: 0; }
+.explain .v { font-weight: 700; }
+.score { font: 800 56px/1 var(--display); font-variant-numeric: tabular-nums; }
+.score small { font-size: 24px; color: var(--muted); font-weight: 600; }
+.review { display: grid; gap: 14px; margin: 6px 0 0; padding: 0; list-style: none; }
+.review li { border-top: 1px solid var(--line); padding-top: 12px; display: grid; gap: 6px; min-width: 0; }
+.review .yours { color: var(--bad); }
+.review .ans { color: var(--good); font-weight: 600; }
+
+/* topic breakdown */
+.breakdown { display: grid; gap: 8px; }
+.brow { display: grid; grid-template-columns: minmax(0, 130px) 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+.brow .meter { height: 8px; background: var(--line); border-radius: 8px; overflow: hidden; }
+.brow .meter i { display: block; height: 100%; border-radius: 8px; }
+
+/* match */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 8px; }
+.tile { min-height: 92px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); display: grid; place-items: center; padding: 10px; cursor: pointer; font: 500 13.5px/1.35 var(--body); text-align: center; transition: opacity .3s, transform .15s; min-width: 0; overflow-wrap: anywhere; }
+.tile.cxt { font: 700 19px var(--mono); background: var(--panel); }
+.tile code { font-size: 12px; }
+.tile.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+.tile.done { opacity: 0; pointer-events: none; }
+.tile.miss { border-color: var(--bad); background: var(--bad-soft); animation: shake .3s; }
+@keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+.timer { font: 600 20px var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+
+.intro { display: grid; gap: 12px; }
+.intro h2 { font: 800 26px/1.1 var(--display); margin: 0; }
+.intro p { margin: 0; max-width: 62ch; }
+.note { font-size: 13px; color: var(--muted); margin: 0; }
+.note b { color: var(--ink); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .card-in, .track i, .tile { transition: none; } .tile.miss { animation: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="course">COMS W3134 · Exam 1 · Mon Oct 5 · 60 min</div>
+      <h1>Exam 1 Drills</h1>
+    </div>
+    <div class="legend" aria-label="Growth class colors, slowest to fastest">
+      <span class="g-const">1</span><span class="g-log">lg n</span><span class="g-sqrt">√n</span><span class="g-lin">n</span><span class="g-nlog">n lg n</span><span class="g-poly">n², n³</span><span class="g-exp">2ⁿ</span>
+    </div>
+  </header>
+
+  <nav role="tablist" aria-label="Mode">
+    <button role="tab" aria-selected="true" data-mode="cards">Flashcards</button>
+    <button role="tab" aria-selected="false" data-mode="quiz">Quiz</button>
+    <button role="tab" aria-selected="false" data-mode="match">Match</button>
+    <button role="tab" aria-selected="false" data-mode="exam">Mock exam</button>
+  </nav>
+
+  <div class="topics" id="topics" role="group" aria-label="Topics"></div>
+
+  <section class="stage" id="stage" aria-live="polite"></section>
+
+  <p class="note">Built from the Sep 9 – Sep 30 lectures on CourseWorks (Java review, math review, recursion, search, orders of growth, recurrences, Master Theorem, array lists and linked lists), the four recitations, the complexity lab, and Dr. B's Exam 1 papers from Fall 2023, Spring 2024, Fall 2024 and Fall 2025. Stacks, queues, trees and postfix appeared on older Exam 1s but come after Oct 5 this term, so they are left out.</p>
+</div>
+
+<script>
+// ---------- helpers ----------
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const c = s => `<code>${esc(s)}</code>`;
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("w3134:" + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("w3134:" + k, JSON.stringify(v)); } catch {} },
+};
+
+function hl(code) {
+  const re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])')|\b(public|private|protected|static|final|void|int|double|float|long|short|char|boolean|return|if|else|for|while|do|new|class|interface|implements|extends|try|catch|finally|throw|throws|null|true|false|this|abstract|import|break|continue|super|package)\b|\b(\d+(?:\.\d+)?[LF]?)\b/g;
+  let out = "", last = 0, m;
+  while ((m = re.exec(code))) {
+    out += esc(code.slice(last, m.index));
+    const cls = m[1] ? "cm" : m[2] ? "st" : m[3] ? "kw" : "nm";
+    out += `<span class="${cls}">${esc(m[0])}</span>`;
+    last = re.lastIndex;
+  }
+  return out + esc(code.slice(last));
+}
+const pre = code => `<pre class="code">${hl(code.replace(/^\n+|\s+$/g, ""))}</pre>`;
+
+// colour complexity expressions like Θ(n lg n) by growth class
+function gclass(inner) {
+  const s = inner.replace(/<[^>]+>/g, "").replace(/\s/g, "");
+  if (/^(2ⁿ|2\^n|10ⁿ|nⁿ|3ⁿ|φⁿ)$/.test(s)) return "g-exp";
+  if (/n[²³]|n3\/2/.test(s)) return "g-poly";
+  if (/^n(lg|log|ln)/.test(s)) return "g-nlog";
+  if (/√|1\/3|1\/2/.test(s)) return "g-sqrt";
+  if (/^(lg|log)/.test(s)) return "g-log";
+  if (s === "1") return "g-const";
+  if (s === "n") return "g-lin";
+  return "";
+}
+function fmt(html) {
+  return html.replace(/([ΘOΩ])\(((?:[^()]|<[^>]*>)*?(?:\([^()]*\))?(?:[^()]|<[^>]*>)*?)\)(?![^<]*<\/code>)/g,
+    (m, sym, inner) => { const g = gclass(inner); return `<span class="cx ${g}">${sym}(${inner})</span>`; });
+}
+
+// ---------- topics ----------
+const TOPICS = {
+  java: "Bash & Java",
+  math: "Math review",
+  rec: "Recursion",
+  search: "Searching",
+  big: "Asymptotics",
+  recur: "Recurrences",
+  lists: "Lists & iterators",
+};
+
+// ---------- question bank ----------
+// t: topic · q: prompt (HTML) · code: optional Java · o: options (HTML), first listed is correct unless a is set · ex: explanation · src: where it comes from
+const Q = [
+// ===== Bash & Java =====
+{ id: "j1", t: "java", src: "Exam 1 Fall 2023 #1", q: `The working directory contains ${c("Main.java")} and ${c("README.md")}. Which command compiles every Java source file and then runs ${c("Main")} with the arguments 3 and 5?`,
+  o: [c("javac *.java && java Main 3 5"), c("java Main.java 3 5 && javac *.java"), c("javac Main.java && java Main 3, 5"), c("javac *.java && java Main.class 3 5")],
+  ex: `${c("javac")} takes source files (wildcards allowed). ${c("java")} takes the class name with no extension, and arguments are separated by spaces.` },
+{ id: "j2", t: "java", src: "Bash Commands handout", q: `Your working directory is ${c("/home/tony/coms3134/hw2/src")}. You run ${c("cd ../..")} and then ${c("pwd")}. What prints?`,
+  o: [c("/home/tony/coms3134"), c("/home/tony/coms3134/hw2"), c("/home/tony"), c("/coms3134")],
+  ex: `Each ${c("..")} climbs one level: src → hw2 → coms3134.` },
+{ id: "j3", t: "java", src: "Exam 1 Fall 2024 #1.3", q: `${c("Grading.java")} has a compile error and the folder has no ${c(".class")} files. What happens when you run ${c("javac Grading.java")} followed by ${c("java Grading")}?`,
+  o: ["Both fail: javac reports the error and creates no class file, so java cannot find Grading", "javac fails, but java runs a cached version of the program", "javac fixes the error automatically and the program runs", "javac succeeds with a warning and the program crashes at runtime"],
+  ex: `A compile error means no ${c("Grading.class")} is produced, and ${c("java")} only runs compiled class files.` },
+{ id: "j4", t: "java", src: "Exam 1 Spring 2024 #1.1", q: `The folder ${c("src")} contains ${c("Shelf.java")} and ${c("notes.txt")}. From inside ${c("src")} you run ${c("mv notes.txt ../test")} and then ${c("ls")}. What prints?`,
+  o: [c("Shelf.java"), c("Shelf.java notes.txt"), c("notes.txt"), "Nothing"],
+  ex: `${c("mv")} moves the file out of src. ${c("cp")} would have left a copy behind.` },
+{ id: "j5", t: "java", src: "Bash Commands handout", q: `You run ${c("rmdir build")}, and ${c("build")} still contains ${c("Main.class")}. What happens?`,
+  o: [`It fails, because ${c("rmdir")} only removes empty directories`, "It deletes build and everything inside it", `It deletes ${c("Main.class")} but keeps the folder`, "It moves build to the trash"],
+  ex: `To delete a directory and its contents you need ${c("rm -r build")}.` },
+{ id: "j6", t: "java", src: "Exam 1 Fall 2025 #2 (new program)", code: `
+public class Check {
+    public static void main(String[] args) {
+        if (args.length < 1) { System.out.print("U"); System.exit(1); }
+        int n = 0;
+        try {
+            n = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            System.out.print("N");
+            System.exit(2);
+        }
+        if (n % 2 == 0) System.out.print("E"); else System.out.print("O");
+        if (n > 10) { System.out.print("B"); System.exit(3); }
+        System.exit(0);
+    }
+}`, q: `What is printed, followed by the exit code, for ${c("java Check 12")}?`,
+  o: [c("EB3"), c("E0"), c("EB0"), c("B3")],
+  ex: `12 parses, is even (E), and is greater than 10 (B), then ${c("System.exit(3)")} ends the program before ${c("exit(0)")}.` },
+{ id: "j7", t: "java", src: "Exam 1 Fall 2025 #2 (new program)", code: `
+public class Check {
+    public static void main(String[] args) {
+        if (args.length < 1) { System.out.print("U"); System.exit(1); }
+        int n = 0;
+        try {
+            n = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            System.out.print("N");
+            System.exit(2);
+        }
+        if (n % 2 == 0) System.out.print("E"); else System.out.print("O");
+        if (n > 10) { System.out.print("B"); System.exit(3); }
+        System.exit(0);
+    }
+}`, q: `What is printed, followed by the exit code, for ${c("java Check seven")}?`,
+  o: [c("N2"), c("NO0"), c("N1"), c("U1")],
+  ex: `${c('Integer.parseInt("seven")')} throws NumberFormatException, so the catch prints N and exits with 2 right away.` },
+{ id: "j8", t: "java", src: "Exam 1 Fall 2023 #4, Fall 2025 #2.6", q: "Which statement about Java interfaces is FALSE?",
+  o: ["An interface can declare a constructor", "A class can implement several interfaces", "Variables declared in an interface are public, static and final by default", "Many different classes can implement the same interface"],
+  ex: "Interfaces cannot be instantiated, so they have no constructors. A class can extend only one class but implement any number of interfaces." },
+{ id: "j9", t: "java", src: "Exam 1 Fall 2024 #3", code: `
+interface CSProf {
+    boolean isCool();
+    String favoriteLanguage();
+    String favoriteStudent();
+}
+
+public class DrB implements CSProf {
+    public boolean isCool() { return true; }
+    public String favoriteLanguage() { return "Java"; }
+}`, q: "Which best describes this code?",
+  o: ["DrB does not compile because it does not implement every method of the interface", "It compiles successfully", "The interface does not compile because it is not declared public", "DrB should use extends instead of implements"],
+  ex: `A concrete class that implements an interface must provide every method, here ${c("favoriteStudent()")}. Only an abstract class could leave it out.` },
+{ id: "j10", t: "java", src: "Exam 1 Fall 2024 #4", code: `
+class Box<T extends Comparable<T>> {
+    T item;
+    public Box(T item) { this.item = item; }
+}`, q: `What can a ${c("Box")} hold?`,
+  o: ["Only objects whose class implements Comparable", "Any type of Object", "Only String objects", "Only primitive types"],
+  ex: `The bound ${c("T extends Comparable<T>")} limits T to types that can compare themselves to each other, like String, Integer or the Person class in Search.java.` },
+{ id: "j11", t: "java", src: "Exam 1 Fall 2025 #3.1 · Search.java", code: `
+public static <______> int sequentialSearch(E key, E[] array) {
+    for (int i = 0; i < array.length; i++) {
+        if (array[i].compareTo(key) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}`, q: "What fills the blank so the generic method compiles?",
+  o: [c("E extends Comparable<E>"), c("E implements Comparable<E>"), c("Comparable<E>"), c("E extends Object")],
+  ex: `Generic bounds always use ${c("extends")}, even for interfaces. The bound is what lets you call ${c("compareTo")} on an E.` },
+{ id: "j12", t: "java", src: "Java Review slides 16–17", code: `
+String a = "data";
+String b = new String("data");
+System.out.println((a == b) + " " + a.equals(b));`, q: "What prints?",
+  o: [c("false true"), c("true true"), c("true false"), c("false false")],
+  ex: `For objects, ${c("==")} compares references (same object in memory). ${c("equals")} compares the characters. ${c("new String")} forces a separate object.` },
+{ id: "j13", t: "java", src: "Java Review slide 12", code: `
+String s = "java";
+s.toUpperCase();
+System.out.println(s);`, q: "What prints?",
+  o: [c("java"), c("JAVA"), "Compile error", c("null")],
+  ex: `Strings are immutable. ${c("toUpperCase()")} returns a new String, which is thrown away here because it is never assigned.` },
+{ id: "j14", t: "java", src: "Java Review slide 15", q: `What are the values of ${c("26 % 15")}, ${c("7 / 2")} and ${c("Math.pow(2, 3)")}?`,
+  o: [`11, 3, 8.0`, `11, 3.5, 8`, `1, 3, 8.0`, `11, 3, 6.0`],
+  ex: `${c("%")} is the remainder, integer division truncates, and ${c("Math.pow")} returns a double. Java has no exponent operator.` },
+{ id: "j15", t: "java", src: "ArrayList slides 10–11", q: "Which line does NOT compile?",
+  o: [c("ArrayList<int> list = new ArrayList<>();"), c("ArrayList<Integer> list = new ArrayList<>();"), c("List<Double> d = new ArrayList<>();"), c("int x = intList.get(0); // intList is a List<Integer>")],
+  ex: "Generics need reference types, so primitives go in through wrapper classes (int → Integer). Auto-unboxing makes the last line legal." },
+{ id: "j16", t: "java", src: "Java Review slide 6", q: "A static (class) method can directly access which variables?",
+  o: ["Local and class (static) variables", "Local, class and instance variables", "Only local variables", "Only instance variables"],
+  ex: `A static method has no ${c("this")}, so it cannot touch instance variables without an object. Instance methods can use all three kinds.` },
+{ id: "j17", t: "java", src: "Java Review slide 7", q: "Which pair is NOT a legal overload?",
+  o: [`${c("int bar(int a)")} and ${c("double bar(int b)")}`, `${c("int bar(int a)")} and ${c("int bar()")}`, `${c("int bar(int a, double b)")} and ${c("int bar(double b, int a)")}`, `${c("Foo()")} and ${c("Foo(int z)")}`],
+  ex: "Overloads need a different signature: number, type or order of parameters. A different return type alone does not count." },
+{ id: "j18", t: "java", src: "Search.java", code: `
+public int compareTo(Person other) {
+    int lastNameComp = lastName.compareTo(other.lastName);
+    if (lastNameComp == 0) {
+        return firstName.compareTo(other.firstName);
+    }
+    return lastNameComp;
+}`, q: `What sign does ${c('new Person("Smith", "Steve").compareTo(new Person("Smith", "Anna"))')} return?`,
+  o: ["A positive int", "A negative int", "0", "It throws an exception"],
+  ex: `Last names tie, so first names decide. "Steve" comes after "Anna", and compareTo returns a positive value when ${c("this")} is greater.` },
+{ id: "j19", t: "java", src: "Java Review slide 26", code: `
+try {
+    int x = 5 / 0;
+    System.out.print("A");
+} catch (ArithmeticException e) {
+    System.out.print("C");
+} finally {
+    System.out.print("F");
+}
+System.out.print("D");`, q: "What prints?",
+  o: [c("CFD"), c("ACFD"), c("CD"), c("CF")],
+  ex: `The division throws before A prints. The catch handles it, finally always runs (unless ${c("System.exit")} is called), and execution continues after the block.` },
+{ id: "j20", t: "java", src: "Java Review slide 27", q: `${c("void load() ____ FileNotFoundException { ... }")}. Which keyword fills the blank?`,
+  o: [c("throws"), c("throw"), c("catch"), c("extends")],
+  ex: `${c("throws")} in a signature declares a checked exception the method may pass up. ${c("throw")} is the statement that actually raises one.` },
+{ id: "j21", t: "java", src: "Java Review slide 19", q: `What is ${c("(5 << 2) + (5 ^ 3)")}?`,
+  o: ["26", "28", "45", "22"],
+  ex: `${c("5 << 2")} shifts left twice, so 5 × 4 = 20. ${c("^")} is bitwise XOR, not a power: 101 ^ 011 = 110 = 6. Total 26.` },
+{ id: "j22", t: "java", src: "Java Review slides 22–23", q: `${c("Animal")} is declared ${c("abstract")}. Which line causes a compile error?`,
+  o: [c("Animal a = new Animal();"), c("Animal a = new Pig();"), c("Pig p = new Pig();"), c("a.sleep(); // a refers to a Pig")],
+  ex: "An abstract class cannot be instantiated, only extended. A superclass reference can point to a subclass object; that is polymorphism." },
+
+// ===== Math review =====
+{ id: "m1", t: "math", src: "Mathematics Review slide 2", q: `${c("2ᴺ + 2ᴺ")} equals:`,
+  o: ["2<sup>N+1</sup>", "2<sup>2N</sup>", "4<sup>N</sup>", "2<sup>N²</sup>"],
+  ex: "2ᴺ + 2ᴺ = 2 · 2ᴺ = 2ᴺ⁺¹. Adding equal powers doubles them; it does not double the exponent." },
+{ id: "m2", t: "math", src: "Mathematics Review slide 3", q: "Simplify 4<sup>lg n</sup>.",
+  o: ["n²", "4n", "2n", "n⁴"],
+  ex: "Use a<sup>log_b x</sup> = x<sup>log_b a</sup>: 4<sup>lg n</sup> = n<sup>lg 4</sup> = n². In the same way 2<sup>lg n</sup> = n." },
+{ id: "m3", t: "math", src: "Mathematics Review slide 3 · Orders of Growth slide 9", q: "log₈ n written in terms of lg n is:",
+  o: ["(lg n) / 3", "3 lg n", "lg n − 3", "(lg n)³"],
+  ex: "Change of base: log₈ n = lg n / lg 8 = lg n / 3. That is why every log base is in the same Θ class, Θ(lg n)." },
+{ id: "m4", t: "math", src: "Mathematics Review slide 9", q: "1 + 2 + 3 + … + (n − 1) equals:",
+  o: ["n(n − 1) / 2", "n(n + 1) / 2", "n² / 2", "(n − 1)(n + 1) / 2"],
+  ex: "The sum to n is n(n+1)/2; stopping one early replaces n with n − 1, giving (n−1)n/2." },
+{ id: "m5", t: "math", src: "Mathematics Review slide 9", q: "1 + 2 + 4 + 8 + … + 2ⁿ equals:",
+  o: ["2<sup>n+1</sup> − 1", "2ⁿ − 1", "2<sup>n+1</sup>", "n · 2ⁿ"],
+  ex: "Geometric series with A = 2: (2<sup>n+1</sup> − 1)/(2 − 1)." },
+{ id: "m6", t: "math", src: "Mathematics Review slide 6", q: "How many subsets does a 10-element set have?",
+  o: ["1024", "100", "3,628,800", "512"],
+  ex: "Each element is in or out: 2¹⁰ = 1024. 10! = 3,628,800 counts permutations." },
+{ id: "m7", t: "math", src: "Mathematics Review slide 6", q: "How many ways can you choose 2 elements from a 5-element set?",
+  o: ["10", "20", "25", "5"],
+  ex: "C(5, 2) = 5! / (2! · 3!) = 10." },
+{ id: "m8", t: "math", src: "Mathematics Review slides 11–13", q: "Sequential search on n items: the key is always present (p = 1) and equally likely to be at any position. What is the average number of comparisons?",
+  o: ["(n + 1) / 2", "n", "n / 2", "lg n"],
+  ex: "C_avg = p(n+1)/2 + n(1 − p). With p = 1 that is (n+1)/2; with p = 0 (never found) it is n." },
+{ id: "m9", t: "math", src: "Mathematics Review slide 10", q: "The harmonic series 1 + 1/2 + 1/3 + … + 1/n is approximately:",
+  o: ["ln n", "n / 2", "√n", "1"],
+  ex: "H(n) ≈ ln n + γ, with γ ≈ 0.577. This is what makes the j += i loop come out to Θ(n lg n)." },
+
+// ===== Recursion =====
+{ id: "r1", t: "rec", src: "Recursion slides 3–4", code: `
+public static int factorial(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}`, q: `In ${c("return n * factorial(n - 1);")}, what is the "${c("n *")}" part called?`,
+  o: ["The pending operation", "The base case", "The accumulator", "The tail call"],
+  ex: "The multiplication has to wait until the recursive call returns, so it stays pending on that stack frame. That is what makes factorial linear recursion rather than tail recursion." },
+{ id: "r2", t: "rec", src: "Recitation 1 · RecursionExercises.java", code: `
+private static int factorialTailHelper(int n, int result) {
+    if (n == 0) {
+        return result;
+    }
+    return factorialTailHelper(n - 1, n * result);
+}`, q: "What type of recursion is this?",
+  o: ["Tail", "Linear", "Tree", "Mutual"],
+  ex: "Nothing is left to do after the recursive call returns. The work happens in the arguments, so the answer is already known at the base case." },
+{ id: "r3", t: "rec", src: "Recursion slides · Recitation 5", code: `
+public static int fib(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}`, q: "What type of recursion is this?",
+  o: ["Tree", "Linear", "Tail", "Mutual"],
+  ex: "Each call makes two recursive calls, and the pending operation of one is another recursive call." },
+{ id: "r4", t: "rec", src: "Exam 1 Fall 2024 #7", code: `
+public static boolean mystery(String s) {
+    return s.length() <= 1 ||
+        (s.charAt(0) == s.charAt(s.length() - 1) &&
+         mystery(s.substring(1, s.length() - 1)));
+}`, q: "What type of recursion is this?",
+  o: ["Tail", "Linear", "Tree", "Mutual"],
+  ex: `The recursive call is the last thing evaluated and its result is returned as is. (It is a palindrome check: ${c('mystery("aibohphobia")')} is true.)` },
+{ id: "r5", t: "rec", src: "Recursion slide 'Tracing Code' (new input)", code: `
+public static int mystery(int n) {
+    return mHelp(n, 0);
+}
+public static int mHelp(int n, int r) {
+    if (n == 0) {
+        return r;
+    }
+    return mHelp(n / 10, r * 10 + n % 10);
+}`, q: `What does ${c("mystery(1203)")} return?`,
+  o: ["3021", "1203", "321", "6"],
+  ex: "mHelp(1203,0) → (120,3) → (12,30) → (1,302) → (0,3021). It reverses the digits with tail recursion." },
+{ id: "r6", t: "rec", src: "Recursion slides · Recitation 5", code: `
+public static int fib(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}`, q: `${c("fib(6)")} returns 8. How many calls to ${c("fib")} happen in total, counting the first one?`,
+  o: ["25", "15", "13", "7"],
+  ex: "Calls C(n) = 1 + C(n−1) + C(n−2) with C(0) = C(1) = 1: 1, 1, 3, 5, 9, 15, 25. The repeated subproblems are why this runs in exponential time." },
+{ id: "r7", t: "rec", src: "Exam 1 Fall 2023 #7 (new array)", code: `
+public static int f(int[] a, int i) {
+    if (i >= a.length) {
+        return 0;
+    }
+    if (a[i] % 2 == 0) {
+        return a[i] + f(a, i + 2);
+    }
+    return f(a, i + 1);
+}
+// int[] a = {3, 4, 5, 6, 8, 10, 1};
+// f(a, 0);`, q: `What does ${c("f(a, 0)")} return, and how many recursive calls are made after the initial one?`,
+  o: ["20, after 4 recursive calls", "28, after 6 recursive calls", "20, after 6 recursive calls", "18, after 3 recursive calls"],
+  ex: "i=0 (3, odd) → i=1 (4) → skip to i=3 (6) → skip to i=5 (10) → i=7 base case. 4 + 6 + 10 = 20, and the calls are f(1), f(3), f(5), f(7)." },
+{ id: "r8", t: "rec", src: "Exam 1 Fall 2023 #7.1", code: `
+public static int f(int[] a, int i) {
+    if (i >= a.length) {
+        return 0;
+    }
+    if (a[i] % 2 == 0) {
+        return a[i] + f(a, i + 2);
+    }
+    return f(a, i + 1);
+}`, q: "What type of recursion is this method?",
+  o: ["Linear", "Tail", "Tree", "Mutual"],
+  ex: `One branch has a pending operation (${c("a[i] + ...")}), so the method as a whole is linear, not tail. Only one recursive call runs per invocation, so it is not tree recursion.` },
+{ id: "r9", t: "rec", src: "Exam 1 Fall 2024 #8", code: `
+// counts the digits equal to 7 in a non-negative int
+public static int count7(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    if (______ == 7) {
+        return 1 + count7(n / 10);
+    }
+    return count7(n / 10);
+}`, q: "What fills the blank?",
+  o: [c("n % 10"), c("n / 10"), c("n % 7"), c("n - 7")],
+  ex: `${c("n % 10")} peels off the last digit and ${c("n / 10")} drops it. ${c("count7(717273)")} returns 3.` },
+{ id: "r10", t: "rec", src: "Exam 1 Spring 2024 #6–7", code: `
+static int countMatches(int[] a, int i, int key, int count) {
+    if (i == a.length) {
+        return ___A___;
+    }
+    if (a[i] == key) {
+        return countMatches(a, i + 1, key, ___B___);
+    }
+    return countMatches(a, i + 1, key, count);
+}`, q: "What fills blanks A and B?",
+  o: [`A: ${c("count")}, B: ${c("count + 1")}`, `A: ${c("0")}, B: ${c("count + 1")}`, `A: ${c("count")}, B: ${c("1 + count(a, i + 1)")}`, `A: ${c("1")}, B: ${c("count")}`],
+  ex: "This is tail recursion with an accumulator. The running total travels down in the parameter, so the base case returns it unchanged." },
+{ id: "r11", t: "rec", src: "RecursionExercises.java", code: `
+public static int power(int x, int y) {
+    if (y == 0) {
+        return 1;
+    }
+    return x * power(x, y - 1);
+}`, q: `How many calls to ${c("power")} happen for ${c("power(2, 10)")}, counting the first?`,
+  o: ["11", "10", "5", "1024"],
+  ex: "y goes 10, 9, …, 0, which is 11 calls, so the method is Θ(y)." },
+{ id: "r12", t: "rec", src: "Hanoi.java", code: `
+public static void hanoi(int numDisks, int fromPeg, int toPeg) {
+    if (numDisks == 1) {
+        System.out.println(fromPeg + " -> " + toPeg);
+        return;
+    }
+    int helpPeg = 6 - fromPeg - toPeg;
+    hanoi(numDisks - 1, fromPeg, helpPeg);
+    System.out.println(fromPeg + " -> " + toPeg);
+    hanoi(numDisks - 1, helpPeg, toPeg);
+}`, q: `For ${c("hanoi(3, 1, 3)")}, what is the first line printed, and how many lines print in total?`,
+  o: [`${c("1 -> 3")}, 7 lines`, `${c("1 -> 2")}, 7 lines`, `${c("1 -> 3")}, 8 lines`, `${c("1 -> 2")}, 6 lines`],
+  ex: "hanoi(3,1,3) → hanoi(2,1,2) → hanoi(1,1,3), which prints 1 -> 3 first. Moves = 2ⁿ − 1 = 7." },
+{ id: "r13", t: "rec", src: "Recitation 5", q: "How many moves does Towers of Hanoi take with 5 disks?",
+  o: ["31", "32", "25", "15"],
+  ex: "T(n) = 2T(n−1) + 1 solves to 2ⁿ − 1, and 2⁵ − 1 = 31." },
+{ id: "r14", t: "rec", src: "RecursionExercises.java", code: `
+public static String removeVowels(String s) {
+    if (s.length() == 0) {
+        return "";
+    }
+    char c = s.charAt(0);
+    if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+        return removeVowels(s.substring(1));
+    }
+    return c + removeVowels(s.substring(1));
+}`, q: `What does ${c('removeVowels("recursion")')} return?`,
+  o: [c('"rcrsn"'), c('"euio"'), c('"recursion"'), c('"rcrson"')],
+  ex: "Consonants are kept in order; every a, e, i, o and u is dropped." },
+{ id: "r15", t: "rec", src: "Recursion slides 6–17", q: `During ${c("factorial(5)")} (the linear version), what is the largest number of ${c("factorial")} stack frames on the call stack at once?`,
+  o: ["6", "5", "1", "120"],
+  ex: "factorial(5) down to factorial(0) are all on the stack when the base case is reached. Frames are popped only as values return." },
+{ id: "r16", t: "rec", src: "Exam 1 Fall 2023 #6", code: `
+// sumDigits(26) -> 8, sumDigits(300) -> 3
+public int sumDigits(int n) {
+    if (n < 10) {
+        return n;
+    }
+    return ____________;
+}`, q: "What completes the return statement?",
+  o: [c("sumDigits(n / 10) + n % 10"), c("sumDigits(n % 10) + n / 10"), c("sumDigits(n - 1) + n"), c("n % 10 + n / 10")],
+  ex: "Add the last digit (n % 10) to the digit sum of everything else (n / 10). A single digit is its own sum, which is the base case." },
+{ id: "r17", t: "rec", src: "Recitation 5 slide 5", q: "Why is the naive recursive fib(n) so slow?",
+  o: ["It recomputes the same subproblems many times, so the number of calls grows exponentially", "Each call uses a loop of length n", "Java recursion is slower than iteration by a constant factor", "The base case is never reached for even n"],
+  ex: "fib(4) alone is computed twice inside fib(6), fib(3) three times, and so on. The call tree roughly doubles each level." },
+
+// ===== Searching =====
+{ id: "s1", t: "search", src: "BinarySearchWorksheet", code: `
+index:  0   1   2   3   4   5   6   7   8   9  10  11  12
+value:  2  17  19  27  46  53  62  68  71  79  85  91  99`, q: `Binary search (as in Search.java) for 72. What does it return?`,
+  o: ["-10", "-9", "-1", "9"],
+  ex: "mid 6 (62) → low 7; mid 9 (79) → high 8; mid 7 (68) → low 8; mid 8 (71) → low 9. Now low > high, so it returns −low − 1 = −10." },
+{ id: "s2", t: "search", src: "Search.java comments", q: "binarySearch returned −10. At what index should the key be inserted to keep the array sorted?",
+  o: ["9", "10", "11", "−9"],
+  ex: "Insertion point = −(return value) − 1 = 10 − 1 = 9." },
+{ id: "s3", t: "search", src: "Search.java", q: "Why does a failed binary search return −low − 1 and not just −low?",
+  o: ["If the key belongs at index 0, −low would be 0, which looks like 'found at index 0'", "−low − 1 avoids integer overflow", "Java arrays are 1-indexed internally", "It makes the method run in Θ(lg n) instead of Θ(n)"],
+  ex: "Subtracting 1 guarantees every not-found result is negative, so any value ≥ 0 means found." },
+{ id: "s4", t: "search", src: "Exam 1 Fall 2025 #4.1", q: "Which computes the middle index with no risk of int overflow?",
+  o: [c("low + (high - low) / 2"), c("(low + high) / 2"), c("(low + high) >> 2"), c("high - low / 2")],
+  ex: `${c("low + high")} can exceed Integer.MAX_VALUE for huge arrays. ${c("high - low")} cannot.` },
+{ id: "s5", t: "search", src: "Exam 1 Fall 2025 #4.4 (new array)", code: `
+int[] a = {1, 3, 5, 7, 9, 11, 13, 15};`, q: `Binary search for 13. How many times is ${c("compareTo")} called before it returns?`,
+  o: ["3", "2", "4", "7"],
+  ex: "mid 3 (7) → low 4; mid 5 (11) → low 6; mid 6 (13) found. Three comparisons." },
+{ id: "s6", t: "search", src: "Exam 1 Fall 2025 #4 (new array)", code: `
+int[] a = {1, 3, 5, 7, 9, 11, 13, 15};`, q: "Binary search for 2. What is returned?",
+  o: ["-2", "-1", "1", "-3"],
+  ex: "mid 3 (7) → high 2; mid 1 (3) → high 0; mid 0 (1) → low 1. low > high, return −1 − 1 = −2, so 2 would go at index 1." },
+{ id: "s7", t: "search", src: "Recitation 1 slides 30–34", code: `
+index:  0   1   2   3   4   5   6   7   8   9  10
+value: 10  14  21  27  35  46  49  52  58  64  70`, q: "Binary search for 65. What is returned?",
+  o: ["-11", "-10", "10", "-1"],
+  ex: "mid 5 → low 6; mid 8 → low 9; mid 9 (64) → low 10; mid 10 (70) → high 9. Return −10 − 1 = −11, insertion index 10." },
+{ id: "s8", t: "search", src: "Exam 1 Fall 2024 #6.3", q: "After 3 iterations of binary search on n elements, the remaining search space is about what fraction of n?",
+  o: ["1/8", "1/3", "1/6", "1/9"],
+  ex: "Each iteration halves it: n/2, n/4, n/8. That halving is why binary search is O(lg n)." },
+{ id: "s9", t: "search", src: "Recitation 2 slide 8", q: "Which best describes binary search's overall running time on a sorted array?",
+  o: ["O(lg n)", "Θ(lg n)", "O(n)", "Θ(1)"],
+  ex: "Best case Θ(1) (key at the first mid), worst case Θ(lg n). Best and worst differ, so use O. Sequential search is O(n) for the same reason." },
+{ id: "s10", t: "search", src: "Search.java", code: `
+int[] a = {5, 1, 9, 3, 7};   // NOT sorted
+// binary search for 1`, q: "What does binary search return here?",
+  o: ["−1, reporting 'not found' even though 1 is at index 1", "1", "0", "It throws an exception"],
+  ex: "mid 2 (9): 1 < 9 → high 1; mid 0 (5): 1 < 5 → high −1; return −0 − 1 = −1. Binary search requires sorted input." },
+{ id: "s11", t: "search", src: "Recurrence Relations notes", q: "Which recurrence describes recursive binary search?",
+  o: ["T(n) = T(n/2) + Θ(1)", "T(n) = 2T(n/2) + Θ(1)", "T(n) = T(n − 1) + Θ(1)", "T(n) = T(n/2) + Θ(n)"],
+  ex: "One recursive call on half the range plus constant work. It solves to lg n + 1, or Θ(lg n)." },
+
+// ===== Asymptotics =====
+{ id: "a1", t: "big", src: "Orders of Growth slide 5", q: "f(n) ∈ O(g(n)) means there exist positive constants c and n₀ such that:",
+  o: ["0 ≤ f(n) ≤ c·g(n) for all n ≥ n₀", "0 ≤ c·g(n) ≤ f(n) for all n ≥ n₀", "f(n) = c·g(n) for all n ≥ n₀", "f(n) ≤ g(n) for all n"],
+  ex: "Big-O is an upper bound. Big-Ω flips the inequality (lower bound), and Θ needs both, with c₁ and c₂." },
+{ id: "a2", t: "big", src: "Exam 1 Fall 2025 #8", q: "Prove 3n² + 4n + 1 ∈ Θ(n²) with the tightest integers c₁, c₂ and matching n₀.",
+  o: ["c₁ = 3, c₂ = 4, n₀ = 5", "c₁ = 3, c₂ = 4, n₀ = 4", "c₁ = 3, c₂ = 8, n₀ = 1", "c₁ = 2, c₂ = 4, n₀ = 5"],
+  ex: "Lower: 3n² ≤ f(n) for all n ≥ 1. Upper: f(n) ≤ 4n² needs 4n + 1 ≤ n², false at n = 4 (17 > 16) and true from n = 5 (21 ≤ 25). n₀ = max(1, 5) = 5." },
+{ id: "a3", t: "big", src: "Exam 1 style (new function)", q: "Prove 4n² + 3n + 2 ∈ Θ(n²) with the tightest integers c₁, c₂ and matching n₀.",
+  o: ["c₁ = 4, c₂ = 5, n₀ = 4", "c₁ = 4, c₂ = 5, n₀ = 3", "c₁ = 4, c₂ = 9, n₀ = 1", "c₁ = 3, c₂ = 5, n₀ = 4"],
+  ex: "Upper bound needs 3n + 2 ≤ n²: n = 3 gives 11 > 9, n = 4 gives 14 ≤ 16. The lower bound 4n² holds from n = 1. So n₀ = 4." },
+{ id: "a4", t: "big", src: "Exam 1 Fall 2023 #11.9", q: "Prove 2n² + 4n + 1 ∈ O(n²) using the smallest integer c. What are c and n₀?",
+  o: ["c = 3, n₀ = 5", "c = 2, n₀ = 1", "c = 3, n₀ = 4", "c = 7, n₀ = 1"],
+  ex: "With c = 3 you need 4n + 1 ≤ n²: n = 4 gives 17 > 16, n = 5 gives 21 ≤ 25. c = 2 never works because 4n + 1 > 0." },
+{ id: "a5", t: "big", src: "Orders of Growth slide 18", q: "Prove 2n² − 5n ∈ Ω(n²) using the largest integer c. What are c and n₀?",
+  o: ["c = 1, n₀ = 5", "c = 2, n₀ = 1", "c = 1, n₀ = 3", "c = 2, n₀ = 5"],
+  ex: "c = 2 fails forever, since 2n² − 5n < 2n². With c = 1 you need n² ≥ 5n, so n ≥ 5." },
+{ id: "a6", t: "big", src: "Exam 1 Fall 2023 #10", q: "An algorithm's best case is Ω(n). What is its running time in terms of Θ?",
+  o: ["Cannot be determined from this alone", "Θ(n)", "Θ(n lg n)", "Θ(n²)"],
+  ex: "A lower bound says nothing about the worst case. You need matching upper and lower bounds to state Θ." },
+{ id: "a7", t: "big", src: "Exam 1 Fall 2023 #11", q: "Order from slowest-growing to fastest: O(n), O(nⁿ), O(10ⁿ), O(2¹⁰⁰).",
+  o: ["O(2¹⁰⁰), O(n), O(10ⁿ), O(nⁿ)", "O(n), O(2¹⁰⁰), O(10ⁿ), O(nⁿ)", "O(2¹⁰⁰), O(n), O(nⁿ), O(10ⁿ)", "O(n), O(10ⁿ), O(2¹⁰⁰), O(nⁿ)"],
+  ex: "2¹⁰⁰ is a huge constant, so it is O(1). nⁿ eventually beats 10ⁿ once n > 10." },
+{ id: "a8", t: "big", src: "Exam 1 Fall 2023 #11.5–11.8", q: "Which two are in the same complexity class?",
+  o: ["n log₁₀ n and n lg n", "n and n lg n", "2ⁿ and 3ⁿ", "n² and n² lg n"],
+  ex: "Log bases differ only by a constant factor (log₁₀ n = lg n / lg 10). Exponential bases do not: 3ⁿ / 2ⁿ = 1.5ⁿ is unbounded." },
+{ id: "a9", t: "big", src: "Lab: Analysis of Algorithms #1", code: `
+void function1(int n) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = i; j <= n; j += 2) {
+            System.out.print('*');
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(n²)", "Θ(n lg n)", "O(n²)", "Θ(n)"],
+  ex: "The inner loop runs about (n − i)/2 times, and summing over i gives about n²/4. There is no early exit, so Θ." },
+{ id: "a10", t: "big", src: "Lab #2", code: `
+void function2(int n) {
+    int count = 0;
+    for (int i = 1; i * i * i <= n; i++) {
+        count++;
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(n<sup>1/3</sup>)", "Θ(√n)", "Θ(lg n)", "Θ(n³)"],
+  ex: "i³ ≤ n means i ≤ n<sup>1/3</sup>." },
+{ id: "a11", t: "big", src: "Lab #3 · Orders of Growth slide 31", code: `
+void function3(int n) {
+    int count = 0;
+    for (int i = 1; i * i <= n; i++) {
+        for (int j = 1; j + n/2 <= n; j++) {
+            for (int k = 1; k <= n; k *= 2) {
+                count++;
+            }
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(n<sup>3/2</sup> lg n)", "Θ(n² lg n)", "Θ(n<sup>3/2</sup>)", "Θ(n lg n)"],
+  ex: "Outer √n, middle j ≤ n/2 gives n/2, inner doubling gives lg n. Multiply: √n · n/2 · lg n." },
+{ id: "a12", t: "big", src: "Lab #4", code: `
+void function4(int n) {
+    int count = 0;
+    for (int i = n/2; i <= n; i++) {
+        for (int j = 1; j <= n; j *= 2) {
+            for (int k = 1; k <= n; k *= 2) {
+                count++;
+            }
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(n lg² n)", "Θ(n lg n)", "Θ(n²)", "Θ(lg² n)"],
+  ex: "n/2 · lg n · lg n. Starting i at n/2 still leaves n/2 iterations, which is Θ(n)." },
+{ id: "a13", t: "big", src: "Lab #5", code: `
+void function5(int n) {
+    if (n == 0) {
+        return;
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            System.out.print('*');
+            break;
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(n)", "Θ(n²)", "O(n²)", "Θ(1)"],
+  ex: "The break ends the inner loop after one pass every time, so it is Θ(1). The n == 0 shortcut only matters for one input, and asymptotics care about large n." },
+{ id: "a14", t: "big", src: "Lab #7", code: `
+void function7(int n) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j *= 3) {
+            System.out.print('*');
+        }
+    }
+}`, q: "Time complexity? (Keep the log base.)",
+  o: ["Θ(n log₃ n)", "Θ(n lg n)", "Θ(n²/3)", "Θ(log₃ n)"],
+  ex: "Tripling j gives log₃ n inner iterations, run n times. The exams ask you to always write the base." },
+{ id: "a15", t: "big", src: "Lab #8 · Exam 1 Fall 2025 #9", code: `
+void function8(int n) {
+    int i = 1, s = 1;
+    while (s <= n) {
+        i++;
+        s += i;
+        System.out.print('*');
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(√n)", "Θ(n)", "Θ(lg n)", "Θ(n²)"],
+  ex: "After i steps s = 1 + 2 + … + i ≈ i²/2. The loop stops once i²/2 > n, that is when i ≈ √(2n)." },
+{ id: "a16", t: "big", src: "Orders of Growth slide 34", code: `
+void function(int n, int[] array) {
+    int count = 0;
+    for (int i = 1; i * i <= n; i++) {
+        if (array[i] < 0) {
+            break;
+        }
+        count++;
+    }
+}`, q: "Time complexity?",
+  o: ["O(√n)", "Θ(√n)", "O(n)", "Θ(1)"],
+  ex: "At most √n iterations, but the break can stop it at any point, so best and worst case differ. Use O." },
+{ id: "a17", t: "big", src: "Exam 1 Fall 2025 #9.1–9.2", code: `
+void method1(int n) {
+    for (int i = n; i >= 1; i--) {
+        for (int j = 1; j <= n; j += i) {
+            System.out.print("*");
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(n lg n)", "Θ(n²)", "Θ(n)", "Θ(lg n)"],
+  ex: "The inner loop runs about n/i times. Σ n/i = n(1 + 1/2 + … + 1/n) ≈ n ln n, the harmonic series. The official key writes Θ(n ln n), which is the same class." },
+{ id: "a18", t: "big", src: "Orders of Growth guidelines (new loop)", code: `
+void halves(int n) {
+    for (int i = n; i > 0; i /= 2) {
+        for (int j = 0; j < i; j++) {
+            System.out.print("*");
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(n)", "Θ(n lg n)", "Θ(lg n)", "Θ(n²)"],
+  ex: "The work is n + n/2 + n/4 + … < 2n, a geometric series. Do not multiply n by lg n blindly when the inner bound shrinks." },
+{ id: "a19", t: "big", src: "Exam 1 Fall 2024 #10", code: `
+void function2(int n) {
+    int upper = (int) Math.pow(2, n);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 2; j <= upper; j *= 2) {
+            System.out.println("*");
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(n²)", "Θ(n · 2ⁿ)", "Θ(n lg n)", "Θ(2ⁿ)"],
+  ex: "Doubling up to 2ⁿ takes lg(2ⁿ) = n steps, and that runs n times." },
+{ id: "a20", t: "big", src: "Exam 1 Fall 2024 #10", code: `
+void function1(int n) {
+    for (int i = n; i <= n; i++) {
+        for (int j = n; j <= n; j++) {
+            System.out.println("*");
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(1)", "Θ(n)", "Θ(n²)", "O(n²)"],
+  ex: "Both loops start at n and stop at n, so each runs exactly once. Read the bounds before assuming nested loops mean n²." },
+{ id: "a21", t: "big", src: "Exam 1 Spring 2024 #8", code: `
+public int overlyComplicatedComplexity(int n) {
+    int x = 0;
+    if (n % 2 == 0) {
+        for (int i = 0; i < n * n * n; i++) {
+            x++;
+        }
+    }
+    for (int i = 1; i < n * n; i *= 2) {
+        x += 3;
+    }
+    return x;
+}`, q: "Which pair of bounds is correct?",
+  o: ["O(n³) and Ω(lg n)", "Θ(n³)", "O(n³) and Ω(n²)", "O(lg n) and Ω(1)"],
+  ex: "Even n runs the n³ loop; odd n skips it and only does lg(n²) = 2 lg n iterations. The bounds differ, so Θ cannot describe the method." },
+{ id: "a22", t: "big", src: "Recitation 2 slide 19", code: `
+int digits(int n) {
+    int count = 0;
+    while (n > 0) {
+        n /= 10;
+        count++;
+    }
+    return count;
+}`, q: "Time complexity?",
+  o: ["Θ(log₁₀ n)", "Θ(n/10)", "Θ(n)", "O(1)"],
+  ex: "Integer division by 10 strips one digit per iteration, and n has about log₁₀ n digits." },
+{ id: "a23", t: "big", src: "Exam 1 Spring 2024 #9.3–9.4", code: `
+void function2(int n) {
+    for (int i = 1; i < 4; i++) {
+        for (int j = 1; j <= n; j *= 2) {
+            System.out.print("I <3 DATA STRUCTURES");
+        }
+    }
+}`, q: "Time complexity?",
+  o: ["Θ(lg n)", "Θ(n lg n)", "Θ(n)", "Θ(4 lg n)"],
+  ex: "The outer loop always runs 3 times, a constant. 3 lg n is Θ(lg n), and you drop the constant." },
+{ id: "a24", t: "big", src: "Orders of Growth slide 12", q: "A method runs an O(n) loop and then, separately, an O(n²) nested loop. Its total complexity is:",
+  o: ["O(n²)", "O(n³)", "O(n + n²) and it cannot be simplified", "O(n)"],
+  ex: "Sequential blocks add: O(f + g) = O(max(f, g)). Nested blocks multiply." },
+{ id: "a25", t: "big", src: "Orders of Growth slides 21–22", q: "f(n) = √n microseconds. What is the largest n you can solve in one hour (3.6 × 10⁹ µs)?",
+  o: ["1.296 × 10¹⁹", "6 × 10⁴", "3.6 × 10⁹", "2<sup>3.6 × 10⁹</sup>"],
+  ex: "√n = 3.6 × 10⁹, so n = (3.6 × 10⁹)² = 12.96 × 10¹⁸. 2<sup>3.6×10⁹</sup> is the answer for f(n) = lg n." },
+{ id: "a26", t: "big", src: "Lab #9 · Exam 1 Fall 2025 #10", q: "You need to check whether every value in an unsorted int array is positive. Most appropriate complexity?",
+  o: ["O(n)", "Θ(n)", "Θ(1)", "O(lg n)"],
+  ex: "You can stop at the first non-positive value, so the best case is constant. Summing every value is Θ(n), because you must touch them all." },
+{ id: "a27", t: "big", src: "Lab #9c", q: "You need the median of a sorted array of length n. Complexity?",
+  o: ["Θ(1)", "Θ(lg n)", "Θ(n)", "Θ(n lg n)"],
+  ex: "It is a single lookup at index n/2 (or (n−1)/2, as in ProcessGrades)." },
+{ id: "a28", t: "big", src: "Recitation 2 slide 7", q: "When should you use O instead of Θ for a method's running time?",
+  o: ["When the method can stop early, so its best case is faster than its worst case", "Whenever the method contains a loop", "When the method is recursive", "Never; O and Θ are interchangeable"],
+  ex: "If the best and worst cases share the same g(n), Θ is a tight bound. A possible early exit (break, return) usually means O." },
+
+// ===== Recurrences & Master Theorem =====
+{ id: "c1", t: "recur", src: "Recurrence Relations notes", q: "Solve x(n) = x(n − 1) + n, x(0) = 0.",
+  o: ["n(n + 1)/2", "n²", "2ⁿ − 1", "n lg n"],
+  ex: "Unrolling gives x(n − i) + (n − i + 1) + … + n. Set i = n to reach x(0) = 0, leaving 1 + 2 + … + n." },
+{ id: "c2", t: "recur", src: "Recurrence Relations notes", q: "Solve x(n) = 2x(n/2) + n, x(1) = 1, for n = 2ᵏ.",
+  o: ["n lg n + n", "n lg n", "2n − 1", "n² + n"],
+  ex: "General form 2ᵏx(n/2ᵏ) + kn. Set k = lg n: n · x(1) + n lg n." },
+{ id: "c3", t: "recur", src: "Recurrence Relations notes (binary search)", q: "Solve x(n) = x(n/2) + 1, x(1) = 1.",
+  o: ["lg n + 1", "lg n", "n/2 + 1", "2 lg n"],
+  ex: "x(n/2ᵏ) + k with k = lg n gives x(1) + lg n." },
+{ id: "c4", t: "recur", src: "Recurrence Relations notes · Recitation 5", q: "Solve x(n) = 2x(n − 1) + 1, x(1) = 1.",
+  o: ["2ⁿ − 1", "2ⁿ", "2n − 1", "n² − 1"],
+  ex: "General form 2ᵏx(n − k) + 2ᵏ − 1. Set k = n − 1: 2ⁿ⁻¹ + 2ⁿ⁻¹ − 1 = 2ⁿ − 1. This is Towers of Hanoi." },
+{ id: "c5", t: "recur", src: "Exam 1 Fall 2025 #13.2", q: "x(n) = x(n − 1) + 3n, x(0) = 1. After the second backward substitution (step 13.2), x(n) =",
+  o: ["x(n − 3) + 3(n − 2) + 3(n − 1) + 3n", "x(n − 2) + 3(n − 1) + 3n", "x(n − 3) + 9n", "x(n − 3) + 3(n − 3) + 3(n − 2) + 3n"],
+  ex: "Step 1: x(n − 2) + 3(n − 1) + 3n. Step 2 replaces x(n − 2) with x(n − 3) + 3(n − 2). Leaving the terms undistributed keeps the pattern visible." },
+{ id: "c6", t: "recur", src: "Exam 1 Fall 2025 #13.5", q: "Solve x(n) = x(n − 1) + 3n, x(0) = 1.",
+  o: ["3n(n + 1)/2 + 1", "3n(n + 1)/2", "3n² + 1", "n(n + 1)/2 + 1"],
+  ex: "i = n gives x(0) + 3(1 + 2 + … + n) = 1 + 3n(n + 1)/2. Don't drop the initial condition." },
+{ id: "c7", t: "recur", src: "Exam 1 Spring 2024 #17.4", q: "x(n) = x(n − 1) + n with x(1) = 1. The general form is x(n − i) + (n − i + 1) + … + n. What value of i reaches the initial condition?",
+  o: ["i = n − 1", "i = n", "i = 1", "i = lg n"],
+  ex: "You need n − i = 1. With x(0) as the initial condition it would be i = n, so read which base case you are given." },
+{ id: "c8", t: "recur", src: "Recurrence Relations notes", q: "x(n) = 2x(n/2) + n. What is the general form after k substitutions?",
+  o: ["2ᵏ x(n/2ᵏ) + kn", "2ᵏ x(n/2ᵏ) + n", "2ᵏ x(n/2ᵏ) + 2ᵏn", "x(n/2ᵏ) + kn"],
+  ex: "One substitution gives 4x(n/4) + 2n, two give 8x(n/8) + 3n. The coefficient doubles and one more n is added each step." },
+{ id: "c9", t: "recur", src: "Exam 1 Fall 2023 #20", q: "Solve x(n) = 2x(n/2) + 1, x(1) = 1.",
+  o: ["2n − 1", "n lg n + 1", "lg n + 1", "n"],
+  ex: "General form 2ᵏx(n/2ᵏ) + 2ᵏ − 1. With k = lg n: n + n − 1." },
+{ id: "c10", t: "recur", src: "Exam 1 Fall 2024 #19", q: "Solve x(n) = 3x(n/3) + n, x(1) = 1 (substitute n = 3ᵏ first).",
+  o: ["n + n log₃ n", "n log₃ n", "3n − 2", "n lg n + n"],
+  ex: "x(3ᵏ) = 3ⁱx(3ᵏ⁻ⁱ) + i·3ᵏ. Set i = k: 3ᵏ + k·3ᵏ = n + n log₃ n." },
+{ id: "c11", t: "recur", src: "Recurrence practice (new)", q: "Solve x(n) = x(n/2) + n, x(1) = 1.",
+  o: ["2n − 1", "n lg n", "n + lg n", "n²"],
+  ex: "x(n) = 1 + 2 + 4 + … + n/2 + n = 2n − 1, a geometric series." },
+{ id: "c12", t: "recur", src: "Exam 1 Fall 2024 extra credit", q: "Solve x(n) = 4x(n/2) + n, x(1) = 1.",
+  o: ["2n² − n", "n² + n", "4n − 3", "n² lg n"],
+  ex: "x(2ᵏ) = 4ᵏ + 2ᵏ(2ᵏ − 1) = 2·4ᵏ − 2ᵏ = 2n² − n." },
+{ id: "mt1", t: "recur", src: "Master Theorem slide 7", code: `
+int function1(int n) {
+    int temp = 1;
+    if (n <= 1) {
+        return temp;
+    }
+    temp += function1(n / 2);
+    temp += function1(n / 2);
+    return temp;
+}`, q: "Use the Master Theorem. Complexity?",
+  o: ["Θ(n)", "Θ(lg n)", "Θ(n lg n)", "Master Theorem does not apply"],
+  ex: "a = 2, b = 2, f(n) = Θ(1) so d = 0. a > bᵈ (2 > 1), so Θ(n^log₂2) = Θ(n)." },
+{ id: "mt2", t: "recur", src: "Master Theorem slide 9", code: `
+int function2(int n) {
+    int temp = 0;
+    if (n > 1) {
+        for (int i = 1; i <= n; ++i) {
+            ++temp;
+        }
+        temp += function2(n / 2);
+    }
+    return temp;
+}`, q: "Use the Master Theorem. Complexity?",
+  o: ["Θ(n)", "Θ(n lg n)", "Θ(lg n)", "Θ(n²)"],
+  ex: "a = 1, b = 2, d = 1. a < bᵈ (1 < 2), so Θ(nᵈ) = Θ(n)." },
+{ id: "mt3", t: "recur", src: "Master Theorem slide 11", code: `
+int function3(int n) {
+    if (n <= 1) {
+        return 0;
+    }
+    int temp = 0;
+    for (int i = 1; i <= 8; ++i) {
+        temp += function3(n / 2);
+    }
+    for (int i = 1, max = n * n * n; i <= max; ++i) {
+        ++temp;
+    }
+    return temp;
+}`, q: "Use the Master Theorem. Complexity?",
+  o: ["Θ(n³ lg n)", "Θ(n³)", "Θ(n⁸)", "Θ(n lg n)"],
+  ex: "The loop makes 8 recursive calls, so a = 8. b = 2 and d = 3. a = bᵈ (8 = 2³), so Θ(n³ lg n)." },
+{ id: "mt4", t: "recur", src: "Master Theorem slide 13", code: `
+int function4(int n) {
+    int temp = 1;
+    for (int i = 1; i <= n; ++i) {
+        ++temp;
+    }
+    temp += function4(n / 2);
+    temp += function4(n / 2);
+    return temp;
+}`, q: "Use the Master Theorem. Complexity?",
+  o: ["Θ(n lg n)", "Θ(n)", "Θ(n²)", "Θ(lg n)"],
+  ex: "a = 2, b = 2, d = 1. a = bᵈ, so Θ(n¹ lg n). This is the merge sort shape." },
+{ id: "mt5", t: "recur", src: "Master Theorem slide 5", code: `
+int function0(int n) {
+    int temp = 1;
+    if (n <= 1) {
+        return temp;
+    }
+    temp += function0(n - 1);
+    return temp;
+}`, q: "Which case of the Master Theorem applies?",
+  o: ["None; the input shrinks by subtraction (decrease-and-conquer)", "a < bᵈ, so Θ(1)", "a = bᵈ, so Θ(lg n)", "a > bᵈ, so Θ(n)"],
+  ex: "The Master Theorem needs T(n) = aT(n/b) + f(n) with b > 1. n − 1 is not n/b. Solve it by backward substitution instead: Θ(n)." },
+{ id: "mt6", t: "recur", src: "Master Theorem practice (new)", q: "T(n) = 4T(n/2) + n. Complexity?",
+  o: ["Θ(n²)", "Θ(n lg n)", "Θ(n)", "Θ(n² lg n)"],
+  ex: "a = 4 > bᵈ = 2¹, so Θ(n^log₂4) = Θ(n²). That matches the exact solution 2n² − n." },
+{ id: "mt7", t: "recur", src: "Master Theorem practice (new)", q: "T(n) = 3T(n/4) + n. Complexity?",
+  o: ["Θ(n)", "Θ(n lg n)", "Θ(n^log₄3)", "Θ(n²)"],
+  ex: "a = 3 < bᵈ = 4¹, so the f(n) term dominates: Θ(n)." },
+{ id: "mt8", t: "recur", src: "Master Theorem practice (new)", q: "T(n) = 2T(n/4) + Θ(1). Complexity?",
+  o: ["Θ(√n)", "Θ(lg n)", "Θ(n)", "Θ(n lg n)"],
+  ex: "a = 2 > bᵈ = 4⁰ = 1, so Θ(n^log₄2) = Θ(n^1/2)." },
+{ id: "mt9", t: "recur", src: "Hanoi.java comment", q: "Hanoi's recurrence is T(n) = 2T(n − 1) + Θ(1). What can you say?",
+  o: ["The Master Theorem does not apply; backward substitution gives Θ(2ⁿ)", "Master Theorem case a > bᵈ gives Θ(n)", "Master Theorem case a = bᵈ gives Θ(n lg n)", "It is Θ(n²)"],
+  ex: "Again the input is reduced by subtraction, so b does not exist. 2ⁿ − 1 moves gives Θ(2ⁿ)." },
+
+// ===== Lists & iterators =====
+{ id: "l1", t: "lists", src: "ArrayList slide 9", q: `What is the cost of ArrayList ${c("add(element)")} (append at the end) over a long run of appends?`,
+  o: ["Θ(1) amortized", "Θ(n) every time", "O(lg n)", "Θ(1) every time, with no exceptions"],
+  ex: "Most appends are Θ(1). When the array is full, the resize copies all n elements (Θ(n)), but that happens rarely enough to average out to Θ(1)." },
+{ id: "l2", t: "lists", src: "Exam 1 Fall 2025 #10.3–10.4", q: `Swap the i-th and j-th elements using ${c("get()")} and ${c("set()")}. What does it cost on an ArrayList and on a LinkedList?`,
+  o: ["ArrayList Θ(1), LinkedList O(n)", "Both Θ(1)", "ArrayList O(n), LinkedList Θ(1)", "Both O(n)"],
+  ex: "ArrayList indexes straight into the array. LinkedList get/set must walk from the head (see the for loop in MyLinkedList.get)." },
+{ id: "l3", t: "lists", src: "Recitation 3 slide 16", q: `LinkedList ${c("remove(0)")} on a list of n nodes costs:`,
+  o: ["Θ(1)", "O(n)", "Θ(n)", "O(lg n)"],
+  ex: "Just move head to head.next. In the general case remove(index) is O(n) because of the walk to the index." },
+{ id: "l4", t: "lists", src: "Recitation 3 slide 19", q: `Why is ${c("remove(index)")} on a doubly linked list still O(n)?`,
+  o: ["You still have to traverse to the index; only the unlinking is Θ(1)", "Each node has two pointers to update, so the cost doubles", "Doubly linked lists must shift elements like an array", "It is not; it is Θ(1)"],
+  ex: "Updating the prev and next pointers is constant time. Getting to the node is the O(n) part." },
+{ id: "l5", t: "lists", src: "LinkedList slide 15", q: `LinkedList ${c("add(element)")} at the end, with no tail pointer, costs:`,
+  o: ["Θ(n)", "Θ(1)", "O(lg n)", "Θ(1) amortized"],
+  ex: "Without a tail you walk from the head to the last node. MyLinkedList keeps a tail, which makes it Θ(1)." },
+{ id: "l6", t: "lists", src: "MyArrayList.java (verified by running it)", code: `
+public boolean add(E element) {
+    if (size >= elementData.length) {
+        Object[] newData = new Object[size * 2 + 1];
+        for (int i = 0; i < size; i++) {
+            newData[i] = elementData[i];
+        }
+        elementData = newData;
+    }
+    elementData[size++] = element;
+    return true;
+}`, q: `Starting from ${c("new MyArrayList<>()")} (default capacity 10), you add 11 elements. What is the capacity now?`,
+  o: ["21", "20", "11", "15"],
+  ex: "The 11th add finds size 10 ≥ length 10 and grows to 10 · 2 + 1 = 21. Size is 11." },
+{ id: "l7", t: "lists", src: "MyArrayList.java (verified by running it)", code: `
+// growth rule in add(): new Object[size * 2 + 1]
+MyArrayList<String> list = new MyArrayList<>(0);
+list.add("a"); list.add("b"); list.add("c"); list.add("d");`, q: "What is the capacity after the four adds?",
+  o: ["7", "4", "8", "3"],
+  ex: "Capacity goes 0 → 1 (1st add) → 3 (2nd add) → 3 (3rd fits) → 7 (4th add, since 3 · 2 + 1)." },
+{ id: "l8", t: "lists", src: "ArrayList slide 8 · Recitation 3 slide 10", q: `An ArrayList's backing array has length 11 and holds 5 elements. What does ${c("size()")} return?`,
+  o: ["5", "11", "6", "10"],
+  ex: "Size is the number of elements stored. Capacity is how many fit before a resize, which is the array length (11)." },
+{ id: "l9", t: "lists", src: "Recitation 3 slides 8–9 (changed condition)", code: `
+// mylist is an ArrayList<Integer> holding [0, 1, 2, ..., 9]
+Iterator<Integer> itr = mylist.iterator();
+while (itr.hasNext()) {
+    int i = itr.next();
+    System.out.print(i + " ");
+    if (i % 3 == 0)
+        itr.remove();
+}
+System.out.println();
+System.out.println(mylist);`, q: "What does the last line print?",
+  o: [c("[1, 2, 4, 5, 7, 8]"), c("[0, 3, 6, 9]"), c("[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"), c("[1, 2, 4, 5, 7, 8, 9]")],
+  ex: "Every element is still visited once (the first line prints 0 through 9). Removing through the iterator is safe and drops 0, 3, 6 and 9." },
+{ id: "l10", t: "lists", src: "MyArrayList.java / MyLinkedList.java", q: `What happens if you call ${c("remove()")} on the iterator returned by the course's MyArrayList?`,
+  o: ["It throws UnsupportedOperationException", "It removes the last element returned by next()", "It removes the first element", "It does nothing"],
+  ex: `Both course classes implement only hasNext and next. ${c("java.util.ArrayList")}'s iterator does support remove().` },
+{ id: "l11", t: "lists", src: "HackerRank solution · Exam 1 Spring 2024 #10", code: `
+public static Node insertNodeAtPosition(Node list, int data, int position) {
+    Node p = list, q = null;
+    for (int i = 0; i < position; i++) {
+        q = p;
+        p = ___A___;
+    }
+    Node n = new Node(data);
+    if (q == null) {
+        list = n;
+    } else {
+        ___B___ = n;
+    }
+    ___C___ = p;
+    return list;
+}`, q: "What fills A, B and C?",
+  o: [`A: ${c("p.next")}, B: ${c("q.next")}, C: ${c("n.next")}`, `A: ${c("q.next")}, B: ${c("p.next")}, C: ${c("n.next")}`, `A: ${c("p.next")}, B: ${c("n.next")}, C: ${c("q.next")}`, `A: ${c("p")}, B: ${c("q")}, C: ${c("n")}`],
+  ex: "q trails one node behind p. The new node goes between them: q.next = n, then n.next = p. If q is null the insert is at the head." },
+{ id: "l12", t: "lists", src: "LinkedList slide 16", code: `
+// prev is the node before the insertion point, n is the new node
+prev.next = n;
+n.next = prev.next;`, q: "What is wrong with doing the insertion in this order?",
+  o: ["n.next ends up pointing to n itself, and the rest of the list is lost", "Nothing; the order does not matter", "It throws a NullPointerException", "It inserts n after the old prev.next"],
+  ex: "After line 1, prev.next is already n. Set n.next = prev.next first, then prev.next = n." },
+{ id: "l13", t: "lists", src: "HackerRankLinkedListSolutions.txt · Exam 1 Fall 2025 #7", code: `
+static boolean hasCycle(Node head) {
+    Node slow = head, fast = head;
+    while (_____________) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow == fast) {
+            return true;
+        }
+    }
+    return false;
+}`, q: "What is the loop condition in Floyd's cycle detection?",
+  o: [c("fast != null && fast.next != null"), c("slow != null && fast != null"), c("fast.next != null && fast != null"), c("slow != fast")],
+  ex: `Both checks are needed before ${c("fast.next.next")}, and the order matters: checking ${c("fast.next")} first throws when fast is null. ${c("slow != fast")} would be false immediately, since both start at head.` },
+{ id: "l14", t: "lists", src: "Exam 1 Fall 2023 #15", code: `
+Node n = new Node(5, null);
+n.next = new Node(6, null);
+n.next.next = new Node(7, n);
+System.out.println(countNodes(n.next));
+
+static int countNodes(Node n) {
+    int count = 0;
+    while (n != null) {
+        n = n.next;
+        count++;
+    }
+    return count;
+}`, q: "What is printed?",
+  o: ["Nothing; the loop never ends", "2", "3", "Compile error"],
+  ex: "Node 7 points back to node 5, making a cycle 5 → 6 → 7 → 5, so n never becomes null." },
+{ id: "l15", t: "lists", src: "MyList.reverse() homework spec", code: `
+Node prev = null, curr = head;
+while (curr != null) {
+    Node next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+}
+head = ______;`, q: "What becomes the new head after reversing in place?",
+  o: [c("prev"), c("curr"), c("next"), c("head.next")],
+  ex: "When the loop ends, curr is null and prev is the old tail, which is now the head. This runs in Θ(n) time and Θ(1) space, as the homework requires." },
+{ id: "l16", t: "lists", src: "Exam 1 Fall 2023 #12", q: "A playlist where guests keep adding songs to the front of the list. ArrayList or LinkedList?",
+  o: ["LinkedList", "ArrayList", "Either; both are Θ(1) at the front", "Neither can insert at the front"],
+  ex: "Inserting at index 0 shifts every element in an ArrayList (O(n)). A linked list just points a new node at the old head." },
+{ id: "l17", t: "lists", src: "Exam 1 Fall 2023 #12", q: "A reader app that jumps straight to page 512 of a book. ArrayList or LinkedList?",
+  o: ["ArrayList", "LinkedList", "Either; both are Θ(1)", "Neither"],
+  ex: "Index access is Θ(1) in an ArrayList and O(n) in a LinkedList." },
+{ id: "l18", t: "lists", src: "Exam 1 Fall 2023 #8", q: "Adding a node to a LinkedList so it stays sorted in non-increasing order costs:",
+  o: ["O(n)", "Θ(1)", "O(lg n)", "Θ(n lg n)"],
+  ex: "You may have to walk the whole list to find the spot, but you might also stop at the head. You cannot binary search a linked list." },
+{ id: "l19", t: "lists", src: "ArrayList slide 2", q: "Which statement about Java's List interface is FALSE?",
+  o: ["A List rejects duplicate elements", "A List preserves insertion order when appending", "ArrayList and LinkedList both implement List", "List lives in java.util"],
+  ex: "Lists allow duplicates. Sets are the collections that reject them." },
+{ id: "l20", t: "lists", src: "ProcessGrades.java", code: `
+// grades holds 90.0, 60.0, 80.0, 70.0
+public static float computeMedian() {
+    Collections.sort(grades);
+    return grades.get((grades.size() - 1) / 2);
+}`, q: "What does computeMedian() return?",
+  o: ["70.0", "75.0", "80.0", "60.0"],
+  ex: "After sorting [60, 70, 80, 90], (4 − 1) / 2 = 1 with integer division, so it returns get(1) = 70.0." },
+{ id: "l21", t: "lists", src: "MyLinkedList.java", code: `
+public boolean add(E element) {
+    Node n = new Node(element);
+    if (head == null) {
+        ____________;
+    } else {
+        tail.next = n;
+        tail = n;
+    }
+    size++;
+    return true;
+}`, q: "What fills the blank?",
+  o: [c("head = tail = n"), c("head = n"), c("tail.next = n"), c("head.next = n")],
+  ex: "In an empty list the new node is both the first and the last node. Forgetting tail makes the next add throw a NullPointerException." },
+{ id: "l22", t: "lists", src: "HackerRankLinkedListSolutions.txt", code: `
+public static Node deleteNode(Node llist, int position) {
+    Node p = llist, q = null;
+    for (int i = 0; i < position; i++) {
+        q = p;
+        p = p.next;
+    }
+    if (q == null) {
+        llist = ______;
+    } else {
+        q.next = p.next;
+    }
+    return llist;
+}`, q: "What fills the blank (deleting the head)?",
+  o: [c("p.next"), c("null"), c("q"), c("p")],
+  ex: "With position 0 the loop never runs, so p is the head and the new head is the second node." },
+{ id: "l23", t: "lists", src: "ArrayList slide 9", q: `ArrayList ${c("indexOf(element)")} costs:`,
+  o: ["O(n)", "Θ(1)", "O(lg n)", "Θ(n)"],
+  ex: "It is a sequential search from index 0 that stops at the first match." },
+{ id: "l24", t: "lists", src: "MyArrayList.java clear()", q: `Why does MyArrayList's ${c("clear()")} set every used slot to null instead of only setting size = 0?`,
+  o: ["So the garbage collector can reclaim the old objects", "Because get() would otherwise return stale values", "To shrink the capacity back to 10", "Java requires arrays to be nulled before reuse"],
+  ex: "With size = 0, get() already refuses those indices, but the array would still hold references and keep the objects alive in memory." },
+{ id: "l25", t: "lists", src: "Linked list tracing", code: `
+Node a = new Node(1);
+a.next = new Node(2);
+a.next.next = new Node(3);
+a.next = a.next.next;
+// print the list starting at a`, q: "What is printed?",
+  o: [c("1 3"), c("1 2 3"), c("1 2"), c("2 3")],
+  ex: "a.next now skips straight to node 3, so node 2 is unlinked. This is how remove works." },
+];
+
+// ---------- flashcards ----------
+const F = [
+  { t: "java", f: "Compile and run a program that takes two arguments", b: `<p>${c("javac *.java")}</p><p>${c("java Main 3 5")}</p><p>No .class extension on the run command. Arguments are separated by spaces.</p>` },
+  { t: "java", f: `${c("cd ..")} vs ${c("cd -")} vs ${c("cd ~")}`, b: `<p>${c("..")} goes to the parent directory. ${c("-")} goes to the previous directory you were in. ${c("~")} goes to your home folder.</p><p>Only ${c("cd ..")} is guaranteed to reach the parent.</p>` },
+  { t: "java", f: `${c("mv")} vs ${c("cp")} vs ${c("rmdir")} vs ${c("rm -r")}`, b: `<p>mv moves or renames (the original is gone). cp copies (add -r for folders). rmdir removes only empty folders. rm -r deletes a folder and everything in it.</p>` },
+  { t: "java", f: "Interface vs abstract class", b: `<p><b>Interface</b>: abstract, default and static methods only. Fields are public static final. No constructors. A class can implement many.</p><p><b>Abstract class</b>: can mix abstract and concrete methods and has instance fields. A class can extend only one. Neither can be instantiated.</p>` },
+  { t: "java", f: `${c("==")} vs ${c(".equals()")}`, b: `<p>For primitives, == compares values.</p><p>For objects, == checks whether two references point to the same object. Use .equals() to compare contents, such as the characters of two Strings.</p>` },
+  { t: "java", f: "Primitive sizes and wrappers", b: `<p>boolean (≈1 byte) · char 2 · short 2 · int 4 · long 8 · float 4 · double 8 bytes.</p><p>Wrappers: Boolean, Character, Short, Integer, Long, Float, Double. Collections need the wrappers.</p>` },
+  { t: "java", f: "Local, instance and class (static) variables", b: `<p>Static methods can use local and class variables.</p><p>Instance methods can use local, class and instance variables.</p>` },
+  { t: "java", f: "Method overloading", b: `<p>Same name, different signature: number, type or order of parameters. Works for constructors too.</p><p>A different return type alone is not an overload.</p>` },
+  { t: "java", f: `What does ${c("compareTo")} return?`, b: `<p>Negative if this &lt; other, 0 if equal, positive if this &gt; other.</p>${pre("public interface Comparable<T> {\n    int compareTo(T o);\n}")}` },
+  { t: "java", f: "Generic method header for a search that uses compareTo", b: pre("public static <E extends Comparable<E>> int\n        binarySearch(E key, E[] array)") + `<p>Always ${c("extends")} in a bound, even though Comparable is an interface.</p>` },
+  { t: "java", f: `${c("throw")} vs ${c("throws")}`, b: `<p>${c("throws")} goes in the method signature and declares checked exceptions the method can pass on.</p><p>${c("throw")} is the statement that raises one: ${c("throw new IndexOutOfBoundsException(...)")}.</p><p>finally always runs unless System.exit() is called.</p>` },
+  { t: "java", f: "Exit codes", b: `<p>${c("System.exit(0)")} means success; anything else signals an error. Exit ends the program immediately, so nothing after it runs, not even later prints.</p>` },
+
+  { t: "math", f: "Logarithm rules", b: `<p>log(xy) = log x + log y · log(x/y) = log x − log y · log xʸ = y log x</p><p>logₐ x = log_b x / log_b a · a<sup>log_b x</sup> = x<sup>log_b a</sup></p><p>So 2<sup>lg n</sup> = n and 4<sup>lg n</sup> = n².</p>` },
+  { t: "math", f: "Exponent rules", b: `<p>XᴬXᴮ = Xᴬ⁺ᴮ · Xᴬ/Xᴮ = Xᴬ⁻ᴮ · (Xᴬ)ᴮ = Xᴬᴮ</p><p>2ᴺ + 2ᴺ = 2ᴺ⁺¹, but Xᴺ + Xᴺ = 2Xᴺ, which is not X²ᴺ.</p>` },
+  { t: "math", f: "Summations to memorize", b: `<p>Σ i (1..n) = n(n+1)/2 · Σ i (1..n−1) = n(n−1)/2</p><p>Σ i² = n(n+1)(2n+1)/6 · Σ Aⁱ (0..n) = (Aⁿ⁺¹ − 1)/(A − 1)</p><p>Σ 1/i ≈ ln n (harmonic) · Σ 1 = N · Σ C = CN</p>` },
+  { t: "math", f: "Counting", b: `<p>Permutations of n items: n!</p><p>k-combinations: n! / (k!(n−k)!)</p><p>Subsets: 2ⁿ</p>` },
+  { t: "math", f: "Sequential search, average comparisons", b: `<p>C_avg = p(n+1)/2 + n(1 − p)</p><p>p = 1 (always found): (n+1)/2. p = 0 (never found): n.</p><p>Best case 1, worst case n.</p>` },
+
+  { t: "rec", f: "Three parts of a recursive function", b: `<p><b>Base case</b>: the answer is known directly.</p><p><b>Recursive call</b>: on an input closer to the base case.</p><p><b>Pending operation</b>: work left to do after the call returns.</p>` },
+  { t: "rec", f: "Linear vs tail vs tree recursion", b: `<p><b>Linear</b>: one recursive call with a pending operation (${c("n * fact(n-1)")}).</p><p><b>Tail</b>: the recursive call is the last thing done, and the work happens in the arguments (${c("helper(n-1, n*result)")}).</p><p><b>Tree</b>: more than one recursive call (${c("fib(n-1) + fib(n-2)")}).</p>` },
+  { t: "rec", f: "What happens on the call stack during recursion?", b: `<p>Each call pushes a stack frame. At the base case, frames pop and each return value is plugged into the pending operation of the frame below.</p><p>factorial(5) peaks at 6 frames.</p>` },
+  { t: "rec", f: "Towers of Hanoi", b: `${pre("int helpPeg = 6 - fromPeg - toPeg;\nhanoi(n - 1, fromPeg, helpPeg);\nprint(fromPeg + \" -> \" + toPeg);\nhanoi(n - 1, helpPeg, toPeg);")}<p>T(n) = 2T(n−1) + 1, so 2ⁿ − 1 moves.</p>` },
+  { t: "rec", f: "Digit tricks for recursion", b: `<p>${c("n % 10")} gives the last digit and ${c("n / 10")} drops it.</p><p>Reverse: ${c("helper(n / 10, r * 10 + n % 10)")}. Sum: ${c("sum(n / 10) + n % 10")}.</p>` },
+
+  { t: "search", f: "Binary search loop (Search.java)", b: pre("int low = 0, high = array.length - 1;\nwhile (low <= high) {\n    int mid = low + (high - low) / 2;\n    int result = key.compareTo(array[mid]);\n    if (result == 0) return mid;\n    if (result < 0) high = mid - 1;\n    else low = mid + 1;\n}\nreturn -low - 1;") },
+  { t: "search", f: "Binary search returned a negative number r. Where would the key go?", b: `<p>Insertion index = −r − 1.</p><p>It returns −low − 1, not −low, so that "insert at 0" cannot be confused with "found at 0".</p>` },
+  { t: "search", f: "Sequential vs binary search", b: `<p><b>Sequential</b>: any order. Best Θ(1), worst Θ(n), overall O(n).</p><p><b>Binary</b>: must be sorted. Best Θ(1), worst Θ(lg n), overall O(lg n). Recurrence T(n) = T(n/2) + 1.</p>` },
+
+  { t: "big", f: "Big-O, Big-Ω, Big-Θ definitions", b: `<p><b>O</b>: 0 ≤ f(n) ≤ c·g(n) for all n ≥ n₀ (upper bound).</p><p><b>Ω</b>: 0 ≤ c·g(n) ≤ f(n) for all n ≥ n₀ (lower bound).</p><p><b>Θ</b>: c₁·g(n) ≤ f(n) ≤ c₂·g(n) for all n ≥ n₀ (tight).</p>` },
+  { t: "big", f: "Finding c₁, c₂, n₀ for a quadratic like 3n² + 4n + 1", b: `<p>c₁ = leading coefficient (3), valid from n = 1 when the other terms are positive.</p><p>c₂ = leading coefficient + 1 (4). Find the first n where the leftover fits: 4n + 1 ≤ n² first holds at n = 5.</p><p>n₀ = max of the two starting points. Test by plugging in numbers.</p>` },
+  { t: "big", f: "Order of growth, slowest to fastest", b: `<p>1 · lg n · √n · n · n lg n · n² · n³ · 2ⁿ · 10ⁿ · n! · nⁿ</p><p>lgᵏ n is O(n) for any k. All log bases are the same class; exponential bases are not.</p>` },
+  { t: "big", f: "Loop rules", b: `<p>Sequential blocks: add, keep the max. Nested: multiply.</p><p>i++ to n: n · i *= 2: lg n · i *= 3: log₃ n · i*i ≤ n: √n · i*i*i ≤ n: n<sup>1/3</sup> · s += ++i: √n</p>` },
+  { t: "big", f: "O or Θ?", b: `<p>Θ when nothing can end the work early (no break or return inside the loops).</p><p>O when an early exit is possible, so the best case beats the worst case.</p><p>if/else: take the worst branch.</p>` },
+  { t: "big", f: "Tricky loops from past exams", b: `<p>for i = n down to 1, j += i: Θ(n lg n) (harmonic).</p><p>for i = n; i > 0; i /= 2, inner j &lt; i: Θ(n) (geometric).</p><p>j *= 2 up to 2ⁿ: n iterations.</p><p>i from n to n: Θ(1).</p>` },
+
+  { t: "recur", f: "The 5 steps for backward substitution", b: `<p>0. (Optional) substitute n = 2ᵏ or 3ᵏ.</p><p>1–2. Two backward substitutions.</p><p>3. General form with i or k.</p><p>4. Use the initial condition to solve for i.</p><p>5. Plug in and simplify.</p>` },
+  { t: "recur", f: "Recurrences you should know cold", b: `<p>x(n−1) + n, x(0) = 0 → n(n+1)/2</p><p>2x(n/2) + n, x(1) = 1 → n lg n + n</p><p>x(n/2) + 1, x(1) = 1 → lg n + 1</p><p>2x(n−1) + 1, x(1) = 1 → 2ⁿ − 1</p><p>2x(n/2) + 1, x(1) = 1 → 2n − 1</p>` },
+  { t: "recur", f: "Master Theorem", b: `<p>T(n) = aT(n/b) + f(n), f(n) ∈ Θ(nᵈ), a ≥ 1, b &gt; 1</p><p>a &lt; bᵈ → Θ(nᵈ) · a = bᵈ → Θ(nᵈ log n) · a &gt; bᵈ → Θ(n<sup>log_b a</sup>)</p><p>Count a by the calls you see in one execution. It does not apply to n − 1.</p>` },
+
+  { t: "lists", f: "ArrayList operation costs", b: `<p>add(e): Θ(1) amortized (Θ(n) on a resize) · add(i, e): O(n) · get/set: Θ(1) · remove(i): O(n) · indexOf: O(n)</p>` },
+  { t: "lists", f: "LinkedList operation costs", b: `<p>add(e): Θ(1) with a tail pointer, Θ(n) without · add(i, e): O(n) · get/set: O(n) · remove(i): O(n), but remove(0) is Θ(1) · indexOf: O(n)</p>` },
+  { t: "lists", f: "Size vs capacity", b: `<p>Size: the number of elements stored.</p><p>Capacity: the backing array length. The default is 10. MyArrayList grows to size·2 + 1 (10 → 21 → 43).</p>` },
+  { t: "lists", f: "ArrayList pros and cons", b: `<p>Pros: dynamic resizing, ordered, Θ(1) index access, holds any object.</p><p>Cons: unused slots waste memory, resizing copies Θ(n), primitives need wrappers, insert and remove in the middle are linear.</p>` },
+  { t: "lists", f: "Linked list insertion steps", b: `<p>1. Create the new node.</p><p>2. Walk to the spot, tracking the previous node.</p><p>3. ${c("n.next = prev.next")}</p><p>4. ${c("prev.next = n")}</p><p>Swap steps 3 and 4 and you lose the rest of the list.</p>` },
+  { t: "lists", f: "Floyd's cycle detection", b: pre("Node slow = head, fast = head;\nwhile (fast != null && fast.next != null) {\n    slow = slow.next;\n    fast = fast.next.next;\n    if (slow == fast) return true;\n}\nreturn false;") },
+  { t: "lists", f: "Iterator methods", b: `<p>${c("hasNext()")}: is there another element?</p><p>${c("next()")}: return it and advance.</p><p>${c("remove()")}: remove the last element returned. java.util supports it; the course's MyArrayList and MyLinkedList throw UnsupportedOperationException.</p>` },
+  { t: "lists", f: "Reverse a singly linked list in place", b: pre("Node prev = null, curr = head;\nwhile (curr != null) {\n    Node next = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = next;\n}\nhead = prev;") + `<p>Θ(n) time, Θ(1) space.</p>` },
+];
+
+// ---------- match pool: left side → complexity label ----------
+const M = [
+  ["ArrayList get(i)", "Θ(1)"], ["LinkedList remove(0)", "Θ(1)"], ["Median of a sorted array", "Θ(1)"], ["ArrayList add(e), amortized", "Θ(1)"],
+  ["Binary search on a sorted array", "O(lg n)"], ["Find an index in a sorted array of distinct values", "O(lg n)"],
+  [`${c("for (i = 1; i <= n; i *= 2)")}`, "Θ(lg n)"], ["x(n) = x(n/2) + 1", "Θ(lg n)"],
+  [`${c("for (i = 1; i * i <= n; i++)")}`, "Θ(√n)"], [`${c("while (s <= n) s += ++i;")}`, "Θ(√n)"],
+  ["Sum every value in an array", "Θ(n)"], [`Outer ${c("i /= 2")} from n, inner ${c("j < i")}`, "Θ(n)"], ["T(n) = 2T(n/2) + Θ(1)", "Θ(n)"],
+  ["LinkedList get(i)", "O(n)"], ["Sequential search", "O(n)"], ["Check that all values are positive", "O(n)"], ["ArrayList add(0, e)", "O(n)"], ["Insert into a sorted LinkedList", "O(n)"],
+  ["T(n) = 2T(n/2) + n", "Θ(n lg n)"], [`Outer i from n down, inner ${c("j += i")}`, "Θ(n lg n)"],
+  [`Nested loops: i to n, ${c("j = i; j += 2")}`, "Θ(n²)"], ["x(n) = x(n − 1) + n", "Θ(n²)"], [`i to n, inner ${c("j *= 2")} up to 2ⁿ`, "Θ(n²)"],
+  ["T(n) = 8T(n/2) + n³", "Θ(n³ lg n)"],
+  ["Towers of Hanoi, n disks", "Θ(2ⁿ)"], ["x(n) = 2x(n − 1) + 1", "Θ(2ⁿ)"],
+  [`i to n, inner ${c("j *= 3")} to n`, "Θ(n log₃ n)"],
+];
+
+// ---------- state ----------
+const byId = Object.fromEntries(Q.map(q => [q.id, q]));
+let topic = store.get("topic", "all");
+const countFor = t => (mode === "cards" ? F : Q).filter(q => t === "all" || q.t === t).length;
+function renderTopics() {
+  const keys = ["all", ...Object.keys(TOPICS)];
+  $("#topics").innerHTML = keys.map(k => `<button aria-pressed="${k === topic}" data-t="${k}">${k === "all" ? "All topics" : TOPICS[k]}<span class="n">${countFor(k)}</span></button>`).join("");
+  $("#topics").querySelectorAll("button").forEach(b => b.onclick = () => {
+    topic = b.dataset.t; store.set("topic", topic); renderTopics();
+    if (mode === "cards") { resetCards(); renderCards(); } else if (mode === "quiz") startQuiz();
+  });
+}
+const inTopic = x => topic === "all" || x.t === topic;
+
+// ---------- modes ----------
+let mode = "cards";
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+function setMode(m) {
+  mode = m;
+  clearInterval(mt.timer); clearInterval(ex.timer);
+  document.querySelectorAll("nav button").forEach(b => b.setAttribute("aria-selected", b.dataset.mode === m));
+  $("#topics").hidden = !(m === "cards" || m === "quiz");
+  renderTopics();
+  ({ cards: () => { resetCards(); renderCards(); }, quiz: startQuiz, match: startMatch, exam: examIntro })[m]();
+}
+
+// ---------- flashcards ----------
+const fc = { deck: [], i: 0, known: 0, learning: [], flipped: false };
+function resetCards(list) { fc.deck = shuffle(list || F.filter(inTopic)); fc.i = 0; fc.known = 0; fc.learning = []; fc.flipped = false; }
+function renderCards() {
+  const st = $("#stage");
+  if (!fc.deck.length) { st.innerHTML = `<p class="note">No flashcards for this topic.</p>`; return; }
+  if (fc.i >= fc.deck.length) {
+    const n = fc.learning.length;
+    st.innerHTML = `<div class="q">
+      <div class="score">${fc.known}<small> / ${fc.deck.length} known</small></div>
+      <p>${n ? `${n} card${n > 1 ? "s" : ""} still need work.` : "You knew every card in this round."}</p>
+      <div class="actions">
+        ${n ? `<button class="btn primary" id="fc-again">Review the ${n} still learning</button>` : ""}
+        <button class="btn" id="fc-all">Restart this deck</button>
+        <button class="btn" id="fc-quiz">Take the quiz</button>
+      </div></div>`;
+    if (n) $("#fc-again").onclick = () => { const l = fc.learning; resetCards(l); renderCards(); };
+    $("#fc-all").onclick = () => { resetCards(); renderCards(); };
+    $("#fc-quiz").onclick = () => setMode("quiz");
+    return;
+  }
+  const card = fc.deck[fc.i];
+  st.innerHTML = `
+    <div class="bar"><span><span class="num">${fc.i + 1} / ${fc.deck.length}</span> · ${fc.known} known</span><span class="tag">${TOPICS[card.t]}</span></div>
+    <div class="track"><i style="width:${(fc.i / fc.deck.length) * 100}%"></i></div>
+    <div class="card ${fc.flipped ? "flipped" : ""}" id="card" tabindex="0" role="button" aria-label="Flip card">
+      <div class="card-in">
+        <div class="face front"><div class="front-text">${fmt(card.f)}</div><div class="hint">Tap or press Space to flip</div></div>
+        <div class="face back"><div class="back-text">${fmt(card.b)}</div></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn bad" id="fc-no">Still learning<kbd>←</kbd></button>
+      <button class="btn good" id="fc-yes">Got it<kbd>→</kbd></button>
+    </div>`;
+  $("#card").onclick = flip;
+  $("#fc-no").onclick = () => answerCard(false);
+  $("#fc-yes").onclick = () => answerCard(true);
+}
+function flip() { fc.flipped = !fc.flipped; $("#card").classList.toggle("flipped", fc.flipped); }
+function answerCard(knew) {
+  if (knew) fc.known++; else fc.learning.push(fc.deck[fc.i]);
+  fc.i++; fc.flipped = false; renderCards();
+}
+document.addEventListener("keydown", e => {
+  if (mode !== "cards" || fc.i >= fc.deck.length || !$("#card")) return;
+  if (e.target.closest("button") && e.target.id !== "card") return;
+  if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
+  else if (e.key === "ArrowRight") answerCard(true);
+  else if (e.key === "ArrowLeft") answerCard(false);
+});
+
+// ---------- shared question rendering ----------
+const LET = "ABCD";
+function prep(q) { // shuffle options, remember where the right one landed
+  const order = shuffle(q.o.map((_, k) => k));
+  return { q, order, right: order.indexOf(0) };
+}
+function questionHTML(p, n, total, extraBar) {
+  const q = p.q;
+  return `
+    <div class="bar"><span><span class="num">Question ${n} / ${total}</span> · <span class="tag">${TOPICS[q.t]}</span></span>${extraBar || ""}</div>
+    <div class="track"><i style="width:${((n - 1) / total) * 100}%"></i></div>
+    <div class="q">
+      <div class="prompt">${fmt(q.q)}</div>
+      ${q.code ? pre(q.code) : ""}
+      <div class="opts">${p.order.map((k, i) => `<button class="opt" data-i="${i}"><span class="letter">${LET[i]}</span><span>${fmt(q.o[k])}</span></button>`).join("")}</div>
+      <div id="after"></div>
+    </div>`;
+}
+function missedSet() { return new Set(store.get("missed", [])); }
+function recordResult(id, ok) {
+  const s = missedSet(); ok ? s.delete(id) : s.add(id); store.set("missed", [...s]);
+}
+
+// ---------- quiz ----------
+const qz = { list: [], i: 0, score: 0, wrong: [], missedOnly: false };
+function startQuiz(opts = {}) {
+  const missed = missedSet();
+  let pool = Q.filter(inTopic);
+  if (opts.missedOnly) pool = Q.filter(q => missed.has(q.id));
+  qz.missedOnly = !!opts.missedOnly;
+  qz.list = shuffle(pool).slice(0, opts.missedOnly ? 20 : 10).map(prep);
+  qz.i = 0; qz.score = 0; qz.wrong = [];
+  renderQuiz();
+}
+function renderQuiz() {
+  const st = $("#stage");
+  const nMissed = missedSet().size;
+  if (!qz.list.length) {
+    st.innerHTML = `<div class="q"><p>${qz.missedOnly ? "No missed questions saved. Nice." : "No questions for this topic."}</p><div class="actions"><button class="btn primary" id="qz-new">Start a regular quiz</button></div></div>`;
+    $("#qz-new").onclick = () => startQuiz();
+    return;
+  }
+  if (qz.i >= qz.list.length) {
+    st.innerHTML = `<div class="q">
+      <div class="score">${qz.score}<small> / ${qz.list.length}</small></div>
+      <p class="note">${topic === "all" || qz.missedOnly ? "" : `Topic: <b>${TOPICS[topic]}</b> · `}${nMissed} question${nMissed === 1 ? "" : "s"} in your missed pile across all topics.</p>
+      ${qz.wrong.length ? reviewList(qz.wrong) : "<p>Perfect round.</p>"}
+      <div class="actions">
+        <button class="btn primary" id="qz-again">New 10-question quiz</button>
+        ${nMissed ? `<button class="btn" id="qz-missed">Retry my missed pile (${nMissed})</button>` : ""}
+      </div></div>`;
+    $("#qz-again").onclick = () => startQuiz();
+    if (nMissed) $("#qz-missed").onclick = () => startQuiz({ missedOnly: true });
+    return;
+  }
+  const p = qz.list[qz.i];
+  const head = `<span class="num">${qz.score} correct</span>`;
+  st.innerHTML = questionHTML(p, qz.i + 1, qz.list.length, head) + `<p class="src" style="margin:10px 0 0">${esc(p.q.src)}</p>`;
+  st.querySelectorAll(".opt").forEach(b => b.onclick = () => answerQuiz(p, +b.dataset.i));
+}
+function answerQuiz(p, i) {
+  const ok = i === p.right;
+  if (ok) qz.score++; else qz.wrong.push({ p, chose: i });
+  recordResult(p.q.id, ok);
+  document.querySelectorAll(".opt").forEach((b, k) => {
+    b.disabled = true;
+    if (k === p.right) b.classList.add("right"); else if (k === i) b.classList.add("wrong");
+  });
+  $("#after").innerHTML = `<p class="explain"><span class="v" style="color:var(--${ok ? "good" : "bad"})">${ok ? "Correct." : `Not quite. The answer is ${LET[p.right]}.`}</span> ${fmt(p.q.ex)}</p>
+    <div class="actions"><button class="btn primary" id="qz-next">${qz.i + 1 < qz.list.length ? "Next question" : "See results"}<kbd>Enter</kbd></button></div>`;
+  $("#qz-next").onclick = () => { qz.i++; renderQuiz(); };
+  $("#qz-next").focus();
+}
+function reviewList(items) {
+  return `<ul class="review">${items.map(({ p, chose }) => `<li>
+    <span class="tag">${TOPICS[p.q.t]}</span>
+    <div>${fmt(p.q.q)}</div>
+    ${p.q.code ? pre(p.q.code) : ""}
+    ${chose == null ? `<div class="yours">Left blank</div>` : `<div class="yours">Your answer: ${fmt(p.q.o[p.order[chose]])}</div>`}
+    <div class="ans">Answer: ${fmt(p.q.o[0])}</div>
+    <p class="explain">${fmt(p.q.ex)}</p></li>`).join("")}</ul>`;
+}
+
+// ---------- match ----------
+const mt = { tiles: [], sel: null, left: 0, t0: 0, penalty: 0, timer: null };
+function startMatch() {
+  clearInterval(mt.timer);
+  const byLabel = {};
+  shuffle(M).forEach(([l, r]) => { if (!byLabel[r]) byLabel[r] = l; });
+  const picks = shuffle(Object.entries(byLabel)).slice(0, 6); // [label, left]
+  mt.tiles = shuffle(picks.flatMap(([r, l], k) => [{ k, side: "l", html: fmt(l) }, { k, side: "r", html: fmt(r) }]));
+  mt.sel = null; mt.left = picks.length; mt.penalty = 0; mt.t0 = 0;
+  const best = store.get("matchBest", null);
+  $("#stage").innerHTML = `
+    <div class="bar"><span>Pair each operation with its complexity. A wrong pair adds 1 second.</span>
+      <span>${best ? `Best <span class="num">${best.toFixed(1)}s</span> · ` : ""}<span class="timer" id="mt-time">0.0s</span></span></div>
+    <div class="grid">${mt.tiles.map((t, i) => `<button class="tile ${t.side === "r" ? "cxt" : ""}" data-i="${i}">${t.html}</button>`).join("")}</div>
+    <div class="actions"><button class="btn" id="mt-new">Shuffle a new set</button></div>`;
+  document.querySelectorAll(".tile").forEach(b => b.onclick = () => pickTile(+b.dataset.i, b));
+  $("#mt-new").onclick = startMatch;
+}
+function tick() { const s = (performance.now() - mt.t0) / 1000 + mt.penalty; const el = $("#mt-time"); if (el) el.textContent = s.toFixed(1) + "s"; return s; }
+function pickTile(i, el) {
+  if (!mt.t0) { mt.t0 = performance.now(); mt.timer = setInterval(tick, 100); }
+  document.querySelectorAll(".tile.miss").forEach(t => t.classList.remove("miss"));
+  if (mt.sel === null) { mt.sel = i; el.classList.add("sel"); return; }
+  if (mt.sel === i) { el.classList.remove("sel"); mt.sel = null; return; }
+  const a = mt.tiles[mt.sel], b = mt.tiles[i];
+  const prev = document.querySelector(`.tile[data-i="${mt.sel}"]`);
+  prev.classList.remove("sel");
+  if (a.k === b.k && a.side !== b.side) {
+    prev.classList.add("done"); el.classList.add("done"); mt.left--;
+    if (!mt.left) finishMatch();
+  } else { mt.penalty += 1; prev.classList.add("miss"); el.classList.add("miss"); }
+  mt.sel = null;
+}
+function finishMatch() {
+  clearInterval(mt.timer);
+  const s = tick(), best = store.get("matchBest", null), rec = best === null || s < best;
+  if (rec) store.set("matchBest", s);
+  $("#stage").innerHTML = `<div class="q">
+    <div class="score">${s.toFixed(1)}s</div>
+    <p>${rec ? "New best time." : `Best time: <b>${best.toFixed(1)}s</b>.`}${mt.penalty ? ` Includes ${mt.penalty}s of penalties.` : ""}</p>
+    <div class="actions"><button class="btn primary" id="mt-again">Play again</button></div></div>`;
+  $("#mt-again").onclick = startMatch;
+}
+
+// ---------- mock exam ----------
+const EXAM_N = 25, EXAM_MIN = 45;
+const MIX = { java: 4, math: 2, rec: 5, search: 3, big: 5, recur: 3, lists: 3 }; // 25, roughly the weighting of past Exam 1s
+const ex = { list: [], ans: [], i: 0, t0: 0, timer: null, done: false };
+function examIntro() {
+  const last = store.get("examLast", null);
+  $("#stage").innerHTML = `<div class="intro">
+    <h2>25 questions, ${EXAM_MIN} minutes</h2>
+    <p>A mixed paper weighted like Dr. B's past Exam 1s: recursion and runtime analysis carry the most, plus Java and bash, search, recurrences and lists. You can move back and forth and change answers. Nothing is graded until you submit.</p>
+    <p class="note">The real exam is 60 minutes with one handwritten double-sided cheat sheet. Always write the base of any logarithm.${last ? ` Last attempt: <b>${last.score} / ${EXAM_N}</b>.` : ""}</p>
+    <div class="actions"><button class="btn primary" id="ex-go">Start the mock exam</button></div></div>`;
+  $("#ex-go").onclick = startExam;
+}
+function startExam() {
+  const picked = [];
+  for (const [t, n] of Object.entries(MIX)) picked.push(...shuffle(Q.filter(q => q.t === t)).slice(0, n));
+  ex.list = shuffle(picked).map(prep); ex.ans = Array(ex.list.length).fill(null); ex.i = 0; ex.done = false;
+  ex.t0 = performance.now(); clearInterval(ex.timer); ex.timer = setInterval(examClock, 1000);
+  renderExam();
+}
+function clockText() {
+  const left = EXAM_MIN * 60 - Math.floor((performance.now() - ex.t0) / 1000), a = Math.abs(left);
+  return (left < 0 ? "+" : "") + Math.floor(a / 60) + ":" + String(a % 60).padStart(2, "0");
+}
+function examClock() { const el = $("#ex-clock"); if (el) { el.textContent = clockText(); el.style.color = clockText().startsWith("+") ? "var(--bad)" : ""; } }
+function renderExam() {
+  const p = ex.list[ex.i], answered = ex.ans.filter(a => a !== null).length;
+  $("#stage").innerHTML = questionHTML(p, ex.i + 1, ex.list.length, `<span>${answered} answered · <span class="timer" id="ex-clock">${clockText()}</span></span>`) + `
+    <div class="actions">
+      <button class="btn" id="ex-prev" ${ex.i === 0 ? "disabled" : ""}>Previous</button>
+      ${ex.i + 1 < ex.list.length ? `<button class="btn primary" id="ex-next">Next</button>` : ""}
+      <button class="btn ${ex.i + 1 === ex.list.length ? "primary" : ""}" id="ex-submit">Submit exam</button>
+    </div>
+    <div id="ex-confirm"></div>`;
+  const opts = document.querySelectorAll(".opt");
+  opts.forEach((b, k) => {
+    if (ex.ans[ex.i] === k) b.classList.add("chosen");
+    b.onclick = () => { ex.ans[ex.i] = k; opts.forEach(o => o.classList.remove("chosen")); b.classList.add("chosen"); };
+  });
+  $("#ex-prev").onclick = () => { ex.i--; renderExam(); };
+  if ($("#ex-next")) $("#ex-next").onclick = () => { ex.i++; renderExam(); };
+  $("#ex-submit").onclick = () => {
+    const blank = ex.ans.filter(a => a === null).length;
+    if (!blank) return gradeExam();
+    $("#ex-confirm").innerHTML = `<p class="note" style="margin-top:12px">${blank} question${blank > 1 ? "s are" : " is"} unanswered.</p>
+      <div class="actions"><button class="btn bad" id="ex-sure">Submit anyway</button><button class="btn" id="ex-back">Keep working</button></div>`;
+    $("#ex-sure").onclick = gradeExam;
+    $("#ex-back").onclick = () => { $("#ex-confirm").innerHTML = ""; };
+  };
+}
+function gradeExam() {
+  clearInterval(ex.timer);
+  const mins = (performance.now() - ex.t0) / 60000;
+  let score = 0; const per = {}, wrong = [];
+  ex.list.forEach((p, k) => {
+    const ok = ex.ans[k] === p.right; if (ok) score++;
+    recordResult(p.q.id, ok);
+    (per[p.q.t] ||= [0, 0])[1]++; if (ok) per[p.q.t][0]++;
+    if (!ok) wrong.push({ p, chose: ex.ans[k] });
+  });
+  store.set("examLast", { score });
+  const pct = Math.round((score / ex.list.length) * 100);
+  $("#stage").innerHTML = `<div class="q">
+    <div class="score">${score}<small> / ${ex.list.length} · ${pct}%</small></div>
+    <p class="note">Finished in ${Math.floor(mins)}m ${Math.round((mins % 1) * 60)}s. Weakest topics first:</p>
+    <div class="breakdown">${Object.entries(per).sort((a, b) => a[1][0] / a[1][1] - b[1][0] / b[1][1]).map(([t, [r, n]]) => {
+      const f = r / n, col = f >= .8 ? "var(--good)" : f >= .5 ? "var(--g-poly)" : "var(--bad)";
+      return `<div class="brow"><span>${TOPICS[t]}</span><span class="meter"><i style="width:${f * 100}%;background:${col}"></i></span><span class="num">${r}/${n}</span></div>`;
+    }).join("")}</div>
+    ${wrong.length ? `<h3 style="margin:8px 0 0;font:700 18px var(--display)">Review</h3>${reviewList(wrong)}` : "<p>Perfect paper.</p>"}
+    <div class="actions"><button class="btn primary" id="ex-again">New mock exam</button><button class="btn" id="ex-quiz">Drill my missed pile</button></div></div>`;
+  $("#ex-again").onclick = startExam;
+  $("#ex-quiz").onclick = () => { setMode("quiz"); startQuiz({ missedOnly: true }); };
+}
+
+// ---------- boot ----------
+setMode("cards");
+</script>
+
+</body></html>

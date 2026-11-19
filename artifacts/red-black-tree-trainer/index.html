@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red-Black Tree Insertion Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f2ec; --panel:#ffffff; --ink:#1c1a18; --muted:#6d675f; --line:#e2dcd2;
+    --red:#d1392f; --black:#1f1d1b; --accent:#2c66d6; --amber:#e39a2b; --good:#1f8a4c; --bad:#c2352b;
+    --mono:'IBM Plex Mono', ui-monospace, monospace; --sans:'IBM Plex Sans', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45}
+  button,select,input{font-family:var(--sans)}
+  button{font-size:inherit;cursor:pointer}
+  header{display:flex;align-items:center;gap:20px;padding:14px 22px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.01em}
+  .brand .dots{display:flex;gap:3px}
+  .brand .dots i{width:11px;height:11px;border-radius:50%;display:block}
+  .tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:10px;border:1px solid var(--line)}
+  .tabs button{border:0;background:transparent;padding:6px 14px;border-radius:7px;font-weight:600;color:var(--muted)}
+  .tabs button.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .stats{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--muted);display:flex;gap:14px}
+  .stats b{color:var(--ink)}
+
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;padding:18px 22px;max-width:1500px;margin:0 auto}
+  @media (max-width:900px){.layout{grid-template-columns:1fr;padding:12px}}
+
+  .stage{background:var(--panel);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+  .prompt{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;min-height:58px;flex-wrap:wrap}
+  .prompt .big{font-size:19px;font-weight:600}
+  .prompt .key{font-family:var(--mono);background:var(--red);color:#fff;border-radius:999px;padding:1px 11px;font-weight:600}
+  .prompt .sub{color:var(--muted);font-size:13.5px}
+  .opts{margin-left:auto;display:flex;gap:12px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+  .opts label{display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none}
+  .canvas-wrap{position:relative;flex:1}
+  svg#svg{display:block;width:100%;height:clamp(400px,62vh,780px);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;background-image:radial-gradient(#e6e0d6 1px,transparent 1px);background-size:22px 22px}
+  svg#svg.panning{cursor:grabbing}
+  .zoom{position:absolute;right:12px;top:10px;display:flex;flex-direction:column;gap:4px}
+  .zoom button{width:36px;height:34px;border:1px solid var(--line);background:#fff;border-radius:8px;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;letter-spacing:.03em;padding:0}
+  .zoom button:hover{background:#faf8f4}
+  .toast{position:absolute;left:50%;bottom:12px;transform:translateX(-50%) translateY(8px);background:var(--ink);color:#fff;padding:7px 14px;border-radius:8px;font-size:13.5px;opacity:0;pointer-events:none;transition:.18s;max-width:90%;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .readonly-badge{position:absolute;top:10px;left:12px;background:#fff6e6;border:1px solid #f1d39c;color:#8a5a0c;font-size:12.5px;padding:3px 9px;border-radius:6px;display:none}
+  .readonly-badge.show{display:block}
+
+  .howto{display:flex;gap:6px 18px;padding:9px 16px;border-bottom:1px solid var(--line);background:#fcfbf8;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted)}
+  .howto span{display:flex;align-items:center;gap:7px}
+  .howto svg{flex:none}
+  .howto .actions{margin-left:auto;display:flex;gap:6px}
+  .icon-btn{border:1px solid var(--line);background:#fff;border-radius:8px;height:32px;padding:0 10px;display:flex;align-items:center;gap:6px;color:var(--ink);font-size:13px;font-weight:500}
+  .icon-btn:hover:not(:disabled){background:#faf8f4}
+  .icon-btn:disabled{opacity:.35;cursor:not-allowed}
+  .checks{display:flex;gap:8px;padding:10px 16px 12px;flex-wrap:wrap;border-top:1px solid var(--line)}
+  .chip{font-size:12.5px;padding:3px 9px 3px 7px;border-radius:999px;border:1px solid var(--line);display:flex;gap:5px;align-items:center}
+  .chip.ok{color:var(--good);border-color:#bfe0cc;background:#f1faf4}
+  .chip.no{color:var(--bad);border-color:#efc2bd;background:#fdf3f2}
+
+  aside{display:flex;flex-direction:column;gap:12px;min-width:0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card h3{margin:0 0 10px;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .row + .row{margin-top:8px}
+  .btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:8px 13px;font-weight:600;color:var(--ink)}
+  .btn:hover:not(:disabled){background:#faf8f4;border-color:#c9c1b4}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.primary:hover:not(:disabled){background:#38342f}
+  .btn.grow{flex:1}
+  .btn .muted{font-weight:500}
+  select,input[type=text]{font-size:inherit;border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff;color:var(--ink);min-width:0}
+  input[type=text]{flex:1;font-family:var(--mono)}
+  .field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);flex:1;min-width:120px}
+  .check{display:flex;gap:7px;align-items:center;font-size:13.5px;margin-top:10px;cursor:pointer;user-select:none}
+
+  .fb{border-radius:10px;padding:11px 13px;font-size:14px;border:1px solid var(--line);background:#faf8f4}
+  .fb.success{background:#eef9f2;border-color:#bfe0cc;color:#135d33}
+  .fb.error{background:#fdf2f1;border-color:#efc2bd;color:#8e2219}
+  .fb.hint{background:#fff7e8;border-color:#f1d39c;color:#71480a}
+  .fb ul{margin:6px 0 0;padding-left:18px}
+  .fb b, .stepmsg b, .steps b{font-family:var(--mono)}
+  .changes{display:block;margin-top:6px;font-size:13px}
+  .changes ul{margin:4px 0 0;padding-left:18px}
+
+  .steps{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;max-height:320px;overflow:auto}
+  .steps li{font-size:13.5px;padding:7px 9px;border-radius:7px;cursor:pointer;border:1px solid transparent}
+  .steps li:hover{background:var(--bg)}
+  .steps li.on{background:#fff7e8;border-color:#f1d39c}
+  .steps li .k{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:block}
+  .stepmsg{font-size:14px;background:#fff7e8;border:1px solid #f1d39c;border-radius:9px;padding:10px 12px;margin:8px 0 10px}
+  .stephead{font-size:13px;color:var(--muted)}
+  .stephead b{font-family:var(--mono);color:var(--ink)}
+  .log{list-style:none;margin:0;padding:0;font-size:13px;max-height:230px;overflow:auto;display:flex;flex-direction:column-reverse;gap:5px}
+  .log li{padding:5px 8px;border-radius:6px;background:var(--bg)}
+  .log li b{font-family:var(--mono)}
+  .muted{color:var(--muted);font-size:13px}
+  details.cheat summary{cursor:pointer;font-weight:600;font-size:14px}
+  details.cheat ol{padding-left:18px;margin:10px 0 0;font-size:13.5px}
+  details.cheat li{margin-bottom:7px}
+  details.cheat .tag{font-family:var(--mono);font-size:11.5px;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+  details.cheat h4{margin:14px 0 4px;font-size:13.5px}
+  details.cheat p{margin:4px 0;font-size:13.5px}
+  .hidden{display:none !important}
+
+  /* SVG */
+  .edge{stroke:#bdb5a8;stroke-width:2}
+  .edge.nil-edge{stroke:#d8d1c5;stroke-width:1.5;stroke-dasharray:3 3}
+  .eg .ehit{stroke:transparent;stroke-width:16;cursor:pointer}
+  .eg.cut:hover .edge{stroke:var(--bad);stroke-dasharray:6 4;stroke-width:2.5}
+  .node{cursor:move}
+  .node .body{stroke:#fff;stroke-width:2.5}
+  .node.R .body{fill:var(--red)}
+  .node.B .body{fill:var(--black)}
+  .node text.k{fill:#fff;font-family:var(--mono);font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+  .node .halo{fill:none;stroke:transparent;stroke-width:3}
+  .node.float .halo{stroke:#a59d91;stroke-dasharray:3 3;stroke-width:2}
+  .node.hl .halo{stroke:var(--amber);stroke-dasharray:5 4;stroke-width:3}
+  .node.sel .halo{stroke:var(--accent);stroke-dasharray:none;stroke-width:3.5}
+  .node.drop .halo{stroke:var(--good);stroke-dasharray:none;stroke-width:4}
+  .node:hover .body{filter:brightness(1.15)}
+  .node .bh{font-family:var(--mono);font-size:10px;fill:var(--muted);pointer-events:none}
+  .node .bh.bad{fill:var(--bad);font-weight:600}
+  .node .newtag{font-family:var(--mono);font-size:9.5px;fill:var(--accent);font-weight:600;text-anchor:middle;pointer-events:none;letter-spacing:.05em}
+  .port{fill:#fff;stroke:#b3aa9c;stroke-width:1.5;cursor:crosshair}
+  .port-hit{fill:transparent;cursor:crosshair}
+  .stub{stroke:#d3ccc0;stroke-width:1.5;stroke-dasharray:2 3;pointer-events:none}
+  .pg:hover .port, .pg.near .port{fill:var(--accent);stroke:var(--accent)}
+  .pg.near .port{r:8}
+  .rubber{stroke:var(--accent);stroke-width:2.5;stroke-dasharray:6 4;pointer-events:none}
+  .nil rect.box{fill:#2c2a27}
+  .nil text{fill:#fff;font-family:var(--mono);font-size:7px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+  .nil.clickable{cursor:pointer}
+  .nil.clickable rect.box{fill:#fff;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:3 2}
+  .nil.clickable text{fill:var(--accent);font-weight:600;font-size:11px}
+  .nil.clickable:hover rect.box{fill:var(--accent)}
+  .nil.clickable:hover text{fill:#fff}
+  .nil.wrong rect.box{fill:var(--bad) !important;stroke:var(--bad)}
+  .nil.wrong text{fill:#fff !important}
+  .nil .hit{fill:transparent}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="dots"><i style="background:var(--red)"></i><i style="background:var(--black)"></i></span>Red-Black Tree Insertion Trainer</div>
+  <div class="tabs" role="tablist">
+    <button id="tabPractice" class="on">Practice</button>
+    <button id="tabSandbox">Sandbox</button>
+  </div>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="layout">
+  <section class="stage">
+    <div class="prompt">
+      <div id="prompt"></div>
+      <div class="opts">
+        <label><input type="checkbox" id="optNil"> NIL leaves</label>
+        <label><input type="checkbox" id="optBh"> Black-heights</label>
+        <label><input type="checkbox" id="optChecks" checked> Live checks</label>
+      </div>
+    </div>
+    <div class="howto" id="howto">
+      <span><svg width="22" height="14" viewBox="0 0 22 14"><line x1="2" y1="12" x2="20" y2="2" stroke="#c2352b" stroke-width="2" stroke-dasharray="4 3"/></svg>Click an edge to cut</span>
+      <span><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="#fff" stroke="#b3aa9c" stroke-width="1.5"/></svg>Drag from an empty slot to a node to connect</span>
+      <span><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="#d1392f"/><path d="M7 1a6 6 0 0 1 0 12z" fill="#1f1d1b"/></svg>Double-click to recolor</span>
+      <div class="actions">
+        <button class="icon-btn" id="tUndo" title="Undo (Z)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3 1.5 6l3 3"/><path d="M1.5 6h7a4 4 0 0 1 0 8h-2"/></svg>Undo</button>
+        <button class="icon-btn" id="tRedo" title="Redo (Y)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3l3 3-3 3"/><path d="M12.5 6h-7a4 4 0 0 0 0 8h2"/></svg>Redo</button>
+      </div>
+    </div>
+    <div class="canvas-wrap">
+      <svg id="svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMin meet"></svg>
+      <div class="zoom">
+        <button id="zIn" title="Zoom in"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+        <button id="zOut" title="Zoom out"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+        <button id="zFit" title="Fit the whole tree in view (F)">FIT</button>
+        <button id="zTidy" title="Put dragged nodes back in place">TIDY</button>
+      </div>
+      <div class="readonly-badge" id="roBadge">Viewing a step (read only)</div>
+      <div class="toast" id="toast"></div>
+    </div>
+    <div class="checks" id="checks"></div>
+  </section>
+
+  <aside>
+    <!-- PRACTICE PANEL -->
+    <div id="panelPractice">
+      <div class="card">
+        <h3>Problem</h3>
+        <div class="row">
+          <label class="field">Fix-up type
+            <select id="pType">
+              <option value="any">Any (mixed)</option>
+              <option value="recolor">Recolor only (Case 1)</option>
+              <option value="single">Single rotation (Case 3)</option>
+              <option value="double">Double rotation (Case 2, then 3)</option>
+              <option value="cascade">Cascade (Case 1, then more)</option>
+            </select>
+          </label>
+          <label class="field" style="max-width:120px">Tree size
+            <select id="pSize">
+              <option value="s">Small</option>
+              <option value="m" selected>Medium</option>
+              <option value="l">Large</option>
+            </select>
+          </label>
+        </div>
+        <label class="check"><input type="checkbox" id="pAuto"> Skip the BST placement step</label>
+        <div class="row" style="margin-top:12px">
+          <button class="btn grow" id="pNew">New problem <span class="muted">(N)</span></button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <div class="row">
+          <button class="btn primary grow" id="pCheck">Check <span style="opacity:.6;font-weight:500">(Enter)</span></button>
+          <button class="btn" id="pHint">Hint <span class="muted">(H)</span></button>
+          <button class="btn" id="pReset" title="Go back to just after placing the node">Reset</button>
+        </div>
+        <div id="pFeedback" class="fb" style="margin-top:12px"></div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn grow" id="pSolution">Show solution</button>
+        </div>
+        <div id="pSolBox" class="hidden" style="margin-top:10px">
+          <div class="row">
+            <button class="btn" id="pSolPrev">‹ Prev</button>
+            <button class="btn" id="pSolNext">Next ›</button>
+            <button class="btn grow" id="pSolBack">Back to my tree</button>
+          </div>
+          <ol class="steps" id="pSolSteps"></ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- SANDBOX PANEL -->
+    <div id="panelSandbox" class="hidden">
+      <div class="card">
+        <h3>Insert</h3>
+        <form class="row" id="sbForm">
+          <input type="text" id="sbInput" placeholder="e.g. 41 38 31 12 19 8" autocomplete="off">
+          <button class="btn primary" type="submit">Insert</button>
+        </form>
+        <div class="row">
+          <button class="btn" id="sbRandom">Add random value</button>
+          <button class="btn" id="sbClear">Clear tree</button>
+        </div>
+        <label class="check"><input type="checkbox" id="sbStep" checked> Step through each fix-up</label>
+        <p class="muted" style="margin:8px 0 0">Between inserts you can cut, connect and recolor nodes freely. The live checks show whether it's still a valid red-black tree.</p>
+      </div>
+
+      <div class="card hidden" id="sbStepper" style="margin-top:12px">
+        <div class="stephead" id="sbStepHead"></div>
+        <div class="stepmsg" id="sbStepMsg"></div>
+        <div class="row">
+          <button class="btn" id="sbPrev">‹ Prev</button>
+          <button class="btn primary grow" id="sbNext">Next ›</button>
+        </div>
+        <div class="row">
+          <button class="btn grow" id="sbFinish">Finish this one</button>
+          <button class="btn grow" id="sbFinishAll">Finish all</button>
+        </div>
+        <div class="muted" id="sbQueue" style="margin-top:8px"></div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>Presets</h3>
+        <div class="row">
+          <button class="btn" data-preset="clrs">CLRS example (insert 4)</button>
+          <button class="btn" data-preset="asc">Ascending 1 to 10</button>
+          <button class="btn" data-preset="zig">Zig-zag</button>
+          <button class="btn" data-preset="rand">Random 12</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>Log</h3>
+        <ul class="log" id="sbLog"></ul>
+        <div class="muted" id="sbLogEmpty">Nothing inserted yet.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <details class="cheat" open>
+        <summary>Insertion cheat sheet</summary>
+        <ol>
+          <li>BST-insert the new node <b>z</b> and color it <b style="color:var(--red)">red</b>. NIL leaves count as black.</li>
+          <li>While z's parent <b>p</b> is red, look at the uncle <b>u</b> (p's sibling) and grandparent <b>g</b>:
+            <ol type="a" style="margin-top:6px">
+              <li><span class="tag">Case 1</span> <b>u is red</b>: color p and u black, g red. Set z = g and repeat.</li>
+              <li><span class="tag">Case 2</span> <b>u is black</b>, z is an <i>inner</i> child (triangle): rotate at p, away from z (z is the right child of a left p, so rotate left). The old p becomes the new z.</li>
+              <li><span class="tag">Case 3</span> <b>u is black</b>, z is an <i>outer</i> child (straight line): color p black, g red, and rotate at g the other way (left-left means rotate right). Done.</li>
+            </ol>
+          </li>
+          <li>Finally, color the root black.</li>
+        </ol>
+        <h4>Doing a rotation by hand</h4>
+        <p><b>Rotate left at x</b>, where y is x's right child and b is y's left child:</p>
+        <ol style="margin-top:4px">
+          <li>Cut the edge above x, the edge x–y, and the edge y–b.</li>
+          <li>Connect y where x used to hang (or leave it as the root).</li>
+          <li>Connect x as y's <b>left</b> child, then b as x's <b>right</b> child.</li>
+        </ol>
+        <p class="muted">Rotate right is the mirror image. Keys: C recolors the selected node, Delete cuts it from its parent, Z/Y undo/redo, F fits the view.</p>
+      </details>
+    </div>
+  </aside>
+</div>
+
+<script id="core">
+/* ---------- Red-black tree core (pure). A tree is {root, floats:[detached subtree roots]}. ---------- */
+const R = 'R', B = 'B';
+function mk(key, color){ return {key, color, left:null, right:null, parent:null}; }
+function cloneNode(n, p){ if(!n) return null; const c = mk(n.key, n.color); c.parent = p; c.left = cloneNode(n.left, c); c.right = cloneNode(n.right, c); return c; }
+function cloneT(T){ return {root: cloneNode(T.root, null), floats: (T.floats || []).map(f => cloneNode(f, null))}; }
+function roots(T){ return (T.root ? [T.root] : []).concat(T.floats || []); }
+function allNodes(T){ const out = []; const w = n => { if(n){ out.push(n); w(n.left); w(n.right); } }; roots(T).forEach(w); return out; }
+function find(T, k){ for(const n of allNodes(T)) if(n.key === k) return n; return null; }
+function bstFind(T, k){ let x = T.root; while(x && x.key !== k) x = k < x.key ? x.left : x.right; return x; }
+function ser(n){ return n ? '(' + n.key + n.color + ser(n.left) + ser(n.right) + ')' : '.'; }
+function serT(T){ return ser(T.root) + ((T.floats || []).length ? '+' + T.floats.map(ser).join('+') : ''); }
+function size(n){ return n ? 1 + size(n.left) + size(n.right) : 0; }
+function keysOf(n, out=[]){ if(n){ keysOf(n.left,out); out.push(n.key); keysOf(n.right,out);} return out; }
+function subtreeKeys(n){ return keysOf(n); }
+function normalize(T){
+  const rs = allNodes(T).filter(n => !n.parent);
+  rs.sort((a, b) => size(b) - size(a));
+  T.root = rs[0] || null; T.floats = rs.slice(1);
+  return T;
+}
+
+function rotL(T, x){
+  const y = x.right; if(!y) return false;
+  x.right = y.left; if(y.left) y.left.parent = x;
+  y.parent = x.parent;
+  if(!x.parent) T.root = y; else if(x === x.parent.left) x.parent.left = y; else x.parent.right = y;
+  y.left = x; x.parent = y; return true;
+}
+function rotR(T, y){
+  const x = y.left; if(!x) return false;
+  y.left = x.right; if(x.right) x.right.parent = y;
+  x.parent = y.parent;
+  if(!y.parent) T.root = x; else if(y === y.parent.left) y.parent.left = x; else y.parent.right = x;
+  x.right = y; y.parent = x; return true;
+}
+function bstSlot(T, k){
+  let y = null, x = T.root, side = '';
+  while(x){ if(k === x.key) return null; y = x; if(k < x.key){ x = x.left; side = 'L'; } else { x = x.right; side = 'R'; } }
+  return {parent:y, side};
+}
+function bstPathText(T, k){
+  const parts = []; let x = T.root;
+  while(x){ parts.push(k < x.key ? `${k} &lt; ${x.key}, go left` : `${k} &gt; ${x.key}, go right`); x = k < x.key ? x.left : x.right; }
+  return parts.join('; ');
+}
+
+/* Standard (CLRS) insertion, recorded as snapshots. */
+function insertSteps(T0, k){
+  const T = cloneT(T0), steps = [];
+  const snap = (kind, msg, hl) => steps.push({kind, msg, hl: hl || [], T: cloneT(T), z: k});
+  const slot = bstSlot(T, k); if(!slot) return null;
+  const z0 = mk(k, R); z0.parent = slot.parent;
+  if(!slot.parent) T.root = z0; else if(slot.side === 'L') slot.parent.left = z0; else slot.parent.right = z0;
+  snap('insert', slot.parent
+    ? `Insert ${k} as a red leaf: the ${slot.side === 'L' ? 'left' : 'right'} child of ${slot.parent.key}.`
+    : `Insert ${k} as the root (red for now).`, [k]);
+  let z = z0;
+  while(z.parent && z.parent.color === R){
+    let p = z.parent; const g = p.parent;
+    const pL = p === g.left; const u = pL ? g.right : g.left;
+    if(u && u.color === R){
+      p.color = B; u.color = B; g.color = R;
+      snap('case1', `Case 1. ${z.key} and its parent ${p.key} are both red, and the uncle ${u.key} is red. Recolor ${p.key} and ${u.key} black and the grandparent ${g.key} red, then keep checking from ${g.key}.`, [p.key, u.key, g.key]);
+      z = g; continue;
+    }
+    const uTxt = u ? `the uncle ${u.key} is black` : `the uncle is NIL (black)`;
+    if(pL && z === p.right){
+      rotL(T, p);
+      snap('case2', `Case 2. ${z.key} and its parent ${p.key} are red, ${uTxt}, and ${z.key} is an inner child (a triangle). Rotate left at ${p.key} to straighten the line; ${p.key} is now the lower red node.`, [z.key, p.key]);
+      z = p; p = z.parent;
+    } else if(!pL && z === p.left){
+      rotR(T, p);
+      snap('case2', `Case 2. ${z.key} and its parent ${p.key} are red, ${uTxt}, and ${z.key} is an inner child (a triangle). Rotate right at ${p.key} to straighten the line; ${p.key} is now the lower red node.`, [z.key, p.key]);
+      z = p; p = z.parent;
+    }
+    p.color = B; g.color = R;
+    if(pL) rotR(T, g); else rotL(T, g);
+    snap('case3', `Case 3. ${z.key} and its parent ${p.key} are red, ${uTxt}, and they form a straight line (${pL ? 'left-left' : 'right-right'}). Recolor ${p.key} black and ${g.key} red, then rotate ${pL ? 'right' : 'left'} at ${g.key}.`, [p.key, g.key]);
+    break;
+  }
+  if(T.root.color === R){
+    T.root.color = B;
+    snap('root', `The root ${T.root.key} is red, so color it black. Done.`, [T.root.key]);
+  } else {
+    snap('done', steps.length === 1
+      ? `The parent ${slot.parent.key} is black, so nothing is violated. Done.`
+      : `No red-red violations remain and the root is black. Done.`, []);
+  }
+  return steps;
+}
+function finalTree(steps){ return cloneT(steps[steps.length - 1].T); }
+
+function classify(steps){
+  let c1=0, c2=0, c3=0;
+  for(const s of steps){ if(s.kind==='case1') c1++; else if(s.kind==='case2') c2++; else if(s.kind==='case3') c3++; }
+  if(c1 + c2 + c3 === 0) return 'trivial';
+  if((c1 > 0 && c2 + c3 > 0) || c1 >= 2) return 'cascade';
+  if(c1 === 1) return 'recolor';
+  if(c2) return 'double';
+  return 'single';
+}
+
+/* Structural diff: which edges to cut, which to connect, which nodes to recolor. */
+function edgeMap(T){ const m = {}; for(const n of allNodes(T)) if(n.parent) m[n.key] = {p: n.parent.key, side: n.parent.left === n ? 'L' : 'R'}; return m; }
+function colorMap(T){ const m = {}; for(const n of allNodes(T)) m[n.key] = n.color; return m; }
+function treeDiff(A, Bt){
+  const ea = edgeMap(A), eb = edgeMap(Bt), ca = colorMap(A), cb = colorMap(Bt);
+  const cuts = [], links = [], recolors = [];
+  for(const c in ea){ const e = eb[c]; if(!e || e.p !== ea[c].p || e.side !== ea[c].side) cuts.push({p: ea[c].p, c: Number(c)}); }
+  for(const c in eb){ const e = ea[c]; if(!e || e.p !== eb[c].p || e.side !== eb[c].side) links.push({p: eb[c].p, c: Number(c), side: eb[c].side}); }
+  for(const k in cb) if(ca[k] !== undefined && ca[k] !== cb[k]) recolors.push({k: Number(k), to: cb[k]});
+  return {cuts, links, recolors, count: cuts.length + links.length + recolors.length,
+          keys: [...new Set([...cuts.flatMap(e => [e.p, e.c]), ...links.flatMap(e => [e.p, e.c]), ...recolors.map(r => r.k)])]};
+}
+function diffItems(d){
+  const items = [];
+  if(d.cuts.length) items.push(`Cut ${d.cuts.map(e => `<b>${e.p}–${e.c}</b>`).join(', ')}`);
+  for(const e of d.links) items.push(`Connect <b>${e.c}</b> as ${e.p}'s ${e.side === 'L' ? 'left' : 'right'} child`);
+  for(const r of d.recolors) items.push(`Recolor <b>${r.k}</b> ${r.to === R ? 'red' : 'black'}`);
+  return items;
+}
+function solutionOps(steps){ return treeDiff(steps[0].T, steps[steps.length - 1].T).count; }
+
+/* Property checks (on the main component; floats reported separately) */
+function validate(T){
+  const redRed = [], bhBad = [], bh = {};
+  function walk(n){
+    if(!n) return 1;
+    if(n.color === R){
+      if(n.left && n.left.color === R) redRed.push([n.key, n.left.key]);
+      if(n.right && n.right.color === R) redRed.push([n.key, n.right.key]);
+    }
+    const l = walk(n.left), r = walk(n.right);
+    if(l !== r) bhBad.push(n.key);
+    bh[n.key] = {bh: Math.max(l, r), ok: l === r};
+    return Math.max(l, r) + (n.color === B ? 1 : 0);
+  }
+  walk(T.root);
+  for(const f of (T.floats || [])) walk(f);
+  const ino = keysOf(T.root), bstBad = [];
+  for(let i = 0; i + 1 < ino.length; i++) if(ino[i] >= ino[i + 1]) bstBad.push([ino[i], ino[i + 1]]);
+  const rootRed = !!(T.root && T.root.color === R);
+  const floats = (T.floats || []).map(f => f.key);
+  return {rootRed, redRed, bhBad, bstBad, floats, bh, ok: !rootRed && !redRed.length && !bhBad.length && !bstBad.length && !floats.length};
+}
+
+/* Conceptual hint for a connected tree */
+function analyze(T){
+  let z = null;
+  (function w(n){ if(!n || z) return; if(n.color === R && n.parent && n.parent.color === R){ z = n; return; } w(n.left); w(n.right); })(T.root);
+  if(z){
+    const p = z.parent, g = p.parent;
+    if(!g) return `The root ${p.key} is red.`;
+    const pL = p === g.left, u = pL ? g.right : g.left;
+    return `${z.key} and its parent ${p.key} are both red. What color is the uncle (${u ? u.key : 'NIL'})? Do ${z.key}, ${p.key}, ${g.key} form a straight line or a triangle?`;
+  }
+  if(T.root && T.root.color === R) return `Look at the root.`;
+  return `No red-red pair left. Check the root and the black-heights.`;
+}
+
+function buildRandom(n){
+  let T = {root:null, floats:[]}; const used = new Set(); let guard = 0;
+  while(used.size < n && guard++ < 1000){
+    const k = 1 + Math.floor(Math.random() * 99);
+    if(used.has(k)) continue; used.add(k);
+    T = finalTree(insertSteps(T, k));
+  }
+  return T;
+}
+function shuffle(a){ for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function generateProblem(type, sizeKey){
+  const ranges = {s:[4,7], m:[8,12], l:[13,18]};
+  const types = ['recolor','single','double','cascade'];
+  const want = type === 'any' ? types[Math.floor(Math.random() * types.length)] : type;
+  let [lo, hi] = ranges[sizeKey] || ranges.m;
+  if(want === 'cascade') lo = Math.max(lo, 7), hi = Math.max(hi, 9);
+  for(let attempt = 0; attempt < 400; attempt++){
+    const n = lo + Math.floor(Math.random() * (hi - lo + 1));
+    const T = buildRandom(n);
+    const present = new Set(keysOf(T.root));
+    const cands = shuffle([...Array(99)].map((_, i) => i + 1).filter(k => !present.has(k)));
+    for(const k of cands){
+      const steps = insertSteps(T, k);
+      if(classify(steps) === want) return {base:T, key:k, steps, cls:want};
+    }
+  }
+  for(;;){
+    const T = buildRandom(hi);
+    for(const k of shuffle([...Array(99)].map((_, i) => i + 1))){
+      const steps = insertSteps(T, k);
+      if(steps && classify(steps) !== 'trivial') return {base:T, key:k, steps, cls:classify(steps)};
+    }
+  }
+}
+</script>
+
+<script>
+/* ---------- UI ---------- */
+const $ = id => document.getElementById(id);
+const svg = $('svg');
+const SX = 52, SY = 78, NILW = 0.6, PORT = {x: 22, y: 36};
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const KIND_LABEL = {insert:'Insert', case1:'Case 1: recolor', case2:'Case 2: rotate at parent', case3:'Case 3: recolor and rotate at grandparent', root:'Recolor root', done:'Done'};
+const KIND_SHORT = {case1:'Case 1', case2:'Case 2', case3:'Case 3', root:'root recolor'};
+const CLS_LABEL = {recolor:'Recolor only', single:'Single rotation', double:'Double rotation', cascade:'Cascade'};
+const ICON_OK = '<svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.5l2.5 2.5 4.5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICON_NO = '<svg width="11" height="11" viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
+function loadStats(){ try { return Object.assign({solved:0, streak:0, best:0}, JSON.parse(localStorage.getItem('rbt-stats') || '{}')); } catch(e){ return {solved:0, streak:0, best:0}; } }
+function saveStats(){ try { localStorage.setItem('rbt-stats', JSON.stringify(S.stats)); } catch(e){} }
+
+const S = {
+  mode: 'practice',
+  opt: {nil:false, bh:false, checks:true},
+  stats: loadStats(),
+  pr: null,
+  sb: {tree:{root:null, floats:[]}, manual:null, hist:[], fut:[], sel:null, steps:null, idx:0, queue:[], log:[], lastKey:null},
+  hintLevel: 0, hintHl: [],
+  offsets: {}, needFit: true, flash: null,
+};
+
+/* ----- layout ----- */
+function layout(T, showNil){
+  const pos = {}, nodes = [], nils = [], edges = [], parentOf = {};
+  let x = 0;
+  function walk(n, d, par, side){
+    if(!n){
+      if(showNil && par){
+        const id = `nil:${par.key}:${side}`;
+        x += SX * NILW / 2; pos[id] = {x, y: d * SY - SY * 0.3}; x += SX * NILW / 2;
+        nils.push({id}); edges.push([par.key, id]); parentOf[id] = par.key;
+      } else if(showNil && !par){
+        pos['nil:root:'] = {x, y: 0}; nils.push({id:'nil:root:'});
+      }
+      return;
+    }
+    if(n.parent) parentOf[n.key] = n.parent.key;
+    walk(n.left, d + 1, n, 'L');
+    x += SX / 2; pos[n.key] = {x, y: d * SY}; x += SX / 2;
+    nodes.push(n);
+    walk(n.right, d + 1, n, 'R');
+    if(n.left) edges.push([n.key, n.left.key]);
+    if(n.right) edges.push([n.key, n.right.key]);
+  }
+  const rs = roots(T);
+  if(!rs.length) walk(null, 0, null, '');
+  rs.forEach((r, i) => { if(i) x += SX; walk(r, 0, null, ''); });
+  for(const id in pos){
+    const k = String(id).startsWith('nil:') ? parentOf[id] : id;
+    const o = k !== undefined && S.offsets[k];
+    if(o) pos[id] = {x: pos[id].x + o.x, y: pos[id].y + o.y};
+  }
+  return {pos, nodes, nils, edges, parentOf};
+}
+
+/* ----- camera ----- */
+let prevPos = {}, animId = 0, lastTarget = {}, lastL = null;
+const cam = {x:-300, y:-50, s:1};
+function svgSize(){ return {w: svg.clientWidth || 800, h: svg.clientHeight || 500}; }
+function camVB(){ const {w, h} = svgSize(); return [cam.x, cam.y, w / cam.s, h / cam.s]; }
+function applyCam(){ svg.setAttribute('viewBox', camVB().map(n => n.toFixed(1)).join(' ')); }
+function fitCamera(target){
+  const {w, h} = svgSize();
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for(const id in target){ const p = target[id]; minX = Math.min(minX, p.x); maxX = Math.max(maxX, p.x); minY = Math.min(minY, p.y); maxY = Math.max(maxY, p.y); }
+  if(minX === Infinity){ minX = maxX = minY = maxY = 0; }
+  const pad = 60, bw = maxX - minX + pad * 2, bh = maxY - minY + pad * 2;
+  cam.s = Math.max(0.8, Math.min(1.35, w / bw, h / bh));
+  const vw = w / cam.s, vh = h / cam.s;
+  cam.x = (minX + maxX) / 2 - vw / 2;
+  cam.y = bh <= vh ? (minY + maxY) / 2 - vh / 2 : minY - pad;
+}
+function zoomAt(f, cx, cy){
+  const {w, h} = svgSize();
+  if(cx === undefined){ cx = w / 2; cy = h / 2; }
+  const ns = Math.max(0.3, Math.min(3, cam.s * f));
+  const wx = cam.x + cx / cam.s, wy = cam.y + cy / cam.s;
+  cam.s = ns; cam.x = wx - cx / ns; cam.y = wy - cy / ns;
+  applyCam();
+}
+
+/* ----- drawing ----- */
+function render(instant){
+  const v = view();
+  const L = layout(v.T, v.showNil);
+  const target = L.pos;
+  if(v.manual) for(const n of L.nodes) if(v.manual[n.key]) target[n.key] = {...v.manual[n.key]};
+  const start = {};
+  for(const id in target){
+    if(prevPos[id]) start[id] = prevPos[id];
+    else { const pk = L.parentOf[id]; start[id] = (pk !== undefined && prevPos[pk]) ? {...prevPos[pk]} : {...target[id]}; }
+  }
+  lastTarget = target; lastL = L;
+  if(S.needFit){ S.needFit = false; fitCamera(target); }
+  const D = (instant || reduceMotion) ? 0 : 420;
+  const id = ++animId, t0 = performance.now();
+  const ease = e => e < .5 ? 4*e*e*e : 1 - Math.pow(-2*e + 2, 3) / 2;
+  paint(L, start, v, validate(v.T));
+  function frame(now){
+    if(id !== animId) return;
+    const e = D ? ease(Math.min(1, (now - t0) / D)) : 1;
+    const cur = {};
+    for(const k in target){ const a = start[k], b = target[k]; cur[k] = {x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e}; }
+    prevPos = cur;
+    move(L, cur);
+    if(e < 1) requestAnimationFrame(frame);
+  }
+  if(D) requestAnimationFrame(frame); else frame(t0);
+}
+
+let edgeEls = [], ptEls = {};
+function paint(L, P, v, vstat){
+  let s = '';
+  for(const [a, b] of L.edges){
+    const nil = String(b).startsWith('nil:');
+    if(v.editable && !nil) s += `<g class="eg cut" data-edge="${b}"><line class="edge"/><line class="ehit"/><title>Click to cut ${a}–${b}</title></g>`;
+    else s += `<g class="eg"><line class="edge${nil ? ' nil-edge' : ''}"/></g>`;
+  }
+  for(const n of L.nils){
+    const wrong = S.flash && S.flash.id === n.id;
+    s += `<g class="nil${v.clickNil ? ' clickable' : ''}${wrong ? ' wrong' : ''}" data-nil="${n.id}">`
+      + (v.clickNil ? `<rect class="hit" x="-16" y="-14" width="32" height="28"/>` : '')
+      + `<rect class="box" x="-11" y="-8" width="22" height="16" rx="3"/><text>${v.clickNil ? '+' : 'NIL'}</text></g>`;
+  }
+  const order = drag && drag.type === 'node' ? [...L.nodes.filter(n => !drag.keys.has(n.key)), ...L.nodes.filter(n => drag.keys.has(n.key))] : L.nodes;
+  for(const n of order){
+    const cls = ['node', n.color];
+    if(v.sel === n.key) cls.push('sel');
+    if(v.hl.has(n.key)) cls.push('hl');
+    if(v.editable && !n.parent && n !== v.T.root) cls.push('float');
+    let ports = '', extra = '';
+    if(v.editable){
+      for(const side of ['L', 'R']){
+        if((side === 'L' ? n.left : n.right)) continue;
+        const px = side === 'L' ? -PORT.x : PORT.x;
+        ports += `<g class="pg" data-port="${n.key}:${side}"><line class="stub" x1="${px * 0.45}" y1="16" x2="${px}" y2="${PORT.y}"/>`
+          + `<circle class="port-hit" cx="${px}" cy="${PORT.y}" r="12"/><circle class="port" cx="${px}" cy="${PORT.y}" r="6"/>`
+          + `<title>Drag to a node to make it ${n.key}'s ${side === 'L' ? 'left' : 'right'} child</title></g>`;
+      }
+    }
+    if(S.opt.bh && vstat.bh[n.key]){
+      const b = vstat.bh[n.key];
+      extra += `<text class="bh${b.ok ? '' : ' bad'}" x="22" y="-17">${b.ok ? 'bh ' + b.bh : 'bh ?'}</text>`;
+    }
+    if(v.newKey === n.key) extra += `<text class="newtag" y="${v.editable ? -28 : 34}">NEW</text>`;
+    s += `<g class="${cls.join(' ')}" data-key="${n.key}">${ports}`
+      + `<circle class="halo" r="25"/><circle class="body" r="19"/><text class="k">${n.key}</text>${extra}</g>`;
+  }
+  if(!L.nodes.length && !L.nils.length){
+    s += `<text x="0" y="40" text-anchor="middle" fill="#9a9389" font-size="15" font-family="IBM Plex Sans, sans-serif">Empty tree. Insert a value to start.</text>`;
+  }
+  s += `<line id="rubber" class="rubber" style="display:none"/>`;
+  svg.innerHTML = s;
+  edgeEls = [...svg.querySelectorAll('g.eg')];
+  ptEls = {};
+  svg.querySelectorAll('g.node,g.nil').forEach(el => { ptEls[el.dataset.key !== undefined ? el.dataset.key : el.dataset.nil] = el; });
+  move(L, P);
+}
+function move(L, P){
+  applyCam();
+  L.edges.forEach(([a, b], i) => {
+    const pa = P[a], pb = P[b], g = edgeEls[i]; if(!pa || !pb || !g) return;
+    for(const ln of g.querySelectorAll('line')){
+      ln.setAttribute('x1', pa.x.toFixed(1)); ln.setAttribute('y1', pa.y.toFixed(1));
+      ln.setAttribute('x2', pb.x.toFixed(1)); ln.setAttribute('y2', pb.y.toFixed(1));
+    }
+  });
+  for(const id in P){ const el = ptEls[id]; if(el) el.setAttribute('transform', `translate(${P[id].x.toFixed(1)},${P[id].y.toFixed(1)})`); }
+}
+
+/* ----- what is on screen ----- */
+function view(){
+  if(S.mode === 'practice'){
+    const P = S.pr;
+    if(P.viewSol >= 0){
+      const st = P.steps[P.viewSol];
+      return {T: st.T, hl: new Set(st.hl), sel: null, newKey: P.key, showNil: S.opt.nil, readonly: true};
+    }
+    const editable = P.phase === 'fix';
+    return {T: P.tree, hl: new Set(S.hintHl), sel: P.sel, newKey: P.phase === 'place' ? null : P.key,
+            showNil: P.phase === 'place' || (S.opt.nil && !editable), clickNil: P.phase === 'place', editable, manual: editable ? P.manual : null};
+  }
+  const Sb = S.sb;
+  if(Sb.steps){
+    const st = Sb.steps[Sb.idx];
+    return {T: st.T, hl: new Set(st.hl), sel: null, newKey: st.z, showNil: S.opt.nil, readonly: true};
+  }
+  return {T: Sb.tree, hl: new Set(S.hintHl), sel: Sb.sel, newKey: Sb.lastKey, showNil: false, editable: true, manual: Sb.manual};
+}
+function ctx(){
+  if(S.mode === 'practice'){ const P = S.pr; return (P.viewSol < 0 && P.phase === 'fix') ? P : null; }
+  return S.sb.steps ? null : S.sb;
+}
+
+/* ----- toast ----- */
+let toastT;
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); }
+function noEdit(){
+  if(S.mode === 'practice' && S.pr.phase === 'place') return toast(`First place ${S.pr.key}: click the + slot where it belongs.`);
+  if(S.mode === 'practice' && S.pr.phase === 'done') return toast('Solved! Start a new problem.');
+  toast('This is a read-only step view.');
+}
+
+/* ----- editing: cut / connect / recolor ----- */
+function currentPositions(T){ const M = {}; for(const n of allNodes(T)) if(prevPos[n.key]) M[n.key] = {...prevPos[n.key]}; return M; }
+function commit(c, T, M){
+  normalize(T);
+  c.hist.push({T: c.tree, M: c.manual}); c.fut = [];
+  c.tree = T; c.manual = T.floats.length ? M : null;
+  if(!T.floats.length) S.offsets = {};
+  changed();
+}
+function cutAbove(key){
+  const c = ctx(); if(!c) return noEdit();
+  const T = cloneT(c.tree), x = find(T, key);
+  if(!x) return;
+  if(!x.parent) return toast(`${key} has no parent edge to cut.`);
+  const p = x.parent;
+  if(p.left === x) p.left = null; else p.right = null;
+  x.parent = null; T.floats.push(x);
+  const M = c.manual ? {...c.manual} : currentPositions(c.tree);
+  for(const k of subtreeKeys(x)) if(M[k]) M[k] = {x: M[k].x, y: M[k].y + 14};   // nudge so the cut is visible
+  if(c.sel === key) c.sel = key;
+  commit(c, T, M);
+}
+function connect(pk, side, ck){
+  const c = ctx(); if(!c) return noEdit();
+  if(pk === ck) return;
+  const T = cloneT(c.tree), p = find(T, pk), ch = find(T, ck);
+  if(!p || !ch) return;
+  if(side === 'L' ? p.left : p.right) return toast(`${pk} already has a ${side === 'L' ? 'left' : 'right'} child. Cut it first.`);
+  if(ch.parent) return toast(`${ck} already hangs under ${ch.parent.key}. Cut that edge first.`);
+  for(let a = p; a; a = a.parent) if(a === ch) return toast(`That would make a loop: ${pk} is inside ${ck}'s subtree.`);
+  if(side === 'L') p.left = ch; else p.right = ch;
+  ch.parent = p;
+  commit(c, T, c.manual ? {...c.manual} : currentPositions(c.tree));
+}
+function recolor(key){
+  const c = ctx(); if(!c) return noEdit();
+  const T = cloneT(c.tree), x = find(T, key); if(!x) return;
+  x.color = x.color === R ? B : R;
+  commit(c, T, c.manual ? {...c.manual} : null);
+}
+function undo(){ const c = ctx(); if(!c || !c.hist.length) return; c.fut.push({T: c.tree, M: c.manual}); const h = c.hist.pop(); c.tree = h.T; c.manual = h.M; S.offsets = {}; changed(); }
+function redo(){ const c = ctx(); if(!c || !c.fut.length) return; c.hist.push({T: c.tree, M: c.manual}); const h = c.fut.pop(); c.tree = h.T; c.manual = h.M; S.offsets = {}; changed(); }
+function changed(){
+  S.hintLevel = 0; S.hintHl = [];
+  if(S.mode === 'practice' && S.pr.phase === 'fix'){
+    const P = S.pr, cur = serT(P.tree);
+    for(let i = P.steps.length - 1; i >= 0; i--) if(serT(P.steps[i].T) === cur){ P.lastMatch = i; break; }
+    if(P.fbType !== 'info') setFeedback('info', fixInstructions());
+  }
+  refresh();
+}
+
+/* ----- practice ----- */
+function fixInstructions(){ return `Now restore the red-black properties by cutting edges, connecting nodes and recoloring. Press <strong>Check</strong> when you're done.`; }
+function setFeedback(type, html){ const P = S.pr; P.fbType = type; P.fbHtml = html; }
+function newProblem(){
+  const g = generateProblem($('pType').value, $('pSize').value);
+  S.pr = {base: g.base, key: g.key, steps: g.steps, cls: g.cls, expected: serT(finalTree(g.steps)), minOps: solutionOps(g.steps),
+          tree: cloneT(g.base), manual: null, hist: [], fut: [], sel: null, phase: 'place', viewSol: -1, misplaced: 0, revealed: false,
+          lastMatch: 0, fbType: 'info', fbHtml: ''};
+  S.hintLevel = 0; S.hintHl = [];
+  prevPos = {}; S.offsets = {}; S.needFit = true;
+  if($('pAuto').checked) placeCorrect(true);
+  else setFeedback('info', `Where does <b>${g.key}</b> go? Click the <b>+</b> slot where a BST insert would put it.`);
+  refresh();
+}
+function placeCorrect(auto){
+  const P = S.pr;
+  P.tree = cloneT(P.steps[0].T); P.phase = 'fix'; P.hist = []; P.fut = []; P.sel = null; P.manual = null; P.lastMatch = 0;
+  setFeedback('info', (auto ? `${P.key} has been placed as a red leaf. ` : `Correct, ${P.key} goes there as a red leaf. `) + fixInstructions());
+}
+function tryPlace(nilId){
+  const P = S.pr; const slot = bstSlot(P.base, P.key);
+  const want = slot.parent ? `nil:${slot.parent.key}:${slot.side}` : 'nil:root:';
+  if(nilId === want){ placeCorrect(false); refresh(); return; }
+  P.misplaced++;
+  S.flash = {id: nilId}; setTimeout(() => { S.flash = null; render(true); }, 650);
+  if(P.misplaced >= 2) setFeedback('error', `Not there. Trace it from the root: ${bstPathText(P.base, P.key)}.`);
+  else setFeedback('error', `Not there. Start at the root: go left if ${P.key} is smaller, right if it's larger, until you reach an empty slot.`);
+  refresh();
+}
+function check(){
+  const P = S.pr;
+  if(P.phase === 'place') return toast(`Place ${P.key} first.`);
+  if(P.phase === 'done') return;
+  const v = validate(P.tree), ops = P.hist.length;
+  if(serT(P.tree) === P.expected){
+    P.phase = 'done'; P.sel = null;
+    if(!P.revealed){ S.stats.solved++; S.stats.streak++; S.stats.best = Math.max(S.stats.best, S.stats.streak); saveStats(); }
+    const path = P.steps.filter(s => KIND_SHORT[s.kind]).map(s => KIND_SHORT[s.kind]).join(', then ');
+    setFeedback('success', `<strong>Correct!</strong> The fix-up was ${path}.<br>You used ${ops} edit${ops === 1 ? '' : 's'}${ops > P.minOps ? ` (the minimum is ${P.minOps})` : ', the minimum'}.`
+      + (P.revealed ? `<br><span class="muted">This one doesn't count toward your streak because you viewed the solution.</span>` : ''));
+  } else {
+    const errs = [];
+    if(v.floats.length) errs.push(`${v.floats.length} piece${v.floats.length > 1 ? 's are' : ' is'} still detached (${v.floats.join(', ')}). Everything must be one tree.`);
+    if(v.bstBad.length) errs.push(`BST order is broken: ${v.bstBad.map(([a, b]) => `${a} comes before ${b} in order`).join('; ')}.`);
+    if(v.rootRed) errs.push(`The root ${P.tree.root.key} is red.`);
+    for(const [a, b] of v.redRed) errs.push(`Red node ${a} has a red child ${b}.`);
+    if(v.bhBad.length) errs.push(`Black-heights are unequal below ${v.bhBad.join(', ')}.`);
+    if(v.ok) setFeedback('error', `This is a <strong>valid</strong> red-black tree, but it isn't what the standard insertion fix-up produces. Follow Cases 1 to 3 exactly (at most 2 rotations), or open the solution to compare.`);
+    else setFeedback('error', `<strong>Not yet.</strong><ul>${errs.map(e => `<li>${e}</li>`).join('')}</ul>`);
+    if(S.stats.streak){ S.stats.streak = 0; saveStats(); }
+  }
+  refresh();
+}
+function hint(){
+  const P = S.pr;
+  if(P.phase === 'place'){ setFeedback('hint', `Path from the root: ${bstPathText(P.base, P.key)}.`); return refresh(); }
+  if(P.phase === 'done') return;
+  const i = P.lastMatch, cur = serT(P.tree);
+  let next = null;
+  for(let j = i + 1; j < P.steps.length; j++) if(serT(P.steps[j].T) !== serT(P.steps[i].T)){ next = P.steps[j]; break; }
+  if(!next){
+    if(cur === P.expected){ setFeedback('hint', `<strong>Hint:</strong> Looks finished. Press Check.`); return refresh(); }
+    next = P.steps[P.steps.length - 1];
+  }
+  const d = treeDiff(P.tree, next.T);
+  S.hintLevel = Math.min(2, S.hintLevel + 1);
+  if(S.hintLevel === 1){
+    const base = serT(P.steps[i].T) === cur ? analyze(P.tree) : `You're partway through a step. The current goal: ${next.msg.split('.')[0]}.`;
+    setFeedback('hint', `<strong>Hint:</strong> ${base} <span class="muted">Press Hint again for the exact edits.</span>`);
+    S.hintHl = [];
+  } else {
+    setFeedback('hint', `<strong>Next step:</strong> ${next.msg}<span class="changes"><strong>Edits from where you are:</strong><ul>${diffItems(d).map(x => `<li>${x}</li>`).join('')}</ul></span>`);
+    S.hintHl = d.keys;
+  }
+  refresh();
+}
+function showSolution(){
+  const P = S.pr;
+  if(P.phase !== 'done' && !P.revealed){ P.revealed = true; if(S.stats.streak){ S.stats.streak = 0; saveStats(); } }
+  P.viewSol = 0; S.offsets = {}; refresh();
+}
+function solGo(i){ const P = S.pr; P.viewSol = Math.max(0, Math.min(P.steps.length - 1, i)); S.offsets = {}; refresh(); }
+function solBack(){ S.pr.viewSol = -1; S.offsets = {}; refresh(); }
+function resetPractice(){
+  const P = S.pr; if(P.phase !== 'fix') return;
+  if(!P.hist.length) return toast('Already at the start.');
+  commit(P, cloneT(P.steps[0].T), null); P.sel = null;
+}
+function stepChanges(steps, i){
+  if(i === 0) return '';
+  const items = diffItems(treeDiff(steps[i - 1].T, steps[i].T));
+  return items.length ? `<span class="changes">${items.join('. ')}.</span>` : '';
+}
+
+/* ----- sandbox ----- */
+function sbParse(str){ return (str.match(/-?\d+/g) || []).map(Number).filter(n => Math.abs(n) <= 9999); }
+function sbEnqueue(vals){
+  const Sb = S.sb;
+  if(Sb.tree.floats.length){ toast('Reconnect the detached pieces before inserting.'); return; }
+  if(validate(Sb.tree).bstBad.length){ toast('BST order is broken. Undo or fix it before inserting.'); return; }
+  Sb.queue.push(...vals);
+  if(!Sb.steps) sbNextValue(false);
+  refresh();
+}
+function sbNextValue(finishAll){
+  const Sb = S.sb;
+  while(Sb.queue.length){
+    const k = Sb.queue.shift();
+    if(bstFind(Sb.tree, k)){ Sb.log.push(`<b>${k}</b> is already in the tree, skipped.`); continue; }
+    const steps = insertSteps(Sb.tree, k);
+    if($('sbStep').checked && !finishAll){ Sb.steps = steps; Sb.idx = 0; S.hintHl = []; Sb.sel = null; S.offsets = {}; if(!Sb.tree.root) S.needFit = true; return; }
+    sbCommit(steps);
+  }
+}
+function sbCommit(steps){
+  const Sb = S.sb;
+  S.offsets = {}; if(!Sb.tree.root) S.needFit = true;
+  Sb.hist.push({T: Sb.tree, M: Sb.manual}); Sb.fut = []; Sb.tree = finalTree(steps); Sb.manual = null; Sb.lastKey = steps[0].z; Sb.sel = null;
+  const path = steps.filter(s => KIND_SHORT[s.kind]).map(s => KIND_SHORT[s.kind]);
+  Sb.log.push(`Insert <b>${steps[0].z}</b>: ${path.length ? path.join(', then ') : 'parent is black, no fix-up'}`);
+}
+function sbStep(d){
+  const Sb = S.sb; if(!Sb.steps) return;
+  const ni = Sb.idx + d;
+  if(ni < 0) return;
+  if(ni >= Sb.steps.length){ sbFinish(false); return; }
+  Sb.idx = ni; S.offsets = {}; refresh();
+}
+function sbFinish(all){
+  const Sb = S.sb; if(!Sb.steps) return;
+  const st = Sb.steps; Sb.steps = null; sbCommit(st);
+  sbNextValue(all); refresh();
+}
+function sbReset(newTree, logMsg){
+  const Sb = S.sb;
+  Sb.steps = null; Sb.queue = [];
+  Sb.hist.push({T: Sb.tree, M: Sb.manual}); Sb.fut = []; Sb.sel = null; Sb.lastKey = null; Sb.manual = null;
+  Sb.tree = newTree; prevPos = {}; S.offsets = {}; S.needFit = true;
+  if(logMsg) Sb.log.push(logMsg);
+}
+function sbPreset(name){
+  if(name === 'clrs'){
+    let T = {root:null, floats:[]}; for(const k of [11,2,14,1,7,15,5,8]) T = finalTree(insertSteps(T, k));
+    sbReset(T, 'Loaded the CLRS Figure 13.4 tree.'); sbEnqueue([4]);
+  } else if(name === 'asc'){ sbReset({root:null, floats:[]}); sbEnqueue([1,2,3,4,5,6,7,8,9,10]); }
+  else if(name === 'zig'){ sbReset({root:null, floats:[]}); sbEnqueue([50,20,35,80,65,10,15,70,68]); }
+  else if(name === 'rand'){ sbReset({root:null, floats:[]}); sbEnqueue(shuffle([...Array(99)].map((_, i) => i + 1)).slice(0, 12)); }
+  refresh();
+}
+
+/* ----- UI refresh ----- */
+function refresh(instant){
+  const isP = S.mode === 'practice';
+  $('tabPractice').classList.toggle('on', isP); $('tabSandbox').classList.toggle('on', !isP);
+  $('panelPractice').classList.toggle('hidden', !isP); $('panelSandbox').classList.toggle('hidden', isP);
+  $('stats').innerHTML = `<span>Solved <b>${S.stats.solved}</b></span><span>Streak <b>${S.stats.streak}</b></span><span>Best <b>${S.stats.best}</b></span>`;
+
+  const v = view(), c = ctx();
+  $('roBadge').classList.toggle('show', !!v.readonly);
+  $('howto').classList.toggle('hidden', !c && !(isP && S.pr.phase === 'done'));
+  $('tUndo').disabled = !c || !c.hist.length; $('tRedo').disabled = !c || !c.fut.length;
+
+  const vs = validate(v.T), chk = $('checks');
+  if(S.opt.checks && v.T.root && !(isP && S.pr.phase === 'place')){
+    chk.classList.remove('hidden');
+    const chip = (ok, label) => `<span class="chip ${ok ? 'ok' : 'no'}">${ok ? ICON_OK : ICON_NO} ${label}</span>`;
+    chk.innerHTML = (vs.floats.length ? chip(false, `Detached: ${vs.floats.join(', ')}`) : '')
+      + chip(!vs.bstBad.length, vs.bstBad.length ? `BST order broken (${vs.bstBad.map(p => p.join(' before ')).join(', ')})` : 'BST order')
+      + chip(!vs.rootRed, 'Root is black')
+      + chip(!vs.redRed.length, vs.redRed.length ? `Red-red: ${vs.redRed.map(p => p.join('–')).join(', ')}` : 'No red node has a red child')
+      + chip(!vs.bhBad.length, vs.bhBad.length ? `Black-heights differ at ${vs.bhBad.join(', ')}` : 'Equal black-heights');
+  } else chk.classList.add('hidden');
+
+  if(isP){
+    const P = S.pr;
+    let sub;
+    if(P.viewSol >= 0) sub = `Solution step ${P.viewSol + 1} of ${P.steps.length}`;
+    else if(P.phase === 'place') sub = 'Step 1: place it in the BST';
+    else if(P.phase === 'fix') sub = `Step 2: fix up. ${P.hist.length} edit${P.hist.length === 1 ? '' : 's'} so far`;
+    else sub = 'Solved';
+    const typeTxt = $('pType').value === 'any' ? ` · ${P.phase === 'done' || P.revealed ? CLS_LABEL[P.cls] : 'type hidden'}` : '';
+    $('prompt').innerHTML = `<div class="big">Insert <span class="key">${P.key}</span></div><div class="sub">${sub}${typeTxt}</div>`;
+    const fb = $('pFeedback'); fb.className = 'fb ' + (P.fbType === 'info' ? '' : P.fbType); fb.innerHTML = P.fbHtml;
+    $('pCheck').disabled = P.phase !== 'fix' || P.viewSol >= 0;
+    $('pHint').disabled = P.phase === 'done' || P.viewSol >= 0;
+    $('pReset').disabled = P.phase !== 'fix' || P.viewSol >= 0;
+    $('pSolution').classList.toggle('hidden', P.viewSol >= 0);
+    $('pSolution').textContent = P.phase === 'done' ? 'Compare with the standard solution' : 'Show solution';
+    $('pSolBox').classList.toggle('hidden', P.viewSol < 0);
+    if(P.viewSol >= 0){
+      $('pSolPrev').disabled = P.viewSol === 0; $('pSolNext').disabled = P.viewSol === P.steps.length - 1;
+      $('pSolSteps').innerHTML = P.steps.map((s, i) => `<li class="${i === P.viewSol ? 'on' : ''}" data-i="${i}"><span class="k">${i + 1}. ${KIND_LABEL[s.kind]}</span>${s.msg}${stepChanges(P.steps, i)}</li>`).join('');
+      const on = $('pSolSteps').querySelector('.on'); if(on) on.scrollIntoView({block:'nearest'});
+    }
+  } else {
+    const Sb = S.sb;
+    const n = allNodes(Sb.tree).length;
+    if(Sb.steps){
+      const st = Sb.steps[Sb.idx];
+      $('prompt').innerHTML = `<div class="big">Inserting <span class="key">${st.z}</span></div><div class="sub">Step ${Sb.idx + 1} of ${Sb.steps.length} · ${KIND_LABEL[st.kind]}</div>`;
+      $('sbStepper').classList.remove('hidden');
+      $('sbStepHead').innerHTML = `Inserting <b>${st.z}</b>, step ${Sb.idx + 1} of ${Sb.steps.length}`;
+      $('sbStepMsg').innerHTML = st.msg + stepChanges(Sb.steps, Sb.idx);
+      $('sbPrev').disabled = Sb.idx === 0;
+      const last = Sb.idx === Sb.steps.length - 1;
+      $('sbNext').textContent = last ? (Sb.queue.length ? `Next value (${Sb.queue[0]}) ›` : 'Done') : 'Next ›';
+      $('sbFinishAll').classList.toggle('hidden', !Sb.queue.length);
+      $('sbQueue').textContent = Sb.queue.length ? `Queued: ${Sb.queue.join(', ')}` : '';
+    } else {
+      $('sbStepper').classList.add('hidden');
+      $('prompt').innerHTML = `<div class="big">Sandbox</div><div class="sub">${n} node${n === 1 ? '' : 's'}${Sb.tree.root ? ` · height ${height(Sb.tree.root)}` : ''}</div>`;
+    }
+    $('sbLog').innerHTML = Sb.log.map(l => `<li>${l}</li>`).join('');
+    $('sbLogEmpty').classList.toggle('hidden', Sb.log.length > 0);
+  }
+  render(instant);
+}
+function height(n){ return n ? 1 + Math.max(height(n.left), height(n.right)) : 0; }
+
+/* ----- pointer interaction ----- */
+let lastTap = {k:null, t:0};
+function handleTap(target){
+  const nilEl = target.closest('[data-nil]');
+  if(nilEl && S.mode === 'practice' && S.pr.phase === 'place' && S.pr.viewSol < 0){ tryPlace(nilEl.dataset.nil); return; }
+  const nodeEl = target.closest('[data-key]');
+  const c = ctx();
+  if(!c){ if(nodeEl) noEdit(); return; }
+  const k = nodeEl ? Number(nodeEl.dataset.key) : null;
+  const now = performance.now();
+  if(k !== null && lastTap.k === k && now - lastTap.t < 400){ lastTap = {k:null, t:0}; c.sel = k; recolor(k); return; }
+  lastTap = {k, t: now};
+  c.sel = k;
+  refresh(true);
+}
+const pointers = new Map();
+let drag = null, pinch = null;
+function svgPt(e){ const r = svg.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; }
+function world(p){ return {x: cam.x + p.x / cam.s, y: cam.y + p.y / cam.s}; }
+function nodeUnder(e){ const el = document.elementFromPoint(e.clientX, e.clientY); const n = el && el.closest && el.closest('[data-key]'); return n && svg.contains(n) ? Number(n.dataset.key) : null; }
+function nearestPort(wp, exclude){
+  // empty child slot closest to world point wp, excluding nodes in `exclude`
+  const v = view(); let best = null, bd = 30;
+  for(const n of allNodes(v.T)){
+    if(exclude.has(n.key) || !prevPos[n.key]) continue;
+    for(const side of ['L', 'R']){
+      if(side === 'L' ? n.left : n.right) continue;
+      const px = prevPos[n.key].x + (side === 'L' ? -PORT.x : PORT.x), py = prevPos[n.key].y + PORT.y;
+      const d = Math.hypot(px - wp.x, py - wp.y);
+      if(d < bd){ bd = d; best = {k: n.key, side}; }
+    }
+  }
+  return best;
+}
+function markNear(port){
+  svg.querySelectorAll('.pg.near').forEach(el => el.classList.remove('near'));
+  if(port){ const el = svg.querySelector(`[data-port="${port.k}:${port.side}"]`); if(el) el.classList.add('near'); }
+}
+function markDrop(k){
+  svg.querySelectorAll('.node.drop').forEach(el => el.classList.remove('drop'));
+  if(k !== null){ const el = svg.querySelector(`[data-key="${k}"]`); if(el) el.classList.add('drop'); }
+}
+
+svg.addEventListener('pointerdown', e => {
+  if(e.button !== undefined && e.button > 0) return;
+  svg.setPointerCapture(e.pointerId);
+  pointers.set(e.pointerId, svgPt(e));
+  if(pointers.size === 2){
+    const [a, b] = [...pointers.values()];
+    pinch = {d: Math.hypot(a.x - b.x, a.y - b.y), s: cam.s}; drag = null; return;
+  }
+  const p = svgPt(e), c = ctx();
+  const portEl = e.target.closest('[data-port]');
+  const nodeEl = e.target.closest('[data-key]');
+  const edgeEl = e.target.closest('[data-edge]');
+  const base = {id: e.pointerId, sx: p.x, sy: p.y, target: e.target, moved: false, cam0: {x: cam.x, y: cam.y}};
+  if(portEl && c){
+    const [k, side] = portEl.dataset.port.split(':');
+    drag = {...base, type: 'link', from: Number(k), side};
+  } else if(nodeEl){
+    const k = Number(nodeEl.dataset.key), v = view(), n = find(v.T, k);
+    const keys = new Set(n ? subtreeKeys(n) : [k]);
+    const b0 = {};
+    for(const kk of keys) b0[kk] = (v.manual && v.manual[kk]) ? {...v.manual[kk]} : {...(S.offsets[kk] || {x:0, y:0})};
+    drag = {...base, type: 'node', key: k, keys, b0, manual: !!v.manual, loose: !!(n && !n.parent && c)};
+  } else if(edgeEl){
+    drag = {...base, type: 'edge', child: Number(edgeEl.dataset.edge)};
+  } else {
+    drag = {...base, type: 'pan'};
+  }
+});
+svg.addEventListener('pointermove', e => {
+  if(!pointers.has(e.pointerId)) return;
+  const p = svgPt(e); pointers.set(e.pointerId, p);
+  if(pinch && pointers.size === 2){
+    const [a, b] = [...pointers.values()];
+    zoomAt((pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d) / cam.s, (a.x + b.x) / 2, (a.y + b.y) / 2); return;
+  }
+  if(!drag || drag.id !== e.pointerId) return;
+  const dx = p.x - drag.sx, dy = p.y - drag.sy;
+  if(!drag.moved && Math.hypot(dx, dy) < 5) return;
+  drag.moved = true;
+  if(drag.type === 'link'){
+    const from = prevPos[drag.from]; if(!from) return;
+    const r = $('rubber'), w = world(p);
+    r.style.display = '';
+    r.setAttribute('x1', from.x + (drag.side === 'L' ? -PORT.x : PORT.x)); r.setAttribute('y1', from.y + PORT.y);
+    r.setAttribute('x2', w.x); r.setAttribute('y2', w.y);
+    const k = nodeUnder(e); markDrop(k !== drag.from ? k : null);
+  } else if(drag.type === 'node'){
+    const v = view(), wdx = dx / cam.s, wdy = dy / cam.s;
+    if(drag.manual){ const c = ctx(); for(const k of drag.keys) c.manual[k] = {x: drag.b0[k].x + wdx, y: drag.b0[k].y + wdy}; }
+    else for(const k of drag.keys) S.offsets[k] = {x: drag.b0[k].x + wdx, y: drag.b0[k].y + wdy};
+    render(true);
+    if(drag.loose){ drag.snap = nearestPort(prevPos[drag.key], drag.keys); markNear(drag.snap); }
+  } else {
+    svg.classList.add('panning');
+    cam.x = drag.cam0.x - dx / cam.s; cam.y = drag.cam0.y - dy / cam.s; applyCam();
+  }
+});
+function endPointer(e){
+  pointers.delete(e.pointerId);
+  if(pointers.size < 2) pinch = null;
+  if(!drag || drag.id !== e.pointerId) return;
+  const d = drag; drag = null; svg.classList.remove('panning');
+  const up = e.type === 'pointerup';
+  if(d.type === 'link'){
+    $('rubber') && ($('rubber').style.display = 'none'); markDrop(null);
+    if(!up) return;
+    if(!d.moved) return toast('Drag from this slot onto the node you want to attach here.');
+    const k = nodeUnder(e);
+    if(k === null || k === d.from) return toast('Drop the line on a node to connect it.');
+    connect(d.from, d.side, k);
+  } else if(d.type === 'node'){
+    if(!d.moved){ if(up) handleTap(d.target); return; }
+    if(up && d.snap) connect(d.snap.k, d.snap.side, d.key);
+    else render(true);
+  } else if(d.type === 'edge'){
+    if(!d.moved && up){ if(ctx()) cutAbove(d.child); else noEdit(); }
+  } else if(!d.moved && up) handleTap(d.target);
+}
+svg.addEventListener('pointerup', endPointer);
+svg.addEventListener('pointercancel', endPointer);
+svg.addEventListener('wheel', e => {
+  e.preventDefault();
+  const p = svgPt(e);
+  const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1;
+  if(e.ctrlKey || e.metaKey) zoomAt(Math.exp(-e.deltaY * unit * 0.01), p.x, p.y);
+  else { cam.x += e.deltaX * unit / cam.s; cam.y += e.deltaY * unit / cam.s; applyCam(); }
+}, {passive: false});
+
+/* ----- controls ----- */
+$('zIn').onclick = () => zoomAt(1.2);
+$('zOut').onclick = () => zoomAt(1 / 1.2);
+$('zFit').onclick = () => { fitCamera(lastTarget); applyCam(); };
+$('zTidy').onclick = () => {
+  S.offsets = {};
+  const c = ctx();
+  if(c && c.manual){
+    // lay detached pieces out cleanly next to the main tree
+    c.manual = null;
+  }
+  render();
+};
+$('tUndo').onclick = undo; $('tRedo').onclick = redo;
+function switchMode(m){ if(S.mode === m) return; S.mode = m; S.hintHl = []; prevPos = {}; S.offsets = {}; S.needFit = true; refresh(); }
+$('tabPractice').onclick = () => switchMode('practice');
+$('tabSandbox').onclick = () => switchMode('sandbox');
+$('optNil').onchange = e => { S.opt.nil = e.target.checked; S.needFit = true; refresh(); };
+$('optBh').onchange = e => { S.opt.bh = e.target.checked; refresh(true); };
+$('optChecks').onchange = e => { S.opt.checks = e.target.checked; refresh(true); };
+
+$('pNew').onclick = newProblem;
+$('pType').onchange = newProblem;
+$('pSize').onchange = newProblem;
+$('pCheck').onclick = check;
+$('pHint').onclick = hint;
+$('pReset').onclick = resetPractice;
+$('pSolution').onclick = showSolution;
+$('pSolPrev').onclick = () => solGo(S.pr.viewSol - 1);
+$('pSolNext').onclick = () => solGo(S.pr.viewSol + 1);
+$('pSolBack').onclick = solBack;
+$('pSolSteps').onclick = e => { const li = e.target.closest('li'); if(li) solGo(Number(li.dataset.i)); };
+$('pAuto').onchange = () => { if(S.pr.phase === 'place' && $('pAuto').checked){ placeCorrect(true); refresh(); } };
+
+$('sbForm').onsubmit = e => {
+  e.preventDefault();
+  const vals = sbParse($('sbInput').value);
+  if(!vals.length) return toast('Type one or more whole numbers, e.g. 41 38 31');
+  $('sbInput').value = ''; sbEnqueue(vals);
+};
+$('sbRandom').onclick = () => {
+  const present = new Set(allNodes(S.sb.tree).map(n => n.key));
+  const free = [...Array(99)].map((_, i) => i + 1).filter(k => !present.has(k) && !S.sb.queue.includes(k));
+  if(!free.length) return toast('No free values left between 1 and 99.');
+  sbEnqueue([free[Math.floor(Math.random() * free.length)]]);
+};
+$('sbClear').onclick = () => { sbReset({root:null, floats:[]}, 'Cleared the tree.'); refresh(); };
+$('sbPrev').onclick = () => sbStep(-1);
+$('sbNext').onclick = () => sbStep(1);
+$('sbFinish').onclick = () => sbFinish(false);
+$('sbFinishAll').onclick = () => sbFinish(true);
+document.querySelectorAll('[data-preset]').forEach(b => b.onclick = () => sbPreset(b.dataset.preset));
+
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input[type=text], select, textarea')) return;
+  const k = e.key.toLowerCase();
+  if((e.metaKey || e.ctrlKey) && k === 'z'){ e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  const c = ctx();
+  if(k === 'c'){ if(c && c.sel != null) recolor(c.sel); else if(c) toast('Click a node first.'); }
+  else if(k === 'delete' || k === 'backspace' || k === 'x'){ if(c && c.sel != null){ e.preventDefault(); cutAbove(c.sel); } }
+  else if(k === 'z') undo();
+  else if(k === 'y') redo();
+  else if(k === 'f'){ fitCamera(lastTarget); applyCam(); }
+  else if(k === '=' || k === '+') zoomAt(1.2);
+  else if(k === '-') zoomAt(1 / 1.2);
+  else if(k === 'escape'){ if(c){ c.sel = null; refresh(true); } }
+  else if(S.mode === 'practice'){
+    if(k === 'enter'){ e.preventDefault(); check(); }
+    else if(k === 'h') hint();
+    else if(k === 'n') newProblem();
+    else if(S.pr.viewSol >= 0 && k === 'arrowright') solGo(S.pr.viewSol + 1);
+    else if(S.pr.viewSol >= 0 && k === 'arrowleft') solGo(S.pr.viewSol - 1);
+  } else if(S.sb.steps){
+    if(k === 'arrowright' || k === 'enter'){ e.preventDefault(); sbStep(1); }
+    else if(k === 'arrowleft') sbStep(-1);
+  }
+});
+let rzT; window.addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(applyCam, 60); });
+
+newProblem();
+</script>
+</body>
+</html>

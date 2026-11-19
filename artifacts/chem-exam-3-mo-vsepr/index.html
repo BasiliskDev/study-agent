@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chem Exam 3 Practice: MO Theory, VSEPR & Hybridization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#1d1f24; --muted:#6b6f78; --line:#e3e0d8;
+  --accent:#2f5d8a; --accent-soft:#e6eef6; --good:#2e7d4f; --good-soft:#e5f3ea;
+  --bad:#b23a3a; --bad-soft:#f8e6e6; --warn:#a86b12; --warn-soft:#fbf0dc;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#16181c; --card:#1f2228; --ink:#eceef2; --muted:#9aa0aa; --line:#30343c;
+    --accent:#7fb0e0; --accent-soft:#22313f; --good:#6cc596; --good-soft:#1d3226;
+    --bad:#ec8a8a; --bad-soft:#3a2224; --warn:#e5b45f; --warn-soft:#352b1a; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:28px 20px 60px}
+header h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:30px;margin:0 0 4px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted)}
+.tabs{display:flex;gap:6px;margin:22px 0 18px;border-bottom:1px solid var(--line)}
+.tab{background:none;border:0;padding:10px 14px;font:inherit;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--accent);border-color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.space{justify-content:space-between}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.q{font-size:18px;font-weight:500;margin:14px 0 16px}
+.opts{display:grid;gap:9px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;font:inherit;color:inherit;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .k{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.sel .k{border-color:var(--accent);color:var(--accent)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.right .k{border-color:var(--good);color:var(--good)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .k{border-color:var(--bad);color:var(--bad)}
+.opt:disabled{cursor:default}
+.fb{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15px}
+.fb.good{background:var(--good-soft)} .fb.bad{background:var(--bad-soft)}
+.fb b{display:block;margin-bottom:4px}
+.btn{font:inherit;font-weight:600;border-radius:9px;padding:10px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:disabled{opacity:.4;cursor:default}
+select{font:inherit;padding:8px 10px;border-radius:8px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stat b{display:block;font-size:22px}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:20px}
+.timer.low{color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:14px 0}
+.cell{font:inherit;font-size:13px;font-weight:600;padding:7px 0;border-radius:7px;border:1.5px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;position:relative}
+.cell.ans{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.cell.cur{outline:2px solid var(--ink);outline-offset:1px}
+.cell.flag::after{content:"";position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--warn)}
+.cell.right{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.cell.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:10px 0}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:13px}
+.review{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.rq{padding:12px 0;border-bottom:1px solid var(--line)}
+.hidden{display:none}
+.big{font-family:Fraunces,Georgia,serif;font-size:46px;font-weight:600;line-height:1}
+kbd{font:12px Inter;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;color:var(--muted)}
+@media (max-width:560px){ .grid{grid-template-columns:repeat(5,1fr)} header h1{font-size:25px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Exam 3 Practice</h1>
+    <p>MO theory, VSEPR and hybridization, built around Prof. Wolcott's Lecture #9. Exam is Thursday, Nov 19.</p>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab on" data-view="practice">Practice, one at a time</button>
+    <button class="tab" data-view="mock">Mock exam</button>
+  </nav>
+
+  <!-- PRACTICE -->
+  <section id="practice">
+    <div class="row space" style="margin-bottom:12px">
+      <div class="row">
+        <label class="small muted" for="topic">Topic</label>
+        <select id="topic"></select>
+      </div>
+      <div class="row small muted">
+        <span id="pScore">0 / 0 correct</span>
+        <button class="btn ghost" id="pReset" style="padding:6px 12px">Restart</button>
+      </div>
+    </div>
+    <div class="card" id="pCard"></div>
+    <p class="small muted" style="margin-top:12px">Keys: <kbd>1</kbd>–<kbd>4</kbd> pick an answer, <kbd>Enter</kbd> next question. Questions you miss come back later in the round.</p>
+  </section>
+
+  <!-- MOCK -->
+  <section id="mock" class="hidden">
+    <div class="card" id="mCard"></div>
+  </section>
+</div>
+
+<script>
+/* ---------- Question banks ---------- */
+const T = {V:"VSEPR & polarity", H:"Hybridization & σ/π", M:"MO diagrams & bond order", I:"Ions & bond length", X:"Heteronuclear MOs"};
+
+const PRACTICE = [
+ // VSEPR
+ {t:"V",q:"What is the molecular shape of NH₃?",o:["Trigonal planar","Trigonal pyramidal","Tetrahedral","Bent"],a:1,e:"N has 3 bonds + 1 lone pair (AX₃E). Four domains give a tetrahedral electron geometry, but the shape described by the atoms is trigonal pyramidal."},
+ {t:"V",q:"SO₂ has which AXₙEₘ designation and shape?",o:["AX₂, linear","AX₂E, bent","AX₂E₂, bent","AX₃, trigonal planar"],a:1,e:"S has 2 bonding domains (each S–O counts once, regardless of bond order) and 1 lone pair: AX₂E. Three domains means a trigonal planar electron geometry, so the shape is bent (<120°)."},
+ {t:"V",q:"Which molecule is nonpolar?",o:["H₂O","NH₃","CO₂","SO₂"],a:2,e:"CO₂ is linear AX₂: its two polar C=O dipoles point in opposite directions and cancel. The other three have lone pairs that make them asymmetric."},
+ {t:"V",q:"What is the electron-domain geometry of H₂O?",o:["Bent","Linear","Trigonal planar","Tetrahedral"],a:3,e:"O has 2 bonds + 2 lone pairs = 4 domains, so the electron geometry is tetrahedral. 'Bent' is the molecular shape, not the electron geometry."},
+ {t:"V",q:"XeF₄ is:",o:["Tetrahedral and nonpolar","Seesaw and polar","Square planar and nonpolar","Square planar and polar"],a:2,e:"AX₄E₂: 6 domains (octahedral electron geometry). The two lone pairs sit opposite each other, leaving a square planar shape whose bond dipoles cancel, so it is nonpolar."},
+ {t:"V",q:"CH₂Cl₂ is tetrahedral. Is it polar?",o:["No, tetrahedral molecules are always nonpolar","Yes, because the C–H and C–Cl dipoles are unequal and don't cancel","No, because it has no lone pairs","Yes, because carbon has a lone pair"],a:1,e:"Symmetry only guarantees cancellation when the outer atoms are identical. With two H and two Cl, the dipoles are unequal, so the molecule is polar."},
+ {t:"V",q:"Which molecule has bond angles smaller than 109.5°?",o:["CH₄","BF₃","H₂O","CO₂"],a:2,e:"H₂O's two lone pairs repel more strongly than bonding pairs and squeeze the H–O–H angle to about 104.5°."},
+ {t:"V",q:"What is the molecular shape of SF₄?",o:["Tetrahedral","Square planar","Seesaw","Trigonal pyramidal"],a:2,e:"S has 4 bonds + 1 lone pair (AX₄E). Five domains give a trigonal bipyramidal electron geometry; with the lone pair equatorial, the shape is a seesaw."},
+ {t:"V",q:"In a trigonal bipyramidal electron geometry, where do lone pairs go?",o:["Axial positions","Equatorial positions","Either, equally likely","Lone pairs aren't allowed"],a:1,e:"Equatorial positions have only two 90° neighbors (axial has three), so lone pairs go equatorial to minimize repulsion."},
+ {t:"V",q:"The ideal F–B–F bond angle in BF₃ is:",o:["90°","109.5°","120°","180°"],a:2,e:"BF₃ is AX₃ (B has no lone pairs), so it is trigonal planar with 120° angles."},
+ // Hybridization
+ {t:"H",q:"What is the hybridization of carbon in CO₂?",o:["sp","sp²","sp³","sp³d"],a:0,e:"C has two double bonds = 2 electron domains, so it is sp (linear). Its two leftover p orbitals form the two π bonds."},
+ {t:"H",q:"What is the hybridization of carbon in formaldehyde, H₂C=O?",o:["sp","sp²","sp³","Unhybridized"],a:1,e:"2 C–H + 1 C=O = 3 domains, so it is sp² (trigonal planar). One unhybridized p orbital forms the C=O π bond."},
+ {t:"H",q:"How many σ and π bonds are in ethylene, C₂H₄?",o:["4 σ, 2 π","5 σ, 1 π","6 σ, 0 π","4 σ, 1 π"],a:1,e:"4 C–H σ + 1 C=C (= 1 σ + 1 π). Total: 5 σ, 1 π."},
+ {t:"H",q:"How many σ and π bonds are in HCN?",o:["2 σ, 2 π","3 σ, 1 π","1 σ, 3 π","2 σ, 1 π"],a:0,e:"H–C is 1 σ; C≡N is 1 σ + 2 π. Total: 2 σ, 2 π."},
+ {t:"H",q:"How many σ and π bonds are in acetylene, HC≡CH?",o:["2 σ, 3 π","3 σ, 2 π","4 σ, 1 π","3 σ, 3 π"],a:1,e:"2 C–H σ + C≡C (1 σ + 2 π). Total: 3 σ, 2 π."},
+ {t:"H",q:"What is the hybridization of N in NH₃?",o:["sp","sp²","sp³","sp³d"],a:2,e:"3 bonds + 1 lone pair = 4 domains, so it is sp³. Lone pairs count as domains for hybridization."},
+ {t:"H",q:"A π bond is formed by:",o:["Head-on overlap of two hybrid orbitals","Side-by-side overlap of unhybridized p orbitals","Overlap of an s orbital with a hybrid orbital","Transfer of an electron between atoms"],a:1,e:"π bonds come from sideways p–p overlap, with electron density above and below the bond axis. Head-on overlap makes σ bonds."},
+ {t:"H",q:"What is the hybridization of S in SF₆?",o:["sp³","sp³d","sp³d²","sp²"],a:2,e:"6 domains means octahedral, so it is sp³d²."},
+ {t:"H",q:"Acrylonitrile is H₂C=CH–C≡N. How many σ and π bonds does it have?",o:["6 σ, 3 π","5 σ, 3 π","6 σ, 2 π","7 σ, 3 π"],a:0,e:"σ: 3 C–H + C=C + C–C + C≡N = 6. π: 1 (C=C) + 2 (C≡N) = 3."},
+ // MO
+ {t:"M",q:"How many valence electrons go into the MO diagram for N₂?",o:["7","10","14","5"],a:1,e:"Each N has 5 valence electrons (2s²2p³), so 5 × 2 = 10. The 1s core electrons are left out."},
+ {t:"M",q:"What is the bond order of N₂?",o:["1","2","2.5","3"],a:3,e:"(σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)⁴(σ₂ₚ)²: 8 bonding − 2 antibonding = 6, divided by 2 = 3."},
+ {t:"M",q:"Which MO energy order applies to C₂?",o:["σ₂ₚ below π₂ₚ","π₂ₚ below σ₂ₚ","σ₂ₚ and π₂ₚ are degenerate","Only σ orbitals form"],a:1,e:"Li₂ through N₂ have s–p mixing, which pushes σ₂ₚ above π₂ₚ. Only O₂, F₂ and Ne₂ use the σ₂ₚ-below-π₂ₚ order."},
+ {t:"M",q:"Why is O₂ paramagnetic?",o:["It has an odd number of electrons","It has 2 unpaired electrons in degenerate π*₂ₚ orbitals","Its σ₂ₚ orbital is half-filled","Its Lewis structure shows a lone electron"],a:1,e:"O₂ has 12 valence e⁻. The last two go into the two degenerate π* orbitals, one each (Hund's rule), leaving 2 unpaired electrons. The Lewis structure misses this."},
+ {t:"M",q:"What are the bond order and magnetism of B₂?",o:["BO 1, diamagnetic","BO 1, paramagnetic","BO 2, diamagnetic","BO 0, does not exist"],a:1,e:"6 valence e⁻: (σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)². The two π electrons occupy separate degenerate orbitals, so B₂ is paramagnetic. BO = (4 − 2)/2 = 1."},
+ {t:"M",q:"What is the bond order of Be₂?",o:["0","0.5","1","2"],a:0,e:"4 valence e⁻: (σ₂ₛ)²(σ*₂ₛ)². 2 bonding − 2 antibonding = 0, so a stable Be₂ molecule is not expected."},
+ {t:"M",q:"What is the bond order of F₂?",o:["0","1","2","3"],a:1,e:"14 valence e⁻: 8 bonding (σ₂ₛ², σ₂ₚ², π₂ₚ⁴) − 6 antibonding (σ*₂ₛ², π*₂ₚ⁴) = 2, divided by 2 = 1."},
+ {t:"M",q:"Which species is diamagnetic?",o:["O₂","B₂","C₂","O₂⁺"],a:2,e:"C₂: (σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)⁴, with all electrons paired. O₂ and B₂ each have 2 unpaired electrons, and O₂⁺ has 1."},
+ {t:"M",q:"Compared with the atomic orbitals that form it, an antibonding MO:",o:["Is lower in energy and has density between the nuclei","Is higher in energy and has a node between the nuclei","Is equal in energy","Exists only in heteronuclear molecules"],a:1,e:"Out-of-phase (destructive) overlap cancels density between the nuclei, creating a node. The result is less stable, so it is higher in energy."},
+ {t:"M",q:"Combining 4 atomic orbitals gives how many molecular orbitals?",o:["2","4","8","It depends on the electrons"],a:1,e:"Orbitals are conserved in LCAO: n atomic orbitals in, n molecular orbitals out."},
+ {t:"M",q:"What is the valence MO configuration of C₂?",o:["(σ₂ₛ)²(σ*₂ₛ)²(σ₂ₚ)²(π₂ₚ)²","(σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)⁴","(σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)²(σ₂ₚ)²","(σ₂ₛ)²(π₂ₚ)⁴(σ*₂ₛ)²"],a:1,e:"8 valence e⁻. With s–p mixing, π₂ₚ fills before σ₂ₚ, so the last 4 electrons fill both π orbitals."},
+ {t:"M",q:"What is the bond order of He₂⁺?",o:["0","0.5","1","1.5"],a:1,e:"3 electrons: (σ₁ₛ)²(σ*₁ₛ)¹. (2 − 1)/2 = 0.5. Half a bond still counts as a weak bond."},
+ {t:"M",q:"How many unpaired electrons does O₂ have?",o:["0","1","2","4"],a:2,e:"Its two π*₂ₚ electrons sit in separate degenerate orbitals (Hund's rule)."},
+ // Ions
+ {t:"I",q:"What is the bond order of O₂⁻ (superoxide)?",o:["1","1.5","2","2.5"],a:1,e:"13 valence e⁻. The extra electron goes into π*, giving 8 bonding − 5 antibonding = 3; 3/2 = 1.5."},
+ {t:"I",q:"Which has the longer bond: N₂ or N₂⁺?",o:["N₂","N₂⁺","They are equal","Can't tell without data"],a:1,e:"N₂'s highest occupied MO is the bonding σ₂ₚ. Removing that electron drops the bond order from 3 to 2.5, so N₂⁺ has the weaker, longer bond."},
+ {t:"I",q:"An electron is removed from O₂ to make O₂⁺. What happens to the bond?",o:["BO falls to 1.5; the bond lengthens","BO rises to 2.5; the bond shortens","BO stays 2","BO rises to 3"],a:1,e:"O₂'s highest electrons are in antibonding π*. Removing one reduces destabilization: BO = (8 − 3)/2 = 2.5, so the bond is stronger and shorter."},
+ {t:"I",q:"What is the magnetism of O₂²⁻ (peroxide)?",o:["Paramagnetic, 2 unpaired","Paramagnetic, 1 unpaired","Diamagnetic","Ferromagnetic"],a:2,e:"14 valence e⁻: π* is completely filled (π*⁴), so every electron is paired. BO = 1."},
+ {t:"I",q:"Rank by bond length, shortest first:",o:["O₂ < O₂⁺ < O₂⁻","O₂⁺ < O₂ < O₂⁻","O₂⁻ < O₂ < O₂⁺","O₂⁺ < O₂⁻ < O₂"],a:1,e:"Bond orders are O₂⁺ 2.5, O₂ 2 and O₂⁻ 1.5. Higher bond order means a shorter bond."},
+ {t:"I",q:"What are the bond order and magnetism of N₂⁻?",o:["3, diamagnetic","2.5, paramagnetic","2.5, diamagnetic","2, paramagnetic"],a:1,e:"11 valence e⁻. The extra electron enters π*₂ₚ, so BO = (8 − 3)/2 = 2.5, with 1 unpaired electron."},
+ {t:"I",q:"What is the bond order of C₂²⁻?",o:["2","2.5","3","1"],a:2,e:"10 valence e⁻, isoelectronic with N₂: (σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)⁴(σ₂ₚ)². BO = 3."},
+ {t:"I",q:"Adding an electron to a bonding MO makes the bond:",o:["Shorter and stronger (BO +0.5)","Longer and weaker (BO −0.5)","Unchanged","Break completely"],a:0,e:"A bonding electron adds stabilization: bond order goes up by ½, so the bond is shorter and stronger."},
+ {t:"I",q:"Which has the strongest bond?",o:["O₂²⁻","O₂⁻","O₂","O₂⁺"],a:3,e:"O₂⁺ has the highest bond order (2.5) in this series, so it has the strongest, shortest bond."},
+ // Hetero
+ {t:"X",q:"In the MO diagram of CO, which atom's atomic orbitals are drawn lower in energy?",o:["C, because it has fewer electrons","O, because it is more electronegative","They are equal","It depends on the bond order"],a:1,e:"The more electronegative atom holds its electrons more tightly, so its atomic orbitals sit lower in energy."},
+ {t:"X",q:"What is the bond order of NO?",o:["2","2.5","3","1.5"],a:1,e:"5 + 6 = 11 valence e⁻: 8 bonding − 3 antibonding (one in π*) = 5; 5/2 = 2.5. With one unpaired electron, NO is paramagnetic."},
+ {t:"X",q:"Which has the shorter bond: NO or NO⁺?",o:["NO","NO⁺","Equal","NO⁺ has no bond"],a:1,e:"NO⁺ loses NO's single π* (antibonding) electron, so BO rises from 2.5 to 3 and the bond shortens."},
+ {t:"X",q:"CN⁻ is isoelectronic with:",o:["O₂","N₂","NO","F₂"],a:1,e:"C (4) + N (5) + 1 = 10 valence e⁻, the same as N₂. Bond order 3, diamagnetic."},
+ {t:"X",q:"In HF, the bonding MO is closer in energy to:",o:["The H 1s orbital","The F 2p orbital","Exactly midway","The F 1s orbital"],a:1,e:"Bonding MOs lie closer to (and have more character from) the more electronegative atom's orbitals. Here that is F."}
+];
+
+const MOCK = [
+ {t:"V",q:"What is the molecular shape of ClF₃?",o:["Trigonal planar","Trigonal pyramidal","T-shaped","Seesaw"],a:2,e:"Cl has 3 bonds + 2 lone pairs (AX₃E₂). Five domains; both lone pairs go equatorial, leaving a T shape."},
+ {t:"V",q:"PCl₃ is:",o:["Trigonal planar, nonpolar","Trigonal pyramidal, polar","Trigonal pyramidal, nonpolar","Tetrahedral, nonpolar"],a:1,e:"AX₃E: the lone pair makes it pyramidal, so the bond dipoles don't cancel and it is polar."},
+ {t:"V",q:"Which molecule is polar?",o:["BF₃","CCl₄","PCl₅","NF₃"],a:3,e:"NF₃ is AX₃E (trigonal pyramidal) and asymmetric. The other three are symmetric with identical outer atoms."},
+ {t:"V",q:"What is the electron-domain geometry of I₃⁻?",o:["Linear","Trigonal planar","Trigonal bipyramidal","Octahedral"],a:2,e:"The central I has 2 bonds + 3 lone pairs = 5 domains (AX₂E₃). The electron geometry is trigonal bipyramidal, even though the shape is linear."},
+ {t:"V",q:"What is the molecular shape of BrF₅?",o:["Trigonal bipyramidal","Square pyramidal","Octahedral","Square planar"],a:1,e:"AX₅E: 6 domains (octahedral) with one lone pair gives a square pyramid."},
+ {t:"H",q:"What is the hybridization of P in PCl₅?",o:["sp³","sp³d","sp³d²","sp²"],a:1,e:"5 domains means trigonal bipyramidal, so it is sp³d."},
+ {t:"H",q:"What is the hybridization of N in HCN?",o:["sp","sp²","sp³","Unhybridized"],a:0,e:"N has the triple bond + 1 lone pair = 2 domains, so it is sp."},
+ {t:"H",q:"How many σ and π bonds are in acetic acid, CH₃COOH?",o:["7 σ, 1 π","8 σ, 1 π","6 σ, 2 π","7 σ, 2 π"],a:0,e:"σ: 3 C–H + C–C + C=O (σ) + C–O + O–H = 7. π: 1 (C=O)."},
+ {t:"H",q:"How many unhybridized p orbitals does an sp² carbon have?",o:["0","1","2","3"],a:1,e:"2s + two 2p orbitals make three sp² hybrids, leaving one 2p for a π bond."},
+ {t:"M",q:"What are the valence MO configuration and bond order of N₂⁺?",o:["(σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)⁴(σ₂ₚ)¹; BO 2.5","(σ₂ₛ)²(σ*₂ₛ)²(σ₂ₚ)²(π₂ₚ)³; BO 2.5","(σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)⁴(σ₂ₚ)²; BO 3","(σ₂ₛ)²(σ*₂ₛ)²(π₂ₚ)³(σ₂ₚ)²; BO 2.5"],a:0,e:"9 valence e⁻ in the N₂-type order (π below σ₂ₚ). The electron is lost from the highest MO, σ₂ₚ. BO = (7 − 2)/2 = 2.5."},
+ {t:"M",q:"Which species has a bond order of 0?",o:["Li₂","Be₂","B₂","H₂⁺"],a:1,e:"Be₂: (σ₂ₛ)²(σ*₂ₛ)², which gives 0. Li₂ = 1, B₂ = 1, H₂⁺ = 0.5."},
+ {t:"M",q:"How many unpaired electrons does B₂ have?",o:["0","1","2","3"],a:2,e:"The two π₂ₚ electrons occupy separate degenerate orbitals. Note this depends on s–p mixing placing π below σ₂ₚ."},
+ {t:"M",q:"Why does σ₂ₚ lie above π₂ₚ in N₂ but not in O₂?",o:["N₂ has a triple bond","In N, the 2s and 2p orbitals are close in energy, so s–p mixing raises σ₂ₚ","O₂ is paramagnetic","π orbitals are always higher than σ orbitals"],a:1,e:"s–p mixing is significant when the 2s–2p gap is small (Li–N). It pushes σ₂ₚ up. For O, F and Ne the gap is too large to matter."},
+ {t:"M",q:"What are the bond order and magnetism of F₂⁺?",o:["1, diamagnetic","1.5, paramagnetic","1.5, diamagnetic","2, paramagnetic"],a:1,e:"13 valence e⁻: π*³. BO = (8 − 5)/2 = 1.5, with 1 unpaired electron."},
+ {t:"M",q:"What is the valence MO configuration of Li₂?",o:["(σ₂ₛ)², diamagnetic","(σ₂ₛ)¹(σ*₂ₛ)¹, paramagnetic","(σ₂ₛ)²(σ*₂ₛ)², diamagnetic","(σ₁ₛ)²(σ*₁ₛ)², diamagnetic"],a:0,e:"2 valence e⁻ fill σ₂ₛ. BO = 1, with all electrons paired. The 1s core is omitted."},
+ {t:"I",q:"Which pair has the same bond order?",o:["O₂ and F₂","O₂⁺ and N₂⁻","C₂ and N₂","B₂ and C₂"],a:1,e:"O₂⁺ (11 e⁻) and N₂⁻ (11 e⁻) both have BO 2.5. O₂ = 2, F₂ = 1, C₂ = 2, N₂ = 3, B₂ = 1."},
+ {t:"I",q:"Which molecule has the longest bond?",o:["N₂","O₂","F₂","C₂"],a:2,e:"Bond orders: N₂ 3, O₂ 2, C₂ 2, F₂ 1. The lowest bond order gives the longest bond."},
+ {t:"I",q:"An electron is removed from a π* orbital. What happens to the bond?",o:["BO decreases; the bond lengthens","BO increases; the bond shortens","No change","The molecule dissociates"],a:1,e:"Removing antibonding electrons reduces destabilization: bond order goes up by ½, so the bond gets shorter and stronger."},
+ {t:"X",q:"Which species is paramagnetic?",o:["CO","CN⁻","NO","N₂"],a:2,e:"NO has 11 valence e⁻ (odd), with 1 unpaired electron in π*. CO, CN⁻ and N₂ each have 10 electrons, all paired."},
+ {t:"X",q:"In a heteronuclear diatomic, the antibonding MOs have more character from:",o:["The more electronegative atom","The less electronegative atom","Both equally","Neither (they are nonbonding)"],a:1,e:"Bonding MOs resemble the lower-energy (more electronegative) atom's orbitals. Antibonding MOs resemble the higher-energy (less electronegative) atom's orbitals."}
+];
+
+/* ---------- Helpers ---------- */
+const $ = s => document.querySelector(s);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const L = "ABCD";
+function prep(q){ // shuffle options, track the correct answer
+  const idx = shuffle(q.o.map((_, i) => i));
+  return {...q, o: idx.map(i => q.o[i]), a: idx.indexOf(q.a)};
+}
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+
+/* ---------- Tabs ---------- */
+document.querySelectorAll(".tab").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === b));
+  $("#practice").classList.toggle("hidden", b.dataset.view !== "practice");
+  $("#mock").classList.toggle("hidden", b.dataset.view !== "mock");
+});
+
+/* ---------- Practice mode ---------- */
+const topicSel = $("#topic");
+topicSel.innerHTML = `<option value="all">All topics (${PRACTICE.length})</option>` +
+  Object.entries(T).map(([k, v]) => `<option value="${k}">${v} (${PRACTICE.filter(q => q.t === k).length})</option>`).join("");
+
+let P = {};
+function startPractice(){
+  const pool = PRACTICE.filter(q => topicSel.value === "all" || q.t === topicSel.value);
+  P = {queue: shuffle(pool).map(prep), total: pool.length, done: 0, right: 0, tries: 0, picked: null, firstTry: new Set(), missed: []};
+  renderP();
+}
+function renderP(){
+  $("#pScore").textContent = `${P.right} / ${P.tries} correct`;
+  const c = $("#pCard");
+  if (!P.queue.length){
+    const pct = P.tries ? Math.round(100 * P.firstTry.size / P.total) : 0;
+    c.innerHTML = `<div class="pill">Round complete</div>
+      <p class="big" style="margin:16px 0 6px">${pct}%</p>
+      <p class="muted">right on the first try (${P.firstTry.size} of ${P.total}). Every question you missed was repeated until you got it.</p>
+      ${P.missed.length ? `<div class="review"><b>Review these again:</b><ul>${[...new Set(P.missed)].map(q => `<li class="small" style="margin:6px 0">${q}</li>`).join("")}</ul></div>` : ""}
+      <div class="row" style="margin-top:16px"><button class="btn" id="again">Start another round</button></div>`;
+    $("#again").onclick = startPractice;
+    return;
+  }
+  const q = P.queue[0];
+  c.innerHTML = `
+    <div class="row space"><span class="pill">${T[q.t]}</span><span class="small muted">${P.done} of ${P.total} mastered</span></div>
+    <div class="bar"><i style="width:${100 * P.done / P.total}%"></i></div>
+    <div class="q">${q.q}</div>
+    <div class="opts">${q.o.map((o, i) => `<button class="opt" data-i="${i}"><span class="k">${L[i]}</span><span>${o}</span></button>`).join("")}</div>
+    <div id="pFb"></div>`;
+  P.picked = null;
+  c.querySelectorAll(".opt").forEach(b => b.onclick = () => answerP(+b.dataset.i));
+}
+function answerP(i){
+  if (P.picked !== null) return;
+  const q = P.queue[0]; P.picked = i; P.tries++;
+  const ok = i === q.a;
+  document.querySelectorAll("#pCard .opt").forEach((b, j) => {
+    b.disabled = true;
+    if (j === q.a) b.classList.add("right"); else if (j === i) b.classList.add("wrong");
+  });
+  if (ok){ P.right++; if (!q._missed) P.firstTry.add(q.q); }
+  else { q._missed = true; P.missed.push(q.q); }
+  $("#pFb").innerHTML = `<div class="fb ${ok ? "good" : "bad"}"><b>${ok ? "Correct." : `Not quite. The answer is ${L[q.a]}.`}</b>${q.e}</div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="next">${ok ? "Next question" : "Got it, keep going"}</button></div>`;
+  $("#pScore").textContent = `${P.right} / ${P.tries} correct`;
+  $("#next").onclick = nextP; $("#next").focus();
+}
+function nextP(){
+  const q = P.queue.shift();
+  if (P.picked === q.a){ P.done++; }
+  else { // reinsert a fresh shuffle 3-5 spots later
+    const re = prep({...q, o: q.o, a: q.a}); re._missed = true;
+    P.queue.splice(Math.min(P.queue.length, 3 + Math.floor(Math.random() * 3)), 0, re);
+  }
+  renderP();
+}
+topicSel.onchange = startPractice;
+$("#pReset").onclick = startPractice;
+document.addEventListener("keydown", e => {
+  if ($("#practice").classList.contains("hidden")) return;
+  if (e.target.tagName === "SELECT") return;
+  if (/^[1-4]$/.test(e.key) && P.picked === null && P.queue.length){ const q = P.queue[0]; const i = +e.key - 1; if (i < q.o.length) answerP(i); }
+  else if (e.key === "Enter" && P.picked !== null && document.activeElement?.id !== "next") nextP();
+});
+startPractice();
+
+/* ---------- Mock exam ---------- */
+const MINUTES = 50;
+let M = null, tick = null;
+function mockIntro(){
+  clearInterval(tick);
+  const best = store.get("mockBest", null);
+  $("#mCard").innerHTML = `
+    <div class="pill">Mock Exam 3</div>
+    <h2 style="font-family:Fraunces,Georgia,serif;margin:12px 0 6px">${MOCK.length} questions · ${MINUTES} minutes</h2>
+    <p class="muted">These questions don't appear in practice mode. You won't see answers until you submit. Flag questions to come back to, and jump around with the grid. The exam submits itself when time runs out.</p>
+    <table><tr><th>Topic</th><th>Questions</th></tr>
+      ${Object.entries(T).map(([k, v]) => `<tr><td>${v}</td><td>${MOCK.filter(q => q.t === k).length}</td></tr>`).join("")}
+    </table>
+    <p class="small muted">This covers Wolcott's Lecture #9 only. The real exam also includes Prof. Parkin's Lewis structure and bonding material, so review that separately.</p>
+    ${best ? `<p class="small">Your best so far: <b>${best.score}/${best.total}</b></p>` : ""}
+    <div class="row" style="margin-top:14px"><button class="btn" id="mStart">Start the timer</button></div>`;
+  $("#mStart").onclick = startMock;
+}
+function startMock(){
+  M = {qs: shuffle(MOCK).map(prep), ans: Array(MOCK.length).fill(null), flag: Array(MOCK.length).fill(false), cur: 0, end: Date.now() + MINUTES * 60000, done: false};
+  tick = setInterval(updTimer, 1000);
+  renderM();
+}
+function fmt(ms){ const s = Math.max(0, Math.round(ms / 1000)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }
+function updTimer(){
+  const left = M.end - Date.now(), el = $("#mTimer");
+  if (el){ el.textContent = fmt(left); el.classList.toggle("low", left < 5 * 60000); }
+  if (left <= 0) submitMock(true);
+}
+function renderM(){
+  const q = M.qs[M.cur], n = M.qs.length, answered = M.ans.filter(a => a !== null).length;
+  $("#mCard").innerHTML = `
+    <div class="row space">
+      <span class="small muted">Question ${M.cur + 1} of ${n} · ${answered} answered</span>
+      <span class="timer" id="mTimer">${fmt(M.end - Date.now())}</span>
+    </div>
+    <div class="grid">${M.qs.map((_, i) => `<button class="cell ${M.ans[i] !== null ? "ans" : ""} ${M.flag[i] ? "flag" : ""} ${i === M.cur ? "cur" : ""}" data-i="${i}">${i + 1}</button>`).join("")}</div>
+    <div class="q">${q.q}</div>
+    <div class="opts">${q.o.map((o, i) => `<button class="opt ${M.ans[M.cur] === i ? "sel" : ""}" data-i="${i}"><span class="k">${L[i]}</span><span>${o}</span></button>`).join("")}</div>
+    <div class="row space" style="margin-top:18px">
+      <div class="row">
+        <button class="btn ghost" id="mPrev" ${M.cur === 0 ? "disabled" : ""}>Back</button>
+        <button class="btn ghost" id="mFlag">${M.flag[M.cur] ? "Unflag" : "Flag"}</button>
+      </div>
+      <div class="row">
+        ${M.cur < n - 1 ? `<button class="btn" id="mNext">Next</button>` : ""}
+        <button class="btn ${M.cur < n - 1 ? "ghost" : ""}" id="mSubmit">Submit exam</button>
+      </div>
+    </div>
+    <div id="mConfirm"></div>`;
+  updTimer();
+  document.querySelectorAll("#mCard .opt").forEach(b => b.onclick = () => { M.ans[M.cur] = +b.dataset.i; renderM(); });
+  document.querySelectorAll("#mCard .cell").forEach(b => b.onclick = () => { M.cur = +b.dataset.i; renderM(); });
+  $("#mPrev").onclick = () => { M.cur--; renderM(); };
+  if ($("#mNext")) $("#mNext").onclick = () => { M.cur++; renderM(); };
+  $("#mFlag").onclick = () => { M.flag[M.cur] = !M.flag[M.cur]; renderM(); };
+  $("#mSubmit").onclick = () => {
+    const blank = M.ans.filter(a => a === null).length, flagged = M.flag.filter(Boolean).length;
+    $("#mConfirm").innerHTML = `<div class="fb" style="background:var(--warn-soft)"><b>Submit now?</b>${blank ? `${blank} unanswered. ` : "All questions answered. "}${flagged ? `${flagged} flagged. ` : ""}You can't change answers afterward.
+      <div class="row" style="margin-top:10px"><button class="btn" id="mYes">Yes, submit</button><button class="btn ghost" id="mNo">Keep working</button></div></div>`;
+    $("#mYes").onclick = () => submitMock(false);
+    $("#mNo").onclick = () => { $("#mConfirm").innerHTML = ""; };
+  };
+}
+function submitMock(timeUp){
+  if (M.done) return; M.done = true; clearInterval(tick);
+  const used = Math.min(MINUTES * 60000, MINUTES * 60000 - (M.end - Date.now()));
+  const score = M.qs.filter((q, i) => M.ans[i] === q.a).length, n = M.qs.length;
+  const best = store.get("mockBest", null);
+  if (!best || score > best.score) store.set("mockBest", {score, total: n});
+  const byT = Object.entries(T).map(([k, v]) => {
+    const ids = M.qs.map((q, i) => q.t === k ? i : -1).filter(i => i >= 0);
+    const r = ids.filter(i => M.ans[i] === M.qs[i].a).length;
+    return {v, r, n: ids.length};
+  });
+  const weak = byT.filter(x => x.n && x.r / x.n < 0.7).map(x => x.v);
+  const pct = Math.round(100 * score / n);
+  $("#mCard").innerHTML = `
+    <div class="pill">${timeUp ? "Time's up: auto-submitted" : "Submitted"}</div>
+    <div class="row" style="margin:16px 0 4px;align-items:baseline;gap:14px"><span class="big">${score}/${n}</span><span class="muted">${pct}% · ${fmt(used)} used</span></div>
+    <p>${pct >= 90 ? "Excellent. You're in great shape for this material." : pct >= 75 ? "Solid. Clean up the misses below and you're set." : pct >= 60 ? "Getting there. Spend time in practice mode on your weak topics." : "Not yet, and that's fine with 8 days to go. Work through practice mode topic by topic, then retake."}</p>
+    <table><tr><th>Topic</th><th>Score</th></tr>${byT.map(x => `<tr><td>${x.v}</td><td>${x.r}/${x.n}</td></tr>`).join("")}</table>
+    ${weak.length ? `<p class="small"><b>Focus next on:</b> ${weak.join(", ")}. Pick it in the Topic menu on the Practice tab.</p>` : ""}
+    <div class="row" style="margin:14px 0"><button class="btn" id="mRetake">Retake mock exam</button></div>
+    <div class="grid">${M.qs.map((q, i) => `<button class="cell ${M.ans[i] === q.a ? "right" : "wrong"}" data-i="${i}">${i + 1}</button>`).join("")}</div>
+    <div class="review">${M.qs.map((q, i) => {
+      const ok = M.ans[i] === q.a;
+      return `<div class="rq" id="rq${i}"><div class="small muted">${i + 1}. ${T[q.t]} · ${ok ? '<span style="color:var(--good);font-weight:600">Correct</span>' : '<span style="color:var(--bad);font-weight:600">' + (M.ans[i] === null ? "Unanswered" : "Incorrect") + "</span>"}</div>
+        <div style="font-weight:500;margin:4px 0">${q.q}</div>
+        ${!ok && M.ans[i] !== null ? `<div class="small" style="color:var(--bad)">Your answer: ${q.o[M.ans[i]]}</div>` : ""}
+        <div class="small" style="color:var(--good)">Correct: ${q.o[q.a]}</div>
+        <div class="small muted" style="margin-top:4px">${q.e}</div></div>`;
+    }).join("")}</div>`;
+  $("#mRetake").onclick = mockIntro;
+  document.querySelectorAll("#mCard .cell").forEach(b => b.onclick = () => document.getElementById("rq" + b.dataset.i).scrollIntoView({behavior: "smooth", block: "center"}));
+}
+mockIntro();
+</script>
+</body>
+</html>

@@ -1,0 +1,1261 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>E2000 Midterm Drill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
+<style>
+/* Layout: engineering-pad page — header strip, topic chips, one wide problem sheet, progress ledger below. */
+:root {
+  --paper: #f2f4f7;
+  --grid: rgba(42, 82, 140, 0.07);
+  --sheet: #ffffff;
+  --ink: #17202c;
+  --muted: #5b6676;
+  --rule: #d9dee6;
+  --accent: #24548f;
+  --accent-soft: #e3ebf6;
+  --good: #2f7a4b;
+  --good-soft: #e2f1e7;
+  --bad: #b2412f;
+  --bad-soft: #f7e4e0;
+  --hint: #8a5a00;
+  --hint-soft: #fbf1db;
+  --f-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-body: "Source Serif 4", Georgia, serif;
+  --f-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f141b; --grid: rgba(127, 168, 224, 0.06); --sheet: #171e28; --ink: #e4e9f0; --muted: #98a3b3; --rule: #2a3442;
+    --accent: #84aee6; --accent-soft: #1d2a3c; --good: #6cc48d; --good-soft: #17301f; --bad: #ec8a78; --bad-soft: #3a1f1a; --hint: #e7b65a; --hint-soft: #33280f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f141b; --grid: rgba(127, 168, 224, 0.06); --sheet: #171e28; --ink: #e4e9f0; --muted: #98a3b3; --rule: #2a3442;
+  --accent: #84aee6; --accent-soft: #1d2a3c; --good: #6cc48d; --good-soft: #17301f; --bad: #ec8a78; --bad-soft: #3a1f1a; --hint: #e7b65a; --hint-soft: #33280f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--paper); color: var(--ink); }
+body {
+  font-family: var(--f-ui); font-size: 15px; line-height: 1.5;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+  padding-inline: 16px; padding-block: 28px 64px;
+}
+.wrap { max-width: 860px; margin: 0 auto; display: grid; gap: 22px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(30px, 5vw, 42px); line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.sub { color: var(--muted); max-width: 62ch; margin: 0; }
+.sub b { color: var(--ink); font-weight: 600; }
+
+.controls { display: grid; gap: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-right: 4px; }
+.chip {
+  font: 500 13px/1 var(--f-ui); color: var(--ink); background: var(--sheet); border: 1px solid var(--rule);
+  border-radius: 999px; padding: 8px 12px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center;
+}
+.chip .n { font-family: var(--f-mono); color: var(--muted); font-size: 12px; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+.chip[aria-pressed="true"] .n { color: var(--sheet); opacity: .8; }
+.chip:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--sheet); }
+.seg button { font: 500 13px/1 var(--f-ui); background: transparent; border: 0; color: var(--ink); padding: 10px 14px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.toggle { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); cursor: pointer; }
+.toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
+.btn { font: 600 14px/1 var(--f-ui); border-radius: 8px; padding: 11px 16px; cursor: pointer; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+.btn.ghost { background: transparent; }
+.kbd { font-family: var(--f-mono); font-size: 11px; opacity: .7; margin-left: 6px; }
+.spacer { flex: 1; }
+.timer { font-family: var(--f-mono); font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 1px 0 var(--rule), 0 10px 30px -18px rgba(20, 40, 80, .25); }
+.prob { padding: 22px 24px 20px; display: grid; gap: 14px; min-width: 0; }
+.prob + .prob { border-top: 1px dashed var(--rule); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; font-size: 12px; color: var(--muted); }
+.meta .num { font-family: var(--f-mono); font-weight: 500; color: var(--accent); font-size: 13px; }
+.meta .sec { font-family: var(--f-mono); }
+.meta .result { margin-left: auto; font-weight: 600; font-size: 12px; padding: 3px 9px; border-radius: 999px; }
+.result.got { background: var(--good-soft); color: var(--good); }
+.result.miss { background: var(--bad-soft); color: var(--bad); }
+.qtext { font-family: var(--f-body); font-size: 18px; line-height: 1.6; min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.panel { border-radius: 6px; padding: 14px 16px; font-family: var(--f-body); font-size: 16px; line-height: 1.6; min-width: 0; overflow-x: auto; }
+.panel h3 { font: 600 11px/1 var(--f-ui); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
+.hintp { background: var(--hint-soft); }
+.hintp h3 { color: var(--hint); }
+.solp { background: var(--paper); border: 1px solid var(--rule); display: grid; gap: 12px; }
+.solp h3 { color: var(--accent); }
+.answer { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; font-weight: 600; }
+.steps { margin: 0; padding-left: 1.4em; display: grid; gap: 6px; }
+.steps li::marker { font-family: var(--f-mono); color: var(--muted); font-size: 13px; }
+.grade { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-family: var(--f-ui); font-size: 13px; color: var(--muted); }
+.btn.got { color: var(--good); border-color: var(--good); }
+.btn.miss { color: var(--bad); border-color: var(--bad); }
+mjx-container[display="true"] { margin: .5em 0 !important; }
+mjx-container { max-width: 100%; }
+
+.ledger { display: grid; gap: 10px; }
+.ledger h2 { font-family: var(--f-display); font-size: 20px; margin: 0; }
+.ledger-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.ledger-head p { margin: 0; color: var(--muted); font-size: 13px; }
+.table { display: grid; gap: 0; }
+.trow { display: grid; grid-template-columns: 34px minmax(0, 1fr) minmax(80px, 160px) 64px; gap: 12px; align-items: center; padding: 9px 14px; border-top: 1px solid var(--rule); font-size: 14px; }
+.trow:first-child { border-top: 0; }
+.trow .n { font-family: var(--f-mono); color: var(--muted); }
+.trow .name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar { height: 8px; border-radius: 4px; background: var(--accent-soft); overflow: hidden; display: flex; }
+.bar i { display: block; height: 100%; }
+.bar .g { background: var(--good); }
+.bar .m { background: var(--bad); }
+.trow .pct { font-family: var(--f-mono); font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.trow.weak .name { color: var(--bad); font-weight: 600; }
+.foot { font-size: 12px; color: var(--muted); }
+.loading { padding: 28px 24px; color: var(--muted); font-family: var(--f-body); }
+@media (max-width: 560px) {
+  .prob { padding: 18px 16px; }
+  .qtext { font-size: 17px; }
+  .trow { grid-template-columns: 26px minmax(0, 1fr) 70px 48px; gap: 8px; padding: 9px 10px; }
+  .kbd { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .prob.enter { animation: rise .25s ease-out; }
+  @keyframes rise { from { transform: translateY(6px); opacity: .4; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">APMA E2000 · Midterm 1 · Lectures 1–10</div>
+    <h1>E2000 Midterm Drill</h1>
+    <p class="sub">Unlimited randomized practice on everything through <b>Stewart §14.5</b>: vectors, lines and planes, space curves, limits, partials, tangent planes, and the chain rule. Each answer is computed exactly, with a worked solution. No calculator, same as the exam.</p>
+  </header>
+
+  <section class="controls" aria-label="Practice settings">
+    <div class="row" id="chips" role="group" aria-label="Lectures"></div>
+    <div class="row">
+      <div class="seg" role="group" aria-label="Mode">
+        <button id="mode-drill" aria-pressed="true">Drill</button>
+        <button id="mode-exam" aria-pressed="false">Mock exam (6)</button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="weak"> Favor topics I've missed</label>
+      <span class="spacer"></span>
+      <span class="timer" id="timer" hidden></span>
+      <button class="btn primary" id="next">New problem<span class="kbd">N</span></button>
+    </div>
+  </section>
+
+  <main class="sheet" id="sheet" aria-live="polite"><div class="loading">Loading math renderer…</div></main>
+
+  <section class="ledger sheet" style="padding:16px 0 6px">
+    <div class="ledger-head" style="padding:0 14px 6px">
+      <h2>Your record</h2>
+      <p id="summary"></p>
+      <span class="spacer"></span>
+      <button class="btn ghost" id="reset" style="padding:7px 10px;font-size:12px">Reset</button>
+    </div>
+    <div class="table" id="table"></div>
+  </section>
+  <p class="foot">After revealing a solution, mark whether you got it. Your record stays in this browser and drives “Favor topics I've missed.” Shortcuts: <b>N</b> new problem, <b>H</b> hint, <b>S</b> solution.</p>
+</div>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: false, ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => window.__mjReady && window.__mjReady()); } },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+<script>
+// ===== Problem engine for APMA E2000 Midterm 1 practice =====
+// Exact arithmetic (rationals, surds, polynomials) so every answer is computed, not typed.
+
+const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a; };
+function chk(c, msg) { if (!c) throw new Error('check failed: ' + msg); }
+
+class Q {
+  constructor(n, d = 1) {
+    if (d === 0) throw new Error('div0');
+    if (!Number.isInteger(n) || !Number.isInteger(d)) throw new Error('non-int ' + n + '/' + d);
+    if (d < 0) { n = -n; d = -d; }
+    const g = gcd(n, d) || 1; this.n = n / g; this.d = d / g;
+    if (this.n === 0) this.n = 0; // kill -0
+  }
+  static of(x) { return x instanceof Q ? x : new Q(x, 1); }
+  add(o) { o = Q.of(o); return new Q(this.n * o.d + o.n * this.d, this.d * o.d); }
+  sub(o) { o = Q.of(o); return new Q(this.n * o.d - o.n * this.d, this.d * o.d); }
+  mul(o) { o = Q.of(o); return new Q(this.n * o.n, this.d * o.d); }
+  div(o) { o = Q.of(o); return new Q(this.n * o.d, this.d * o.n); }
+  neg() { return new Q(-this.n, this.d); }
+  abs() { return new Q(Math.abs(this.n), this.d); }
+  isZero() { return this.n === 0; }
+  eq(o) { o = Q.of(o); return this.n === o.n && this.d === o.d; }
+  val() { return this.n / this.d; }
+  tex() { return this.d === 1 ? `${this.n}` : `${this.n < 0 ? '-' : ''}\\frac{${Math.abs(this.n)}}{${this.d}}`; }
+}
+const q = (n, d = 1) => new Q(n, d);
+
+// ---------- random helpers ----------
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const nz = (a, b) => { let x; do { x = ri(a, b); } while (x === 0); return x; };
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const chance = (p) => Math.random() < p;
+const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = ri(0, i); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+// ---------- vectors ----------
+const dot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0);
+const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const isZeroV = (a) => a.every((x) => x === 0);
+const rv3 = (a, b) => [ri(a, b), ri(a, b), ri(a, b)];
+const rv3nz = (a, b) => { let v; do { v = rv3(a, b); } while (isZeroV(v)); return v; };
+const tx = (x) => (x instanceof Q ? x.tex() : `${x}`);
+const vtex = (a) => `\\langle ${a.map(tx).join(', ')} \\rangle`;
+const ptex = (a) => `(${a.map(tx).join(', ')})`;
+const vgcd = (a) => a.reduce((g, x) => gcd(g, x), 0) || 1;
+const reduceV = (a) => { const g = vgcd(a); let r = a.map((x) => x / g); const f = r.find((x) => x !== 0); if (f < 0) r = r.map((x) => -x); return r.map((x) => x + 0); };
+const sub3 = (a, b) => a.map((x, i) => x - b[i]);
+const sqSum = (a) => `${a.map((x) => (x < 0 ? `(${x})^2` : `${x}^2`)).join(' + ')}`;
+
+// ---------- surds ----------
+function sqParts(n) { // n = out^2 * inn
+  chk(Number.isInteger(n) && n >= 0, 'sqParts ' + n);
+  let out = 1, inn = n;
+  for (let f = 2; f * f <= inn; f++) while (inn % (f * f) === 0) { inn /= f * f; out *= f; }
+  return [out, inn];
+}
+function texCoefRad(c, m) { // c * sqrt(m)
+  c = Q.of(c);
+  if (c.isZero() || m === 0) return '0';
+  if (m === 1) return c.tex();
+  const s = c.n < 0 ? '-' : '';
+  const a = Math.abs(c.n);
+  const num = (a === 1 ? '' : a) + `\\sqrt{${m}}`;
+  return s + (c.d === 1 ? num : `\\frac{${num}}{${c.d}}`);
+}
+function texSqrtQ(x) { x = Q.of(x); const [k, m] = sqParts(x.n * x.d); return texCoefRad(q(k, x.d), m); }
+const texSqrtInt = (n) => texSqrtQ(q(n));
+function texQoverSqrt(num, N) { // num / sqrt(N)
+  const [k, m] = sqParts(N);
+  return texCoefRad(Q.of(num).mul(q(k, N)), m);
+}
+
+// ---------- tex term helpers ----------
+function cmono(c, s) { c = Q.of(c); if (c.isZero()) return '0'; if (c.n === c.d) return s; if (c.n === -c.d) return '-' + s; return c.tex() + s; }
+function sumTex(terms) {
+  let out = '';
+  for (let t of terms) {
+    if (t instanceof Q) t = t.tex(); else if (typeof t === 'number') t = `${t}`;
+    if (!t || t === '0') continue;
+    if (out === '') out = t;
+    else if (t[0] === '-') out += ' - ' + t.slice(1);
+    else out += ' + ' + t;
+  }
+  return out || '0';
+}
+function shiftTex(v, a) { a = Q.of(a); if (a.isZero()) return v; return `(${v} ${a.n > 0 ? '-' : '+'} ${a.abs().tex()})`; }
+function texQpi(x) { x = Q.of(x); if (x.d === 1) return cmono(x.n, '\\pi'); return `${x.n < 0 ? '-' : ''}\\frac{${Math.abs(x.n) === 1 ? '' : Math.abs(x.n)}\\pi}{${x.d}}`; }
+const paren = (x) => { const s = tx(x); return s[0] === '-' ? `(${s})` : s; };
+const pr = (a, b) => `(${tx(a)})(${tx(b)})`;
+const evq = (p, v) => (p.isConst() ? v.tex() : `${p.tex()} = ${v.tex()}`);
+const dotList = (u, v) => sumTex(u.map((x, i) => (x * v[i] === 0 ? '0' : `${x < 0 && v[i] < 0 ? '' : x * v[i] < 0 ? '-' : ''}(${Math.abs(x)})(${Math.abs(v[i])})`))).replace(/^0$/, '0');
+
+// ---------- polynomials in x,y,z,t,s ----------
+const VARS = ['x', 'y', 'z', 't', 's'];
+class P {
+  constructor() { this.t = new Map(); }
+  addTerm(c, e) {
+    c = Q.of(c); const k = e.join(','); const prev = this.t.get(k);
+    const nc = prev ? prev.add(c) : c;
+    if (nc.isZero()) this.t.delete(k); else this.t.set(k, nc);
+    return this;
+  }
+  static mono(c, ex = {}) { return new P().addTerm(c, VARS.map((v) => ex[v] || 0)); }
+  static c(c) { return P.mono(c, {}); }
+  static v(n) { return P.mono(1, { [n]: 1 }); }
+  static from(list) { const p = new P(); for (const [c, ex] of list) p.addTerm(c, VARS.map((v) => ex[v] || 0)); return p; }
+  clone() { const r = new P(); for (const [k, c] of this.t) r.t.set(k, c); return r; }
+  *terms() { for (const [k, c] of this.t) yield [c, k.split(',').map(Number)]; }
+  add(o) { o = o instanceof P ? o : P.c(o); const r = this.clone(); for (const [c, e] of o.terms()) r.addTerm(c, e); return r; }
+  sub(o) { o = o instanceof P ? o : P.c(o); return this.add(o.scale(-1)); }
+  scale(k) { const r = new P(); for (const [c, e] of this.terms()) r.addTerm(c.mul(k), e); return r; }
+  mul(o) { o = o instanceof P ? o : P.c(o); const r = new P(); for (const [c1, e1] of this.terms()) for (const [c2, e2] of o.terms()) r.addTerm(c1.mul(c2), e1.map((x, i) => x + e2[i])); return r; }
+  pow(n) { let r = P.c(1); for (let i = 0; i < n; i++) r = r.mul(this); return r; }
+  d(v) { const i = VARS.indexOf(v); const r = new P(); for (const [c, e] of this.terms()) if (e[i] > 0) { const e2 = e.slice(); e2[i]--; r.addTerm(c.mul(e[i]), e2); } return r; }
+  integ(v) { const i = VARS.indexOf(v); const r = new P(); for (const [c, e] of this.terms()) { const e2 = e.slice(); e2[i]++; r.addTerm(c.div(e2[i]), e2); } return r; }
+  ev(vals) {
+    let s = q(0);
+    for (const [c, e] of this.terms()) {
+      let term = c;
+      e.forEach((p, i) => { if (p) { chk(vals[VARS[i]] !== undefined, 'missing var ' + VARS[i]); const x = Q.of(vals[VARS[i]]); for (let j = 0; j < p; j++) term = term.mul(x); } });
+      s = s.add(term);
+    }
+    return s;
+  }
+  subs(map) {
+    let r = new P();
+    for (const [c, e] of this.terms()) {
+      let term = P.c(c);
+      e.forEach((p, i) => { if (p) { const b = map[VARS[i]] || P.v(VARS[i]); term = term.mul(b.pow(p)); } });
+      r = r.add(term);
+    }
+    return r;
+  }
+  isZero() { return this.t.size === 0; }
+  isConst() { return [...this.terms()].every(([, e]) => e.every((x) => x === 0)); }
+  hasVar(v) { const i = VARS.indexOf(v); return [...this.terms()].some(([, e]) => e[i] > 0); }
+  tex() {
+    const arr = [...this.terms()].sort((A, B) => {
+      const da = A[1].reduce((s, x) => s + x, 0), db = B[1].reduce((s, x) => s + x, 0);
+      if (da !== db) return db - da;
+      for (let i = 0; i < 5; i++) if (A[1][i] !== B[1][i]) return B[1][i] - A[1][i];
+      return 0;
+    });
+    return sumTex(arr.map(([c, e]) => {
+      const vp = e.map((p, i) => (p === 0 ? '' : p === 1 ? VARS[i] : `${VARS[i]}^{${p}}`)).join('');
+      return vp === '' ? c.tex() : cmono(c, vp);
+    }));
+  }
+}
+function randPoly(vars, nterms, maxdeg, cmax = 5, mindeg = 1) {
+  for (let tries = 0; tries < 200; tries++) {
+    const p = new P(); const seen = new Set();
+    while (seen.size < nterms) {
+      const ex = {}; let deg = 0;
+      for (const v of vars) { ex[v] = ri(0, maxdeg); deg += ex[v]; }
+      if (deg < mindeg || deg > maxdeg) continue;
+      const key = vars.map((v) => ex[v]).join(','); if (seen.has(key)) continue;
+      seen.add(key); p.addTerm(nz(-cmax, cmax), VARS.map((v) => ex[v] || 0));
+    }
+    if (vars.every((v) => p.hasVar(v))) return p;
+  }
+  throw new Error('randPoly');
+}
+function randPolyT(maxdeg = 3, cmax = 3) {
+  const d = ri(1, maxdeg); const p = P.mono(nz(-cmax, cmax), { t: d });
+  for (let e = 0; e < d; e++) if (chance(0.45)) p.addTerm(nz(-cmax, cmax), [0, 0, 0, e, 0]);
+  return p;
+}
+function solve2(a11, a12, a21, a22, b1, b2) {
+  const D = Q.of(a11).mul(a22).sub(Q.of(a12).mul(a21));
+  if (D.isZero()) return null;
+  return [Q.of(b1).mul(a22).sub(Q.of(a12).mul(b2)).div(D), Q.of(a11).mul(b2).sub(Q.of(b1).mul(a21)).div(D)];
+}
+const deg = (rad) => (rad * 180 / Math.PI).toFixed(1);
+const M = (s) => `$${s}$`;
+const D = (s) => `$$${s}$$`;
+const B = (s) => `\\mathbf{${s}}`;
+
+// =====================================================================
+// LECTURE 1 — Coordinates, vectors, quadric surfaces
+// =====================================================================
+function gVecArith() {
+  let u, v, a, b, w;
+  do { u = rv3(-4, 4); v = rv3(-4, 4); a = nz(-3, 3); b = nz(-3, 3); w = u.map((x, i) => a * x + b * v[i]); } while (isZeroV(w) || isZeroV(u) || isZeroV(v));
+  const N = dot(w, w); const [k, m] = sqParts(N);
+  const unit = m === 1 ? vtex(w.map((x) => q(x, k))) : `\\frac{1}{${texSqrtInt(N)}}${vtex(w)}`;
+  const expr = sumTex([cmono(a, B('u')), cmono(b, B('v'))]);
+  return {
+    lec: 1,
+    q: `Let ${M(`${B('u')} = ${vtex(u)}`)} and ${M(`${B('v')} = ${vtex(v)}`)}. Find ${M(`${B('w')} = ${expr}`)}, its length ${M(`|${B('w')}|`)}, and the unit vector in the direction of ${M(B('w'))}.`,
+    hint: `Scale and add componentwise. ${M(`|\\mathbf w| = \\sqrt{w_1^2+w_2^2+w_3^2}`)}, and the unit vector is ${M(`\\mathbf w / |\\mathbf w|`)}.`,
+    steps: [
+      D(`${cmono(a, B('u'))} = ${vtex(u.map((x) => a * x))}, \\qquad ${cmono(b, B('v'))} = ${vtex(v.map((x) => b * x))}`),
+      D(`${B('w')} = ${vtex(w)}`),
+      D(`|${B('w')}| = \\sqrt{${sqSum(w)}} = \\sqrt{${N}}${m === 1 || k > 1 ? ` = ${texSqrtInt(N)}` : ''}`),
+      D(`\\hat{${B('w')}} = \\frac{${B('w')}}{|${B('w')}|} = ${unit}`),
+    ],
+    ans: `${M(`${B('w')} = ${vtex(w)}`)}, ${M(`|${B('w')}| = ${texSqrtInt(N)}`)}, unit vector ${M(unit)}`,
+  };
+}
+
+function gSphere() {
+  const c = [ri(-5, 5), ri(-5, 5), ri(-5, 5)], r = ri(1, 7), f = pick([1, 1, 1, 2, 3]);
+  const lin = c.map((x) => -2 * x); const G = dot(c, c) - r * r;
+  const eq = sumTex([cmono(f, 'x^2'), cmono(f, 'y^2'), cmono(f, 'z^2'), cmono(f * lin[0], 'x'), cmono(f * lin[1], 'y'), cmono(f * lin[2], 'z'), f * G]) + ' = 0';
+  const grp = ['x', 'y', 'z'].map((v, i) => (lin[i] === 0 ? `${v}^2` : `(${sumTex([`${v}^2`, cmono(lin[i], v)])})`));
+  const done = ['x', 'y', 'z'].map((v, i) => `${shiftTex(v, c[i])}^2`);
+  const steps = [];
+  if (f > 1) steps.push(`Divide by ${f}: ${D(sumTex([`x^2`, `y^2`, `z^2`, cmono(lin[0], 'x'), cmono(lin[1], 'y'), cmono(lin[2], 'z'), G]) + ' = 0')}`);
+  steps.push(`Group by variable: ${D(`${grp.join(' + ')} = ${-G}`)}`);
+  steps.push(`Complete each square by adding ${M(`(b/2)^2`)} to both sides (${M(c.map((x) => x * x).join(' + '))}): ${D(`${done.join(' + ')} = ${-G} + ${dot(c, c)} = ${r * r}`)}`);
+  return {
+    lec: 1,
+    q: `Show that the equation ${D(eq)} describes a sphere, and find its center and radius.`,
+    hint: `Complete the square in ${M('x')}, ${M('y')} and ${M('z')} separately to reach ${M('(x-a)^2+(y-b)^2+(z-c)^2=r^2')}.`,
+    steps,
+    ans: `Center ${M(ptex(c))}, radius ${M(r)}`,
+  };
+}
+
+function gQuadric() {
+  const perm = shuffle(['x', 'y', 'z']); const [X, Y, Z] = perm; // Z is the special axis
+  const sq = [1, 4, 9, 16, 25];
+  const A = pick([1, 2, 3, 4, 9]), Bc = pick([1, 2, 3, 4, 9]), C = pick([1, 2, 3, 4, 9]);
+  const type = pick(['ellipsoid', 'hyp1', 'hyp2', 'cone', 'ellpar', 'hyppar']);
+  const co = {}; let eq, name, why;
+  const order = ['x', 'y', 'z'];
+  if (['ellipsoid', 'hyp1', 'hyp2', 'cone'].includes(type)) {
+    let Dv = pick(sq.slice(1)) * pick([1, 4]);
+    co[X] = A; co[Y] = Bc; co[Z] = C;
+    if (type === 'hyp1') co[Z] = -C;
+    if (type === 'hyp2') { co[X] = -A; co[Y] = -Bc; }
+    if (type === 'cone') { co[Z] = -C; Dv = 0; }
+    if (type === 'hyp2' && chance(0.5)) { co[X] = A; co[Y] = Bc; co[Z] = -C; Dv = -Dv; }
+    eq = sumTex(order.map((v) => cmono(co[v], `${v}^2`))) + ` = ${Dv}`;
+    const neg = order.filter((v) => co[v] < 0).length;
+    if (type === 'ellipsoid') { name = 'Ellipsoid'; why = 'All three squared terms are positive and the right side is positive, so every trace is an ellipse.'; }
+    if (type === 'hyp1') { name = `Hyperboloid of one sheet, axis along the ${M(Z)}-axis`; why = `Two squares positive, one negative (${M(Z)}), right side positive. Traces ${M(Z + ' = k')} are ellipses for every k, so the surface is connected.`; }
+    if (type === 'hyp2') { name = `Hyperboloid of two sheets, axis along the ${M(Z)}-axis`; why = `After making the right side positive, only the ${M(Z + '^2')} term is positive. Traces ${M(Z + ' = k')} are empty for small |k|, so there are two sheets.`; }
+    if (type === 'cone') { name = `Elliptic cone, axis along the ${M(Z)}-axis`; why = `Right side is 0 with one square of opposite sign (${M(Z)}), so traces ${M(Z + ' = k')} are ellipses that shrink to the origin at k = 0.`; }
+    void neg;
+  } else {
+    const c = nz(-2, 2) === 0 ? 1 : pick([1, 1, 2, 3, -1]);
+    const a2 = A, b2 = type === 'hyppar' ? -Bc : Bc;
+    const swap = chance(0.5);
+    const rhs = sumTex([cmono(swap ? b2 : a2, `${swap ? Y : X}^2`), cmono(swap ? a2 : b2, `${swap ? X : Y}^2`)]);
+    eq = `${cmono(c, Z)} = ${rhs}`;
+    if (type === 'ellpar') { name = `Elliptic paraboloid, axis along the ${M(Z)}-axis, opening toward ${c > 0 ? 'positive' : 'negative'} ${M(Z)}`; why = `${M(Z)} is linear and the other two variables appear squared with the same sign, so traces ${M(Z + ' = k')} are ellipses and the other traces are parabolas.`; }
+    else { name = `Hyperbolic paraboloid (saddle) along the ${M(Z)}-axis`; why = `${M(Z)} is linear and the two squares have opposite signs, so traces ${M(Z + ' = k')} are hyperbolas and the other traces are parabolas opening in opposite directions.`; }
+  }
+  return {
+    lec: 1,
+    q: `Identify the quadric surface ${D(eq)} Name its type and its axis.`,
+    hint: `Count the squared variables and their signs, and check whether a variable appears only linearly. Then look at traces (set one variable equal to a constant).`,
+    steps: [why],
+    ans: name,
+  };
+}
+
+// =====================================================================
+// LECTURE 2 — Dot, cross, projection
+// =====================================================================
+function gAngle() {
+  let u, v;
+  do {
+    u = rv3nz(-4, 4);
+    if (chance(0.25)) { const w = cross(u, rv3nz(-2, 2)); v = isZeroV(w) ? [0, 0, 0] : reduceV(w).map((x) => x * pick([1, -1])); }
+    else v = rv3nz(-4, 4);
+  } while (isZeroV(v) || isZeroV(cross(u, v)) || v.some((x) => Math.abs(x) > 12));
+  const d = dot(u, v), uu = dot(u, u), vv = dot(v, v), N = uu * vv;
+  const cosT = texQoverSqrt(d, N);
+  const th = Math.acos(d / Math.sqrt(N));
+  const kind = d === 0 ? 'orthogonal (right angle)' : d > 0 ? 'acute' : 'obtuse';
+  return {
+    lec: 2,
+    q: `Find the angle between ${M(`${B('a')} = ${vtex(u)}`)} and ${M(`${B('b')} = ${vtex(v)}`)}. Is it acute, right, or obtuse?`,
+    hint: M(`\\cos\\theta = \\dfrac{\\mathbf a\\cdot\\mathbf b}{|\\mathbf a|\\,|\\mathbf b|}`) + '. The sign of the dot product alone tells you acute or obtuse.',
+    steps: [
+      D(`${B('a')}\\cdot${B('b')} = ${u.map((x, i) => pr(x, v[i])).join(' + ')} = ${d}`),
+      D(`|${B('a')}| = \\sqrt{${uu}}, \\qquad |${B('b')}| = \\sqrt{${vv}}`),
+      D(`\\cos\\theta = \\frac{${d}}{\\sqrt{${uu}}\\sqrt{${vv}}} = ${cosT}`),
+    ],
+    ans: d === 0 ? `${M('\\theta = \\pi/2')}. The vectors are orthogonal.` : `${M(`\\theta = \\arccos\\left(${cosT}\\right) \\approx ${deg(th)}^\\circ`)}, which is ${kind}.`,
+  };
+}
+
+function gProj() {
+  let a, b;
+  do { a = rv3nz(-4, 4); b = rv3nz(-5, 5); } while (dot(a, b) === 0 || isZeroV(cross(a, b)));
+  const ab = dot(a, b), aa = dot(a, a);
+  const pr = a.map((x) => q(ab * x, aa));
+  const perp = b.map((x, i) => q(x).sub(pr[i]));
+  return {
+    lec: 2,
+    q: `Let ${M(`${B('a')} = ${vtex(a)}`)} and ${M(`${B('b')} = ${vtex(b)}`)}. Find the scalar projection ${M(`\\operatorname{comp}_{${B('a')}}${B('b')}`)} and the vector projection ${M(`\\operatorname{proj}_{${B('a')}}${B('b')}`)}. Then write ${M(B('b'))} as a vector parallel to ${M(B('a'))} plus a vector orthogonal to ${M(B('a'))}.`,
+    hint: M(`\\operatorname{comp}_{\\mathbf a}\\mathbf b = \\dfrac{\\mathbf a\\cdot\\mathbf b}{|\\mathbf a|}`) + ', ' + M(`\\operatorname{proj}_{\\mathbf a}\\mathbf b = \\dfrac{\\mathbf a\\cdot\\mathbf b}{\\mathbf a\\cdot\\mathbf a}\\,\\mathbf a`) + '.',
+    steps: [
+      D(`${B('a')}\\cdot${B('b')} = ${ab}, \\qquad ${B('a')}\\cdot${B('a')} = ${aa}`),
+      D(`\\operatorname{comp}_{${B('a')}}${B('b')} = \\frac{${ab}}{\\sqrt{${aa}}} = ${texQoverSqrt(ab, aa)}`),
+      D(`\\operatorname{proj}_{${B('a')}}${B('b')} = ${q(ab, aa).tex()}\\,${vtex(a)} = ${vtex(pr)}`),
+      `Orthogonal part: ${D(`${B('b')} - \\operatorname{proj}_{${B('a')}}${B('b')} = ${vtex(perp)}`)} Check: its dot product with ${M(B('a'))} is ${M(perp.reduce((s, x, i) => s.add(x.mul(a[i])), q(0)).tex())}.`,
+    ],
+    ans: `${M(`\\operatorname{comp} = ${texQoverSqrt(ab, aa)}`)}, ${M(`\\operatorname{proj} = ${vtex(pr)}`)}, ${M(`${B('b')} = ${vtex(pr)} + ${vtex(perp)}`)}`,
+  };
+}
+
+function gArea() {
+  if (chance(0.35)) {
+    let a, b, c; do { a = rv3(-4, 4); b = rv3(-4, 4); c = cross(a, b); } while (isZeroV(c));
+    const N = dot(c, c);
+    return {
+      lec: 2,
+      q: `Find the area of the parallelogram spanned by ${M(`${B('a')} = ${vtex(a)}`)} and ${M(`${B('b')} = ${vtex(b)}`)}.`,
+      hint: `Area ${M(`= |\\mathbf a \\times \\mathbf b|`)}.`,
+      steps: [D(`${B('a')}\\times${B('b')} = \\begin{vmatrix} \\mathbf i & \\mathbf j & \\mathbf k \\\\ ${a.join(' & ')} \\\\ ${b.join(' & ')} \\end{vmatrix} = ${vtex(c)}`), D(`|${B('a')}\\times${B('b')}| = \\sqrt{${sqSum(c)}} = ${texSqrtInt(N)}`)],
+      ans: M(`\\text{Area} = ${texSqrtInt(N)}`),
+    };
+  }
+  let P0, P1, P2, u, v, c;
+  do { P0 = rv3(-3, 4); P1 = rv3(-3, 4); P2 = rv3(-3, 4); u = sub3(P1, P0); v = sub3(P2, P0); c = cross(u, v); } while (isZeroV(c));
+  const N = dot(c, c); const [k, m] = sqParts(N);
+  return {
+    lec: 2,
+    q: `Find the area of the triangle with vertices ${M(`P${ptex(P0)}`)}, ${M(`Q${ptex(P1)}`)}, ${M(`R${ptex(P2)}`)}.`,
+    hint: `Area ${M(`= \\tfrac12\\,|\\overrightarrow{PQ}\\times\\overrightarrow{PR}|`)}.`,
+    steps: [
+      D(`\\overrightarrow{PQ} = ${vtex(u)}, \\qquad \\overrightarrow{PR} = ${vtex(v)}`),
+      D(`\\overrightarrow{PQ}\\times\\overrightarrow{PR} = \\begin{vmatrix} \\mathbf i & \\mathbf j & \\mathbf k \\\\ ${u.join(' & ')} \\\\ ${v.join(' & ')} \\end{vmatrix} = ${vtex(c)}`),
+      D(`\\text{Area} = \\tfrac12\\sqrt{${sqSum(c)}} = \\tfrac12\\sqrt{${N}} = ${texCoefRad(q(k, 2), m)}`),
+    ],
+    ans: M(`\\text{Area} = ${texCoefRad(q(k, 2), m)}`),
+  };
+}
+
+function gTriple() {
+  let a, b, c, copl = chance(0.35);
+  do {
+    a = rv3(-3, 3); b = rv3(-3, 3);
+    if (copl) { const al = nz(-2, 2), be = nz(-2, 2); c = a.map((x, i) => al * x + be * b[i]); }
+    else c = rv3(-3, 3);
+  } while (isZeroV(cross(a, b)) || isZeroV(c) || (!copl && dot(a, cross(b, c)) === 0) || c.some((x) => Math.abs(x) > 9));
+  const bc = cross(b, c), det = dot(a, bc);
+  return {
+    lec: 2,
+    q: `Find the volume of the parallelepiped determined by ${M(`${B('a')} = ${vtex(a)}`)}, ${M(`${B('b')} = ${vtex(b)}`)}, ${M(`${B('c')} = ${vtex(c)}`)}. Are the three vectors coplanar?`,
+    hint: `Volume ${M(`= |\\mathbf a\\cdot(\\mathbf b\\times\\mathbf c)|`)}, the absolute value of the 3×3 determinant. Coplanar exactly when it is 0.`,
+    steps: [
+      D(`${B('b')}\\times${B('c')} = ${vtex(bc)}`),
+      D(`${B('a')}\\cdot(${B('b')}\\times${B('c')}) = \\begin{vmatrix} ${a.join(' & ')} \\\\ ${b.join(' & ')} \\\\ ${c.join(' & ')} \\end{vmatrix} = ${a.map((x, i) => pr(x, bc[i])).join(' + ')} = ${det}`),
+    ],
+    ans: det === 0 ? `Volume ${M('= 0')}, so the vectors are coplanar.` : `Volume ${M(`= ${Math.abs(det)}`)}. They are not coplanar.`,
+  };
+}
+
+function gOrthoK() {
+  for (;;) {
+    const v = rv3(-5, 5); const slots = shuffle([0, 1, 2]); const j = slots[0], l = slots[1], r = slots[2];
+    const al = pick([0, 0, 1, 2, -1]), be = ri(-4, 4), cr = ri(-4, 4);
+    const coefK = v[j] + al * v[l]; if (coefK === 0) continue;
+    const rhs = -(be * v[l] + cr * v[r]);
+    const u = []; u[j] = 'k'; u[l] = al === 0 ? `${be}` : sumTex([cmono(al, 'k'), be]); u[r] = `${cr}`;
+    if (isZeroV(v)) continue;
+    const K = q(rhs, coefK);
+    const lhs = sumTex([cmono(v[j], 'k'), al === 0 ? be * v[l] : cmono(v[l], `(${u[l]})`), cr * v[r]]);
+    return {
+      lec: 2,
+      q: `Find the value of ${M('k')} for which ${M(`${B('u')} = \\langle ${u.join(', ')} \\rangle`)} and ${M(`${B('v')} = ${vtex(v)}`)} are orthogonal.`,
+      hint: `Orthogonal means ${M('\\mathbf u\\cdot\\mathbf v = 0')}. Solve the resulting linear equation for ${M('k')}.`,
+      steps: [D(`${B('u')}\\cdot${B('v')} = ${lhs} = 0`), D(`${cmono(coefK, 'k')} ${rhs >= 0 ? '=' : '='} ${rhs} \\;\\Rightarrow\\; k = ${K.tex()}`)],
+      ans: M(`k = ${K.tex()}`),
+    };
+  }
+}
+
+// =====================================================================
+// LECTURE 3 — Lines and planes
+// =====================================================================
+const planeTex = (n, d) => `${sumTex([cmono(n[0], 'x'), cmono(n[1], 'y'), cmono(n[2], 'z')])} = ${tx(d)}`;
+const lineTex = (P0, v, par = 't') => ['x', 'y', 'z'].map((c, i) => `${c} = ${sumTex([P0[i], cmono(v[i], par)])}`).join(',\\quad ');
+
+function gPlane3() {
+  let P0, P1, P2, n;
+  do { P0 = rv3(-3, 4); P1 = rv3(-3, 4); P2 = rv3(-3, 4); n = cross(sub3(P1, P0), sub3(P2, P0)); } while (isZeroV(n));
+  const nr = reduceV(n), d = dot(nr, P0);
+  chk(dot(nr, P1) === d && dot(nr, P2) === d, 'plane3');
+  return {
+    lec: 3,
+    q: `Find an equation of the plane through ${M(`P${ptex(P0)}`)}, ${M(`Q${ptex(P1)}`)}, and ${M(`R${ptex(P2)}`)}.`,
+    hint: `A normal vector is ${M('\\overrightarrow{PQ}\\times\\overrightarrow{PR}')}. Then use ${M('\\mathbf n\\cdot(\\mathbf r - \\mathbf r_0)=0')}.`,
+    steps: [
+      D(`\\overrightarrow{PQ} = ${vtex(sub3(P1, P0))}, \\quad \\overrightarrow{PR} = ${vtex(sub3(P2, P0))}`),
+      D(`\\mathbf n = \\overrightarrow{PQ}\\times\\overrightarrow{PR} = ${vtex(n)}${vgcd(n) !== 1 || nr[0] !== n[0] ? ` \\;\\to\\; \\text{use } ${vtex(nr)}` : ''}`),
+      D(`${sumTex([cmono(nr[0], shiftTex('x', P0[0])), cmono(nr[1], shiftTex('y', P0[1])), cmono(nr[2], shiftTex('z', P0[2]))])} = 0`),
+      `Check: ${M('Q')} and ${M('R')} also satisfy it.`,
+    ],
+    ans: M(planeTex(nr, d)),
+  };
+}
+
+function gPlaneInter() {
+  let n1, n2, P0, dir;
+  do { n1 = rv3nz(-3, 3); n2 = rv3nz(-3, 3); dir = cross(n1, n2); } while (isZeroV(dir));
+  P0 = rv3(-3, 3); const d1 = dot(n1, P0), d2 = dot(n2, P0);
+  const dr = reduceV(dir);
+  let pt = null, how = '';
+  for (const [fix, i, j] of [[2, 0, 1], [1, 0, 2], [0, 1, 2]]) {
+    const s = solve2(n1[i], n1[j], n2[i], n2[j], d1, d2);
+    if (s) { pt = [0, 0, 0].map(() => q(0)); pt[i] = s[0]; pt[j] = s[1]; how = `Set ${['x', 'y', 'z'][fix]} = 0 and solve the two equations for ${['x', 'y', 'z'][i]} and ${['x', 'y', 'z'][j]}.`; break; }
+  }
+  chk(pt, 'planeinter');
+  chk(pt.reduce((s, x, i) => s.add(x.mul(n1[i])), q(0)).eq(d1), 'pi1');
+  const Pt = pt.map((x) => x.tex());
+  return {
+    lec: 3,
+    q: `Find parametric equations for the line of intersection of the planes ${M(planeTex(n1, d1))} and ${M(planeTex(n2, d2))}.`,
+    hint: `The direction is ${M('\\mathbf n_1\\times\\mathbf n_2')}. For a point, set one variable to 0 and solve the 2×2 system.`,
+    steps: [
+      D(`\\mathbf n_1 = ${vtex(n1)}, \\; \\mathbf n_2 = ${vtex(n2)}, \\; \\mathbf n_1\\times\\mathbf n_2 = ${vtex(dir)}${vgcd(dir) !== 1 || dr[0] !== dir[0] ? `\\;\\to\\; ${vtex(dr)}` : ''}`),
+      `${how} This gives the point ${M(ptex(Pt))}.`,
+      D(lineTex(Pt, dr)),
+    ],
+    ans: `${M(lineTex(Pt, dr))}. Any point on both planes with direction parallel to ${M(vtex(dr))} is also correct.`,
+  };
+}
+
+function gDistPlane() {
+  if (chance(0.35)) {
+    const n = rv3nz(-4, 4), d1 = ri(-9, 9); let d2; do { d2 = ri(-9, 9); } while (d2 === d1);
+    const k = pick([1, 2, 3]); const N = dot(n, n);
+    return {
+      lec: 3,
+      q: `Find the distance between the parallel planes ${M(planeTex(n, d1))} and ${M(planeTex(n.map((x) => k * x), k * d2))}.`,
+      hint: `Make the normals identical first, then use ${M('|d_1-d_2|/|\\mathbf n|')}.`,
+      steps: [k > 1 ? `Divide the second equation by ${k}: ${M(planeTex(n, d2))}.` : `The normals already match.`, D(`\\text{dist} = \\frac{|${d1} - (${d2})|}{\\sqrt{${N}}} = ${texQoverSqrt(Math.abs(d1 - d2), N)}`)],
+      ans: M(texQoverSqrt(Math.abs(d1 - d2), N)),
+    };
+  }
+  let n, P0, d, num;
+  do { n = rv3nz(-4, 4); d = ri(-8, 8); P0 = rv3(-4, 4); num = dot(n, P0) - d; } while (num === 0);
+  const N = dot(n, n);
+  return {
+    lec: 3,
+    q: `Find the distance from the point ${M(ptex(P0))} to the plane ${M(planeTex(n, d))}.`,
+    hint: M(`D = \\dfrac{|ax_0+by_0+cz_0-d|}{\\sqrt{a^2+b^2+c^2}}`),
+    steps: [D(`D = \\frac{|${n.map((x, i) => pr(x, P0[i])).join(' + ')} - (${d})|}{\\sqrt{${sqSum(n)}}} = \\frac{${Math.abs(num)}}{\\sqrt{${N}}} = ${texQoverSqrt(Math.abs(num), N)}`)],
+    ans: M(`D = ${texQoverSqrt(Math.abs(num), N)}`),
+  };
+}
+
+function gLinePlane() {
+  let n, v, P0, t0;
+  do { n = rv3nz(-3, 3); v = rv3nz(-3, 3); P0 = rv3(-4, 4); t0 = nz(-3, 3); } while (dot(n, v) === 0);
+  const X = P0.map((x, i) => x + t0 * v[i]); const d = dot(n, X);
+  const sub = sumTex(n.map((c, i) => cmono(c, `(${sumTex([P0[i], cmono(v[i], 't')])})`)));
+  const c0 = dot(n, P0), c1 = dot(n, v);
+  chk((d - c0) / c1 === t0, 'lineplane');
+  return {
+    lec: 3,
+    q: `Where does the line ${M(lineTex(P0, v))} intersect the plane ${M(planeTex(n, d))}?`,
+    hint: `Substitute the parametric ${M('x, y, z')} into the plane equation, solve for ${M('t')}, then plug back in.`,
+    steps: [D(`${sub} = ${d}`), D(`${sumTex([c0, cmono(c1, 't')])} = ${d} \\;\\Rightarrow\\; t = ${t0}`), D(`(x,y,z) = ${ptex(X)}`)],
+    ans: `The point ${M(ptex(X))}`,
+  };
+}
+
+function gPlaneAngle() {
+  let n1, n2;
+  do { n1 = rv3nz(-3, 3); n2 = rv3nz(-3, 3); } while (isZeroV(cross(n1, n2)));
+  const d1 = ri(-6, 6), d2 = ri(-6, 6); const dd = dot(n1, n2), N = dot(n1, n1) * dot(n2, n2);
+  const c = texQoverSqrt(Math.abs(dd), N);
+  return {
+    lec: 3,
+    q: `Find the angle between the planes ${M(planeTex(n1, d1))} and ${M(planeTex(n2, d2))}.`,
+    hint: `The angle between planes is the angle between their normals: ${M('\\cos\\theta = |\\mathbf n_1\\cdot\\mathbf n_2|/(|\\mathbf n_1||\\mathbf n_2|)')}.`,
+    steps: [D(`\\mathbf n_1\\cdot\\mathbf n_2 = ${dd}, \\quad |\\mathbf n_1| = \\sqrt{${dot(n1, n1)}}, \\quad |\\mathbf n_2| = \\sqrt{${dot(n2, n2)}}`), D(`\\cos\\theta = \\frac{${Math.abs(dd)}}{\\sqrt{${N}}} = ${c}`)],
+    ans: dd === 0 ? `${M('\\theta = 90^\\circ')}. The planes are perpendicular.` : M(`\\theta = \\arccos\\left(${c}\\right) \\approx ${deg(Math.acos(Math.abs(dd) / Math.sqrt(N)))}^\\circ`),
+  };
+}
+
+function gLines() {
+  const kind = pick(['parallel', 'intersect', 'intersect', 'skew', 'skew']);
+  let P1, v1, P2, v2, Qp;
+  for (;;) {
+    v1 = rv3nz(-3, 3); P1 = rv3(-3, 3);
+    if (kind === 'parallel') { const mul = pick([2, -1, -2, 3]); v2 = v1.map((x) => x * mul); P2 = rv3(-4, 4); if (isZeroV(cross(sub3(P2, P1), v1))) continue; }
+    else if (kind === 'intersect') { v2 = rv3nz(-3, 3); if (isZeroV(cross(v1, v2))) continue; const t0 = nz(-2, 2), s0 = nz(-2, 2); Qp = P1.map((x, i) => x + t0 * v1[i]); P2 = Qp.map((x, i) => x - s0 * v2[i]); }
+    else { v2 = rv3nz(-3, 3); P2 = rv3(-4, 4); if (isZeroV(cross(v1, v2))) continue; if (dot(sub3(P2, P1), cross(v1, v2)) === 0) continue; }
+    if ([...P2, ...v2].some((x) => Math.abs(x) > 10)) continue;
+    break;
+  }
+  const steps = []; let ans;
+  const par = isZeroV(cross(v1, v2));
+  steps.push(`Directions ${M(`${vtex(v1)}`)} and ${M(`${vtex(v2)}`)} are ${par ? 'scalar multiples, so the lines are parallel (or identical).' : 'not scalar multiples, so the lines are not parallel.'}`);
+  if (par) {
+    steps.push(`Check whether ${M(ptex(P2))} lies on ${M('L_1')}: the vector ${M(vtex(sub3(P2, P1)))} from ${M(ptex(P1))} is not parallel to ${M(vtex(v1))}, so the lines are distinct.`);
+    ans = 'Parallel (distinct) lines';
+  } else {
+    let pr = null;
+    for (const [i, j] of [[0, 1], [0, 2], [1, 2]]) { const s = solve2(v1[i], -v2[i], v1[j], -v2[j], P2[i] - P1[i], P2[j] - P1[j]); if (s) { pr = [i, j, s]; break; } }
+    const [i, j, [t, s]] = pr; const k = 3 - i - j; const nm = ['x', 'y', 'z'];
+    steps.push(`Set the ${nm[i]} and ${nm[j]} coordinates equal: ${D(`\\begin{cases} ${sumTex([P1[i], cmono(v1[i], 't')])} = ${sumTex([P2[i], cmono(v2[i], 's')])} \\\\ ${sumTex([P1[j], cmono(v1[j], 't')])} = ${sumTex([P2[j], cmono(v2[j], 's')])} \\end{cases} \\;\\Rightarrow\\; t = ${t.tex()},\\; s = ${s.tex()}`)}`);
+    const z1 = t.mul(v1[k]).add(P1[k]), z2 = s.mul(v2[k]).add(P2[k]);
+    steps.push(`Check ${nm[k]}: ${M(`L_1\\text{ gives } ${z1.tex()}`)}, ${M(`L_2 \\text{ gives } ${z2.tex()}`)}.`);
+    if (z1.eq(z2)) {
+      const X = P1.map((x, ii) => t.mul(v1[ii]).add(x));
+      chk(kind === 'intersect', 'should intersect');
+      ans = `Intersecting, at the point ${M(ptex(X))}`; steps.push(`They match, so the lines meet at ${M(ptex(X))}.`);
+    } else { chk(kind === 'skew', 'should be skew'); ans = 'Skew (not parallel and not intersecting)'; steps.push('They differ, so there is no common point. The lines are skew.'); }
+  }
+  return {
+    lec: 3,
+    q: `Determine whether the lines are parallel, skew, or intersecting. If they intersect, find the point. ${D(`L_1: ${lineTex(P1, v1, 't')}`)} ${D(`L_2: ${lineTex(P2, v2, 's')}`)}`,
+    hint: `First compare direction vectors. If they aren't parallel, use different parameters, solve two coordinate equations for ${M('t, s')}, and test the third.`,
+    steps, ans,
+  };
+}
+
+// =====================================================================
+// LECTURE 4 — Calculus of space curves
+// =====================================================================
+function polyComp(t0) { const p = randPolyT(3, 3); return { tex: p.tex(), dtex: p.d('t').tex(), val: p.ev({ t: t0 }), der: p.d('t').ev({ t: t0 }) }; }
+function specialComp() {
+  const k = pick([1, 2, 3, -1, -2]); const kt = cmono(k, 't');
+  return pick([
+    { tex: `e^{${kt}}`, dtex: cmono(k, `e^{${kt}}`), val: q(1), der: q(k) },
+    { tex: `\\sin(${kt})`, dtex: cmono(k, `\\cos(${kt})`), val: q(0), der: q(k) },
+    { tex: `\\cos(${kt})`, dtex: cmono(-k, `\\sin(${kt})`), val: q(1), der: q(0) },
+    { tex: `\\ln(1+t)`, dtex: `\\frac{1}{1+t}`, val: q(0), der: q(1) },
+    { tex: `\\sqrt{1+${Math.abs(k) * 2}t}`, dtex: `\\frac{${Math.abs(k)}}{\\sqrt{1+${Math.abs(k) * 2}t}}`, val: q(1), der: q(Math.abs(k)) },
+  ]);
+}
+function gTangentLine() {
+  for (;;) {
+    const t0 = pick([0, 0, 1, -1, 2]);
+    let comps = [polyComp(t0), polyComp(t0), polyComp(t0)];
+    if (t0 === 0) { const ns = ri(1, 2); for (const i of shuffle([0, 1, 2]).slice(0, ns)) comps[i] = specialComp(); }
+    const r0 = comps.map((c) => c.val), d0 = comps.map((c) => c.der);
+    if (d0.every((x) => x.isZero())) continue;
+    return {
+      lec: 4,
+      q: `Find parametric equations for the tangent line to ${D(`\\mathbf r(t) = \\langle ${comps.map((c) => c.tex).join(',\\; ')} \\rangle`)} at ${M(`t = ${t0}`)}.`,
+      hint: `The tangent line passes through ${M('\\mathbf r(t_0)')} with direction ${M("\\mathbf r'(t_0)")}.`,
+      steps: [D(`\\mathbf r'(t) = \\langle ${comps.map((c) => c.dtex).join(',\\; ')} \\rangle`), D(`\\mathbf r(${t0}) = ${vtex(r0)}, \\qquad \\mathbf r'(${t0}) = ${vtex(d0)}`), D(lineTex(r0.map((x) => x.tex()), d0, 's'))],
+      ans: M(lineTex(r0.map((x) => x.tex()), d0, 's')),
+    };
+  }
+}
+function gVecIntegral() {
+  const ps = [0, 1, 2].map(() => randPolyT(2, 4)); const a = 0, b = pick([1, 2, 3]);
+  const F = ps.map((p) => p.integ('t')); const vals = F.map((f) => f.ev({ t: b }).sub(f.ev({ t: a })));
+  return {
+    lec: 4,
+    q: `Evaluate ${D(`\\int_{${a}}^{${b}} \\langle ${ps.map((p) => p.tex()).join(',\\; ')} \\rangle\\, dt`)}`,
+    hint: 'Integrate each component separately.',
+    steps: [D(`\\text{Antiderivative: } \\langle ${F.map((f) => f.tex()).join(',\\; ')} \\rangle`), D(`\\text{Evaluate from } ${a} \\text{ to } ${b}: \\; ${vtex(vals)}`)],
+    ans: M(vtex(vals)),
+  };
+}
+
+// =====================================================================
+// LECTURE 5 — Motion
+// =====================================================================
+function gAccel() {
+  if (chance(0.4)) { // projectile
+    const T = ri(1, 4), vz = ri(0, 5 * T - 1), h = 5 * T * T - vz * T, vx = ri(0, 12), vy = ri(-6, 6);
+    const zt = P.from([[h, {}], [vz, { t: 1 }], [-5, { t: 2 }]]);
+    chk(zt.ev({ t: T }).isZero(), 'proj');
+    const vimp = [vx, vy, vz - 10 * T];
+    return {
+      lec: 5,
+      q: `A ball is thrown from the point ${M(ptex([0, 0, h]))} with initial velocity ${M(vtex([vx, vy, vz]))} (meters, seconds). Take ${M("\\mathbf a = \\langle 0,0,-10 \\rangle")}. Find ${M('\\mathbf r(t)')}, when and where the ball hits the ground ${M('(z=0)')}, and its speed at impact.`,
+      hint: `Integrate twice: ${M('\\mathbf v = \\mathbf v_0 + \\int \\mathbf a')}, then ${M('\\mathbf r = \\mathbf r_0 + \\int\\mathbf v')}. Solve ${M('z(t)=0')} for ${M('t>0')}.`,
+      steps: [D(`\\mathbf v(t) = \\langle ${vx},\\; ${vy},\\; ${sumTex([vz, cmono(-10, 't')])} \\rangle`), D(`\\mathbf r(t) = \\langle ${cmono(vx, 't')},\\; ${cmono(vy, 't')},\\; ${zt.tex()} \\rangle`), D(`${zt.tex()} = 0 \\;\\Rightarrow\\; t = ${T} \\quad (\\text{the positive root})`), D(`\\mathbf r(${T}) = ${ptex([vx * T, vy * T, 0])}, \\quad \\mathbf v(${T}) = ${vtex(vimp)}, \\quad |\\mathbf v| = \\sqrt{${dot(vimp, vimp)}} = ${texSqrtInt(dot(vimp, vimp))}`)],
+      ans: `Lands at ${M(`t=${T}`)} s at ${M(ptex([vx * T, vy * T, 0]))}, with impact speed ${M(texSqrtInt(dot(vimp, vimp)))} m/s`,
+    };
+  }
+  const a = [0, 1, 2].map(() => (chance(0.3) ? P.c(nz(-4, 4)) : P.from([[ri(-3, 3), {}], [nz(-3, 3) * 2, { t: 1 }]])));
+  const v0 = rv3(-3, 3), r0 = rv3(-3, 3);
+  const v = a.map((p, i) => p.integ('t').add(v0[i])), r = v.map((p, i) => p.integ('t').add(r0[i]));
+  chk(r.every((p, i) => p.d('t').d('t').sub(a[i]).isZero()), 'accel');
+  return {
+    lec: 5,
+    q: `A particle has acceleration ${M(`\\mathbf a(t) = \\langle ${a.map((p) => p.tex()).join(',\\; ')} \\rangle`)}, initial velocity ${M(`\\mathbf v(0) = ${vtex(v0)}`)}, and initial position ${M(`\\mathbf r(0) = ${vtex(r0)}`)}. Find ${M('\\mathbf v(t)')} and ${M('\\mathbf r(t)')}.`,
+    hint: `${M('\\mathbf v(t) = \\mathbf v(0) + \\int_0^t \\mathbf a')} and ${M('\\mathbf r(t) = \\mathbf r(0) + \\int_0^t \\mathbf v')}. Integrate componentwise.`,
+    steps: [D(`\\mathbf v(t) = \\langle ${v.map((p) => p.tex()).join(',\\; ')} \\rangle`), D(`\\mathbf r(t) = \\langle ${r.map((p) => p.tex()).join(',\\; ')} \\rangle`), 'Check: setting t = 0 recovers the initial conditions.'],
+    ans: `${M(`\\mathbf v(t) = \\langle ${v.map((p) => p.tex()).join(', ')} \\rangle`)}, ${M(`\\mathbf r(t) = \\langle ${r.map((p) => p.tex()).join(', ')} \\rangle`)}`,
+  };
+}
+
+function gTanNormal() {
+  for (;;) {
+    const r = [0, 1, 2].map(() => randPolyT(chance(0.5) ? 2 : 3, 3)); const t0 = pick([0, 1, -1, 2]);
+    const v = r.map((p) => p.d('t').ev({ t: t0 }).n), a = r.map((p) => p.d('t').d('t').ev({ t: t0 }).n);
+    if (isZeroV(v) || isZeroV(a)) continue;
+    const vv = dot(v, v), va = dot(v, a), c = cross(v, a), cc = dot(c, c);
+    if (vv > 400 || cc === 0) continue;
+    chk(Math.abs(va * va / vv + cc / vv - dot(a, a)) < 1e-9, 'aT^2+aN^2');
+    return {
+      lec: 5,
+      q: `For ${M(`\\mathbf r(t) = \\langle ${r.map((p) => p.tex()).join(',\\; ')} \\rangle`)}, find the velocity, acceleration, and speed at ${M(`t=${t0}`)}, and the tangential and normal components of acceleration ${M('a_T')}, ${M('a_N')} there.`,
+      hint: `${M("a_T = \\dfrac{\\mathbf v\\cdot\\mathbf a}{|\\mathbf v|}")}, ${M("a_N = \\dfrac{|\\mathbf v\\times\\mathbf a|}{|\\mathbf v|}")}. Check with ${M('a_T^2+a_N^2=|\\mathbf a|^2')}.`,
+      steps: [
+        D(`\\mathbf v(t) = \\langle ${r.map((p) => p.d('t').tex()).join(', ')} \\rangle, \\quad \\mathbf a(t) = \\langle ${r.map((p) => p.d('t').d('t').tex()).join(', ')} \\rangle`),
+        D(`\\mathbf v(${t0}) = ${vtex(v)}, \\quad \\mathbf a(${t0}) = ${vtex(a)}, \\quad |\\mathbf v| = ${texSqrtInt(vv)}`),
+        D(`a_T = \\frac{${va}}{\\sqrt{${vv}}} = ${texQoverSqrt(va, vv)}`),
+        D(`\\mathbf v\\times\\mathbf a = ${vtex(c)}, \\quad a_N = \\frac{\\sqrt{${cc}}}{\\sqrt{${vv}}} = ${texSqrtQ(q(cc, vv))}`),
+      ],
+      ans: `${M(`\\mathbf v = ${vtex(v)}`)}, ${M(`\\mathbf a = ${vtex(a)}`)}, speed ${M(texSqrtInt(vv))}, ${M(`a_T = ${texQoverSqrt(va, vv)}`)}, ${M(`a_N = ${texSqrtQ(q(cc, vv))}`)}`,
+    };
+  }
+}
+
+// =====================================================================
+// LECTURE 6 — Arc length, reparametrization, curvature
+// =====================================================================
+const TRIPLES = [[3, 4, 5], [4, 3, 5], [5, 12, 13], [12, 5, 13], [6, 8, 10], [8, 6, 10], [8, 15, 17], [1, 0, 1]].slice(0, 7);
+function gArcLength() {
+  const fam = pick(['helix', 'ln', 'half', 'cubic', 'exp']);
+  if (fam === 'helix') {
+    const [a, b, c] = pick(TRIPLES); const T = pick([q(1), q(2), q(1, 2), q(3, 2)]);
+    return { lec: 6, q: `Find the length of the helix ${M(`\\mathbf r(t) = \\langle ${a}\\cos t,\\; ${a}\\sin t,\\; ${b}t \\rangle`)} for ${M(`0 \\le t \\le ${texQpi(T)}`)}.`, hint: M("L = \\int_a^b |\\mathbf r'(t)|\\,dt"), steps: [D(`\\mathbf r'(t) = \\langle -${a}\\sin t,\\; ${a}\\cos t,\\; ${b} \\rangle, \\quad |\\mathbf r'(t)| = \\sqrt{${a * a}(\\sin^2 t + \\cos^2 t) + ${b * b}} = ${c}`), D(`L = \\int_0^{${texQpi(T)}} ${c}\\, dt = ${texQpi(T.mul(c))}`)], ans: M(`L = ${texQpi(T.mul(c))}`) };
+  }
+  if (fam === 'ln') {
+    const k = pick([1, 2, 3]); const Bv = pick(['2', '3', 'e']);
+    const L = Bv === 'e' ? 'e^2' : `${Number(Bv) ** 2 - 1} + \\ln ${Bv}`;
+    const Lk = k === 1 ? L : Bv === 'e' ? `${k}e^2` : `${k * (Number(Bv) ** 2 - 1)} + ${k}\\ln ${Bv}`;
+    return { lec: 6, q: `Find the arc length of ${M(`\\mathbf r(t) = \\langle ${cmono(k, 't^2')},\\; ${2 * k}t,\\; ${cmono(k, '\\ln t')} \\rangle`)} for ${M(`1 \\le t \\le ${Bv}`)}.`, hint: `Look for a perfect square under the root.`, steps: [D(`\\mathbf r'(t) = \\langle ${2 * k}t,\\; ${2 * k},\\; \\tfrac{${k}}{t} \\rangle`), D(`|\\mathbf r'|^2 = ${k === 1 ? '' : k * k}\\left(4t^2 + 4 + \\tfrac{1}{t^2}\\right) = ${k === 1 ? '' : k * k}\\left(2t + \\tfrac1t\\right)^2`), D(`L = ${k === 1 ? '' : k}\\int_1^{${Bv}} \\left(2t + \\tfrac1t\\right)dt = ${k === 1 ? '' : k}\\big[t^2 + \\ln t\\big]_1^{${Bv}} = ${Lk}`)], ans: M(`L = ${Lk}`) };
+  }
+  if (fam === 'half') {
+    const b = ri(1, 4); const L = 12 * b + 3 * b * b;
+    return { lec: 6, q: `Find the length of ${M(`\\mathbf r(t) = \\langle 12t,\\; 8t^{3/2},\\; 3t^2 \\rangle`)} for ${M(`0 \\le t \\le ${b}`)}.`, hint: 'Expand |r′|² and look for a perfect square.', steps: [D(`\\mathbf r'(t) = \\langle 12,\\; 12t^{1/2},\\; 6t \\rangle`), D(`|\\mathbf r'|^2 = 144 + 144t + 36t^2 = (12 + 6t)^2`), D(`L = \\int_0^{${b}} (12 + 6t)\\,dt = \\big[12t + 3t^2\\big]_0^{${b}} = ${L}`)], ans: M(`L = ${L}`) };
+  }
+  if (fam === 'cubic') {
+    const b = ri(1, 3); const L = q(b * b * b, 3).add(2 * b);
+    return { lec: 6, q: `Find the length of ${M(`\\mathbf r(t) = \\langle 2t,\\; t^2,\\; \\tfrac13 t^3 \\rangle`)} for ${M(`0 \\le t \\le ${b}`)}.`, hint: 'Expand |r′|² and look for a perfect square.', steps: [D(`\\mathbf r'(t) = \\langle 2,\\; 2t,\\; t^2 \\rangle, \\quad |\\mathbf r'|^2 = 4 + 4t^2 + t^4 = (t^2+2)^2`), D(`L = \\int_0^{${b}} (t^2 + 2)\\,dt = \\left[\\tfrac{t^3}{3} + 2t\\right]_0^{${b}} = ${L.tex()}`)], ans: M(`L = ${L.tex()}`) };
+  }
+  const Bn = pick([2, 3, 4, 5]);
+  return { lec: 6, q: `Find the length of ${M(`\\mathbf r(t) = \\langle e^t\\cos t,\\; e^t\\sin t,\\; e^t \\rangle`)} for ${M(`0 \\le t \\le \\ln ${Bn}`)}.`, hint: 'Use the product rule, then simplify with sin² + cos² = 1.', steps: [D(`\\mathbf r'(t) = e^t\\langle \\cos t - \\sin t,\\; \\sin t + \\cos t,\\; 1 \\rangle`), D(`|\\mathbf r'|^2 = e^{2t}\\big[(\\cos t-\\sin t)^2 + (\\sin t+\\cos t)^2 + 1\\big] = 3e^{2t}`), D(`L = \\int_0^{\\ln ${Bn}} \\sqrt3\\, e^t\\,dt = \\sqrt3\\,(${Bn} - 1) = ${Bn - 1 === 1 ? '' : Bn - 1}\\sqrt3`)], ans: M(`L = ${Bn - 1 === 1 ? '' : Bn - 1}\\sqrt3`) };
+}
+
+function gCurvature() {
+  const v = pick(['graph', 'space', 'helix']);
+  if (v === 'helix') {
+    const [a, b, c] = pick(TRIPLES); const k = q(a, c * c);
+    return { lec: 6, q: `Find the curvature of the helix ${M(`\\mathbf r(t) = \\langle ${a}\\cos t,\\; ${a}\\sin t,\\; ${b}t \\rangle`)}.`, hint: M("\\kappa = \\dfrac{|\\mathbf r'\\times\\mathbf r''|}{|\\mathbf r'|^3}"), steps: [D(`\\mathbf r' = \\langle -${a}\\sin t, ${a}\\cos t, ${b}\\rangle, \\quad \\mathbf r'' = \\langle -${a}\\cos t, -${a}\\sin t, 0 \\rangle`), D(`\\mathbf r'\\times\\mathbf r'' = \\langle ${a * b}\\sin t,\\; -${a * b}\\cos t,\\; ${a * a} \\rangle, \\quad |\\mathbf r'\\times\\mathbf r''| = ${a}\\sqrt{${b * b}+${a * a}} = ${a * c}`), D(`\\kappa = \\frac{${a * c}}{${c}^3} = ${k.tex()}`), 'The curvature is constant, as you would expect for a helix.'], ans: M(`\\kappa = ${k.tex()}`) };
+  }
+  if (v === 'graph') {
+    for (;;) {
+      const f = randPoly(['x'], ri(2, 3), 3, 3); const x0 = pick([0, 1, -1, 2]);
+      const f1 = f.d('x').ev({ x: x0 }).n, f2 = f.d('x').d('x').ev({ x: x0 }).n; if (f2 === 0) continue;
+      const W = 1 + f1 * f1; if (W > 65) continue; const [kk, m] = sqParts(W); const kap = texCoefRad(q(Math.abs(f2) * kk, W * W), m);
+      return { lec: 6, q: `Find the curvature of ${M(`y = ${f.tex()}`)} at ${M(`x = ${x0}`)}.`, hint: M("\\kappa = \\dfrac{|f''(x)|}{\\big(1 + f'(x)^2\\big)^{3/2}}"), steps: [D(`f'(x) = ${f.d('x').tex()}, \\quad f''(x) = ${f.d('x').d('x').tex()}`), D(`f'(${x0}) = ${f1}, \\quad f''(${x0}) = ${f2}`), D(`\\kappa = \\frac{${Math.abs(f2)}}{(1 + ${f1 * f1})^{3/2}} = \\frac{${Math.abs(f2)}}{${W}^{3/2}} = ${kap}`)], ans: M(`\\kappa = ${kap}`) };
+    }
+  }
+  for (;;) {
+    const r = [0, 1, 2].map(() => randPolyT(ri(1, 3), 2)); const t0 = pick([0, 1, -1]);
+    const v1 = r.map((p) => p.d('t').ev({ t: t0 }).n), v2 = r.map((p) => p.d('t').d('t').ev({ t: t0 }).n);
+    const c = cross(v1, v2); if (isZeroV(v1) || isZeroV(c)) continue;
+    const vv = dot(v1, v1), cc = dot(c, c); if (vv > 30) continue;
+    const [k, m] = sqParts(cc * vv); const kap = texCoefRad(q(k, vv * vv), m);
+    chk(Math.abs(k * Math.sqrt(m) / (vv * vv) - Math.sqrt(cc) / Math.pow(vv, 1.5)) < 1e-9, 'kappa');
+    return { lec: 6, q: `Find the curvature of ${M(`\\mathbf r(t) = \\langle ${r.map((p) => p.tex()).join(',\\; ')} \\rangle`)} at ${M(`t = ${t0}`)}.`, hint: M("\\kappa = \\dfrac{|\\mathbf r'\\times\\mathbf r''|}{|\\mathbf r'|^3}"), steps: [D(`\\mathbf r'(${t0}) = ${vtex(v1)}, \\quad \\mathbf r''(${t0}) = ${vtex(v2)}`), D(`\\mathbf r'\\times\\mathbf r'' = ${vtex(c)}, \\quad |\\mathbf r'\\times\\mathbf r''| = \\sqrt{${cc}}, \\quad |\\mathbf r'| = \\sqrt{${vv}}`), D(`\\kappa = \\frac{\\sqrt{${cc}}}{${vv}^{3/2}} = ${kap}`)], ans: M(`\\kappa = ${kap}`) };
+  }
+}
+
+function gReparam() {
+  if (chance(0.5)) {
+    const [a, b, c] = pick(TRIPLES);
+    return { lec: 6, q: `Reparametrize ${M(`\\mathbf r(t) = \\langle ${a}\\cos t,\\; ${a}\\sin t,\\; ${b}t \\rangle`)} by arc length measured from ${M('t=0')} in the direction of increasing ${M('t')}.`, hint: M("s(t) = \\int_0^t |\\mathbf r'(u)|\\,du") + `. Solve for ${M('t')} in terms of ${M('s')} and substitute.`, steps: [D(`|\\mathbf r'(t)| = \\sqrt{${a * a} + ${b * b}} = ${c}`), D(`s = ${c}t \\;\\Rightarrow\\; t = \\tfrac{s}{${c}}`), D(`\\mathbf r(s) = \\left\\langle ${a}\\cos\\tfrac{s}{${c}},\\; ${a}\\sin\\tfrac{s}{${c}},\\; ${cmono(q(b, c), 's')} \\right\\rangle`)], ans: M(`\\mathbf r(s) = \\left\\langle ${a}\\cos\\tfrac{s}{${c}},\\; ${a}\\sin\\tfrac{s}{${c}},\\; ${cmono(q(b, c), 's')} \\right\\rangle`) };
+  }
+  const QUADS = [[1, 2, 2, 3], [2, 3, 6, 7], [1, 4, 8, 9], [4, 4, 7, 9], [2, 6, 9, 11], [2, 10, 11, 15]];
+  const qd = pick(QUADS); const n = qd[3]; const v = shuffle(qd.slice(0, 3)).map((x) => x * pick([1, -1])); const P0 = rv3(-4, 4);
+  const u = v.map((x) => q(x, n));
+  return { lec: 6, q: `Reparametrize the line ${M(`\\mathbf r(t) = \\langle ${[0, 1, 2].map((i) => sumTex([P0[i], cmono(v[i], 't')])).join(',\\; ')} \\rangle`)} by arc length from the point where ${M('t=0')}.`, hint: `For a line, ${M("|\\mathbf r'|")} is constant, so ${M("s = |\\mathbf r'|\\,t")}.`, steps: [D(`|\\mathbf r'| = \\sqrt{${sqSum(v)}} = ${n} \\;\\Rightarrow\\; s = ${n}t,\\; t = \\tfrac{s}{${n}}`), D(`\\mathbf r(s) = \\langle ${[0, 1, 2].map((i) => sumTex([P0[i], cmono(u[i], 's')])).join(',\\; ')} \\rangle`)], ans: M(`\\mathbf r(s) = \\langle ${[0, 1, 2].map((i) => sumTex([P0[i], cmono(u[i], 's')])).join(', ')} \\rangle`) };
+}
+
+// =====================================================================
+// LECTURE 7 — Limits and continuity
+// =====================================================================
+function gLimitPath() {
+  const PQ = [[2, 2], [2, 4], [4, 2], [2, 6], [6, 2], [4, 4]];
+  const want = Math.random() < 0.45 ? 'one' : Math.random() < 0.73 ? 'zero' : 'inf';
+  let p, qq, a, b;
+  for (;;) {
+    [p, qq] = pick(PQ); const cands = [];
+    for (let A = 1; A <= 4; A++) for (let Bb = 1; Bb <= 4; Bb++) {
+      const s = A * qq + Bb * p - p * qq; // sign of (a/p + b/q - 1)
+      if ((want === 'one' && s === 0) || (want === 'zero' && s > 0 && A + Bb <= 5) || (want === 'inf' && s < 0)) cands.push([A, Bb]);
+    }
+    if (cands.length) { [a, b] = pick(cands); break; }
+  }
+  const c = pick([1, 1, 2, 3, -1, -2]), k = pick([1, 1, 2, 3]);
+  const num = cmono(c, `x${a > 1 ? `^{${a}}` : ''}y${b > 1 ? `^{${b}}` : ''}`);
+  const den = sumTex([`x^{${p}}`, cmono(k, `y^{${qq}}`)]);
+  const g = gcd(p, qq); const ex = qq / g, ey = p / g;
+  const pw = (bse, e) => (e === 1 || e === '1' ? bse : `${bse}^{${e}}`);
+  const tpow = (e) => (e === 1 ? 't' : `t^{${e}}`);
+  const sQ = q(a * qq + b * p, p * qq);
+  let steps, ans;
+  if (want === 'one') {
+    const val = (m) => `\\frac{${cmono(c, `m${b > 1 ? `^{${b}}` : ''}`)}}{${sumTex([1, cmono(k, `m^{${qq}}`)])}}`;
+    steps = [
+      `Along the x-axis ${M('(y=0)')} the function is ${M('0')}.`,
+      `Try paths that balance the denominator, ${M(`(x,y) = (${tpow(ex)},\\; m\\,${tpow(ey)})`)} with ${M('t\\to0^+')}. Then ${M(`x^{${p}} = t^{${p * ex}}`)} and ${M(`y^{${qq}} = m^{${qq}}t^{${p * ex}}`)}, and the numerator is also ${M(`\\propto t^{${p * ex}}`)}: ${D(`f = ${val('m')}`)}`,
+      `This depends on ${M('m')}. For example ${M('m=1')} gives ${M(q(c, 1 + k).tex())}, but the x-axis gives 0. Different paths give different limits.`,
+    ];
+    ans = 'The limit does not exist.';
+  } else if (want === 'zero') {
+    steps = [
+      `Let ${M(`D = ${den}`)}. Then ${M(`|x|^{${p}} \\le D`)} and ${M(`|y|^{${qq}} \\le D${k > 1 ? `/${k}` : ''}`)}.`,
+      `So ${M(`${pw('|x|', a)}${pw('|y|', b)} \\le C\\,${pw('D', q(a, p).tex())}\\,${pw('D', q(b, qq).tex())} = C\\,${pw('D', sQ.tex())}`)}, which gives ${D(`|f(x,y)| \\le C'\\, ${pw('D', sQ.sub(1).tex())} \\to 0 \\quad \\text{as } (x,y)\\to(0,0)`)}`,
+      `The exponent ${M(`${sQ.sub(1).tex()}`)} is positive because ${M(`\\tfrac{${a}}{${p}} + \\tfrac{${b}}{${qq}} > 1`)}, so the Squeeze Theorem gives 0.${p === 2 && qq === 2 ? ` (Equivalently, polar coordinates give ${M(`f = ${cmono(c, pw('r', a + b - 2))}\\cdot(\\text{bounded})`)}.)` : ''}`,
+    ];
+    ans = M(`\\lim = 0`);
+  } else {
+    const e = (p * qq - a * qq - b * p) / g;
+    steps = [`Along either axis the function is ${M('0')}.`, `Along ${M(`(x,y) = (${tpow(ex)},\\, ${tpow(ey)})`)}: ${D(`f = \\frac{${c}\\, t^{${(a * qq + b * p) / g}}}{${1 + k}\\, t^{${p * qq / g}}} = \\frac{${c}}{${1 + k}}\\,t^{-${e}} \\to ${c > 0 ? '+' : '-'}\\infty`)}`, `The function is unbounded near the origin, so the limit cannot exist.`];
+    ans = 'The limit does not exist (unbounded along some paths).';
+  }
+  return {
+    lec: 7,
+    q: `Find the limit, or show it does not exist: ${D(`\\lim_{(x,y)\\to(0,0)} \\frac{${num}}{${den}}`)}`,
+    hint: `Compare total "weights": the limit is 0 when ${M(`\\tfrac{a}{p} + \\tfrac{b}{q} > 1`)} (squeeze it). Otherwise try curved paths like ${M(`y = m\\,x^{p/q}`)}.`,
+    steps, ans,
+  };
+}
+
+function gLimitAlg() {
+  const t = pick(['diff', 'sqrt', 'sin', 'fact']);
+  if (t === 'diff') { const k = ri(2, 5), m = nz(-3, 3); return { lec: 7, q: `Evaluate ${D(`\\lim_{(x,y)\\to(${k * m},\\,${m})} \\frac{x^2 - ${k * k}y^2}{x - ${k}y}`)}`, hint: 'Direct substitution gives 0/0. Factor the numerator.', steps: [D(`\\frac{(x - ${k}y)(x + ${k}y)}{x - ${k}y} = x + ${k}y \\quad (x \\ne ${k}y)`), D(`\\lim = ${k * m} + ${k}(${m}) = ${2 * k * m}`)], ans: M(`${2 * k * m}`) }; }
+  if (t === 'sqrt') { const a = ri(1, 5); return { lec: 7, q: `Evaluate ${D(`\\lim_{(x,y)\\to(${a * a},\\,${a * a})} \\frac{x - y}{\\sqrt x - \\sqrt y}`)}`, hint: `Factor ${M('x - y')} as a difference of squares.`, steps: [D(`x - y = (\\sqrt x - \\sqrt y)(\\sqrt x + \\sqrt y)`), D(`\\lim = \\sqrt{${a * a}} + \\sqrt{${a * a}} = ${2 * a}`)], ans: M(`${2 * a}`) }; }
+  if (t === 'sin') { const c = ri(2, 6); return { lec: 7, q: `Evaluate ${D(`\\lim_{(x,y)\\to(0,0)} \\frac{\\sin\\big(${c}(x^2+y^2)\\big)}{x^2+y^2}`)}`, hint: `Substitute ${M('u = x^2+y^2 \\to 0')}.`, steps: [D(`u = x^2 + y^2 \\to 0^+: \\quad \\lim_{u\\to0}\\frac{\\sin(${c}u)}{u} = ${c}\\lim_{u\\to 0}\\frac{\\sin(${c}u)}{${c}u} = ${c}`)], ans: M(`${c}`) }; }
+  const k = ri(2, 6), b = nz(-4, 4);
+  const num = sumTex(['xy', cmono(-k, 'y'), cmono(b, 'x'), -k * b]);
+  return { lec: 7, q: `Evaluate ${D(`\\lim_{(x,y)\\to(${k},\\,${b})} \\frac{${num}}{x - ${k}}`)}`, hint: 'Factor by grouping.', steps: [D(`${num} = y(x-${k}) ${b > 0 ? '+' : '-'} ${Math.abs(b)}(x-${k}) = (x-${k})(${sumTex(['y', b])})`), D(`\\lim = ${b} + ${paren(b)} = ${2 * b}`)], ans: M(`${2 * b}`) };
+}
+
+// =====================================================================
+// LECTURE 8 — Partial derivatives
+// =====================================================================
+function gPartialPoly() {
+  const f = randPoly(['x', 'y'], 3, 4, 5, 2);
+  const fx = f.d('x'), fy = f.d('y'), fxy = fx.d('y'), fyx = fy.d('x');
+  chk(fxy.sub(fyx).isZero(), 'clairaut');
+  return {
+    lec: 8,
+    q: `Find all second-order partial derivatives of ${M(`f(x,y) = ${f.tex()}`)} and confirm that ${M('f_{xy} = f_{yx}')}.`,
+    hint: `Hold the other variable constant. Clairaut's theorem says the mixed partials agree.`,
+    steps: [D(`f_x = ${fx.tex()}, \\qquad f_y = ${fy.tex()}`), D(`f_{xx} = ${fx.d('x').tex()}, \\qquad f_{yy} = ${fy.d('y').tex()}`), D(`f_{xy} = (f_x)_y = ${fxy.tex()}, \\qquad f_{yx} = (f_y)_x = ${fyx.tex()}`)],
+    ans: `${M(`f_{xx} = ${fx.d('x').tex()}`)}, ${M(`f_{yy} = ${fy.d('y').tex()}`)}, ${M(`f_{xy} = f_{yx} = ${fxy.tex()}`)}`,
+  };
+}
+
+function gPartialTpl() {
+  const k = pick([2, 3, 4, 5]), m = pick([2, 3, 4]), p = nz(-4, 4), r = nz(-4, 4);
+  const T = [
+    () => ({ f: `x^{${m}}e^{${k}y}`, fx: `${m}x^{${m - 1 === 1 ? '' : m - 1}}e^{${k}y}`.replace('x^{}', 'x'), fy: `${k}x^{${m}}e^{${k}y}` }),
+    () => { const arg = sumTex([cmono(p, 'x'), cmono(r, 'y')]); return { f: `\\sin(${arg})`, fx: cmono(p, `\\cos(${arg})`), fy: cmono(r, `\\cos(${arg})`) }; },
+    () => ({ f: `\\ln(x^2 + ${k}y^2)`, fx: `\\dfrac{2x}{x^2 + ${k}y^2}`, fy: `\\dfrac{${2 * k}y}{x^2 + ${k}y^2}` }),
+    () => ({ f: `x^{${m}}\\cos(${k}xy)`, fx: `${m}${m - 1 === 1 ? 'x' : `x^{${m - 1}}`}\\cos(${k}xy) - ${k}x^{${m}}y\\sin(${k}xy)`, fy: `-${k}x^{${m + 1}}\\sin(${k}xy)` }),
+    () => ({ f: `e^{${k}xy}`, fx: `${k}y\\,e^{${k}xy}`, fy: `${k}x\\,e^{${k}xy}` }),
+    () => ({ f: `\\dfrac{x}{x + ${k}y}`, fx: `\\dfrac{${k}y}{(x+${k}y)^2}`, fy: `-\\dfrac{${k}x}{(x+${k}y)^2}` }),
+    () => ({ f: `\\sqrt{${k}x^2 + ${m}y^2}`, fx: `\\dfrac{${k}x}{\\sqrt{${k}x^2 + ${m}y^2}}`, fy: `\\dfrac{${m}y}{\\sqrt{${k}x^2 + ${m}y^2}}` }),
+    () => ({ f: `\\arctan\\!\\left(\\dfrac{y}{x}\\right)`, fx: `-\\dfrac{y}{x^2+y^2}`, fy: `\\dfrac{x}{x^2+y^2}` }),
+  ];
+  const idx = ri(0, T.length - 1); const o = T[idx]();
+  const why = ['Product rule is not needed: the x-part and y-part are separate factors.', 'Chain rule: the derivative of sin(u) is cos(u)·u′.', 'Chain rule: the derivative of ln(u) is u′/u.', 'Use the product rule for f_x. Only the cosine depends on y.', 'Chain rule on the exponent.', 'Quotient rule (or write f = x(x+ky)⁻¹).', 'Chain rule: the derivative of √u is u′/(2√u).', 'Chain rule: the derivative of arctan(u) is u′/(1+u²), with u = y/x.'][idx];
+  return {
+    lec: 8,
+    q: `Find ${M('f_x')} and ${M('f_y')} for ${M(`f(x,y) = ${o.f}`)}.`,
+    hint: 'Treat the other variable as a constant and use single-variable rules (chain, product, quotient).',
+    steps: [why, D(`f_x = ${o.fx}`), D(`f_y = ${o.fy}`)],
+    ans: `${M(`f_x = ${o.fx}`)}, ${M(`f_y = ${o.fy}`)}`,
+  };
+}
+
+function gPartialEval() {
+  const f = randPoly(['x', 'y', 'z'], 3, 3, 4, 2); const P0 = [nz(-2, 2), nz(-2, 2), nz(-2, 2)];
+  const vals = { x: P0[0], y: P0[1], z: P0[2] };
+  const g = ['x', 'y', 'z'].map((v) => f.d(v).ev(vals));
+  return {
+    lec: 8,
+    q: `Let ${M(`w = ${f.tex()}`)}. Compute ${M('w_x, w_y, w_z')} at ${M(ptex(P0))}.`,
+    hint: 'Differentiate with respect to one variable while holding the other two fixed, then plug in.',
+    steps: [D(`w_x = ${f.d('x').tex()}, \\quad w_y = ${f.d('y').tex()}, \\quad w_z = ${f.d('z').tex()}`), D(`\\text{At } ${ptex(P0)}: \\quad w_x = ${g[0].tex()},\\; w_y = ${g[1].tex()},\\; w_z = ${g[2].tex()}`)],
+    ans: M(`(w_x, w_y, w_z) = ${ptex(g)}`),
+  };
+}
+
+// =====================================================================
+// LECTURE 9 — Tangent planes & linearization
+// =====================================================================
+function gTanPlane() {
+  for (;;) {
+    const f = randPoly(['x', 'y'], ri(2, 3), 3, 3); const x0 = ri(-2, 2), y0 = ri(-2, 2);
+    const v = { x: x0, y: y0 }; const z0 = f.ev(v), fx = f.d('x').ev(v), fy = f.d('y').ev(v);
+    if (fx.isZero() && fy.isZero()) continue;
+    const c0 = z0.sub(fx.mul(x0)).sub(fy.mul(y0));
+    return {
+      lec: 9,
+      q: `Find an equation of the tangent plane to ${M(`z = ${f.tex()}`)} at the point ${M(ptex([x0, y0, z0]))}.`,
+      hint: M('z - z_0 = f_x(x_0,y_0)(x-x_0) + f_y(x_0,y_0)(y-y_0)'),
+      steps: [D(`f_x = ${f.d('x').tex()}, \\quad f_y = ${f.d('y').tex()}`), D(`f_x(${x0},${y0}) = ${fx.tex()}, \\quad f_y(${x0},${y0}) = ${fy.tex()}`), D(`z - ${paren(z0)} = ${sumTex([cmono(fx, shiftTex('x', x0)), cmono(fy, shiftTex('y', y0))])}`), D(`z = ${sumTex([cmono(fx, 'x'), cmono(fy, 'y'), c0])}`)],
+      ans: M(`z = ${sumTex([cmono(fx, 'x'), cmono(fy, 'y'), c0])}`),
+    };
+  }
+}
+
+function gLinApprox() {
+  const t = pick(['pyth', 'exp', 'ln', 'poly']);
+  const dq = () => pick([q(1, 10), q(-1, 10), q(2, 10), q(-2, 10), q(1, 20), q(-1, 20), q(3, 100), q(-3, 100)]);
+  const dec = (x) => { const v = x.val(); return Number.isInteger(v * 1000) ? `${+v.toFixed(3)}` : x.tex(); };
+  if (t === 'pyth') {
+    const [a, b, c] = pick([[3, 4, 5], [4, 3, 5], [6, 8, 10], [5, 12, 13], [8, 6, 10]]); const h = dq(), k = dq();
+    const L = q(c).add(h.mul(a).add(k.mul(b)).div(c));
+    return { lec: 9, q: `Use a linear approximation of ${M('f(x,y) = \\sqrt{x^2+y^2}')} at ${M(`(${a},${b})`)} to estimate ${M(`f(${dec(h.add(a))},\\, ${dec(k.add(b))})`)}.`, hint: M('L(x,y) = f(a,b) + f_x(a,b)(x-a) + f_y(a,b)(y-b)'), steps: [D(`f(${a},${b}) = ${c}, \\quad f_x = \\frac{x}{\\sqrt{x^2+y^2}} = \\frac{${a}}{${c}}, \\quad f_y = \\frac{${b}}{${c}}`), D(`L = ${c} + \\tfrac{${a}}{${c}}(${dec(h)}) + \\tfrac{${b}}{${c}}(${dec(k)}) = ${L.tex()} \\approx ${L.val().toFixed(4)}`)], ans: M(`f \\approx ${L.tex()} \\approx ${L.val().toFixed(4)}`) };
+  }
+  if (t === 'exp') {
+    const k = nz(-3, 3), h = dq(), kk = dq(); const L = q(1).add(h).add(kk.mul(k));
+    return { lec: 9, q: `Find the linearization of ${M(`f(x,y) = x\\,e^{${cmono(k, 'xy')}}`)} at ${M('(1,0)')}, and use it to approximate ${M(`f(${dec(h.add(1))},\\, ${dec(kk)})`)}.`, hint: 'Compute f, f_x and f_y at (1,0).', steps: [D(`f(1,0)=1, \\quad f_x = e^{${cmono(k, 'xy')}}(${sumTex(['1', cmono(k, 'xy')])}) \\Rightarrow f_x(1,0) = 1, \\quad f_y = ${cmono(k, `x^2e^{${cmono(k, 'xy')}}`)} \\Rightarrow f_y(1,0) = ${k}`), D(`L(x,y) = ${sumTex(['1', '(x-1)', cmono(k, 'y')])} = ${sumTex(['x', cmono(k, 'y')])}`), D(`L(${dec(h.add(1))}, ${dec(kk)}) = ${L.tex()} = ${dec(L)}`)], ans: `${M(`L(x,y) = ${sumTex(['x', cmono(k, 'y')])}`)}, ${M(`f \\approx ${dec(L)}`)}` };
+  }
+  if (t === 'ln') {
+    const k = ri(1, 4), h = dq(), kk = dq(); const L = h.sub(kk.mul(k));
+    return { lec: 9, q: `Find the linearization of ${M(`f(x,y) = \\ln(${sumTex(['x', cmono(-k, 'y')])})`)} at ${M(`(${k + 1},1)`)}, and use it to approximate ${M(`f(${dec(h.add(k + 1))},\\, ${dec(kk.add(1))})`)}.`, hint: 'Note f(k+1,1) = ln 1 = 0.', steps: [D(`f(${k + 1},1) = \\ln 1 = 0, \\quad f_x = \\frac{1}{${sumTex(['x', cmono(-k, 'y')])}} = 1, \\quad f_y = \\frac{-${k}}{${sumTex(['x', cmono(-k, 'y')])}} = -${k}`), D(`L(x,y) = (x - ${k + 1}) - ${k === 1 ? '' : k}(y - 1)`), D(`L = ${dec(h)} - ${k === 1 ? '' : k}(${dec(kk)}) = ${dec(L)}`)], ans: `${M(`L = (x-${k + 1}) - ${k === 1 ? '' : k}(y-1)`)}, ${M(`f \\approx ${dec(L)}`)}` };
+  }
+  const f = randPoly(['x', 'y'], ri(2, 3), 3, 3); const x0 = ri(-2, 2), y0 = ri(-2, 2), h = dq(), k = dq();
+  const v = { x: x0, y: y0 }; const z0 = f.ev(v), fx = f.d('x').ev(v), fy = f.d('y').ev(v);
+  const dz = fx.mul(h).add(fy.mul(k)); const L = z0.add(dz);
+  return { lec: 9, q: `Let ${M(`z = ${f.tex()}`)}. Use the differential ${M('dz')} to estimate the change in ${M('z')} as ${M('(x,y)')} moves from ${M(`(${x0},${y0})`)} to ${M(`(${dec(h.add(x0))},\\, ${dec(k.add(y0))})`)}, and estimate the new value of ${M('z')}.`, hint: M('dz = f_x\\,dx + f_y\\,dy'), steps: [D(`f_x = ${f.d('x').tex()}, \\; f_y = ${f.d('y').tex()} \\;\\Rightarrow\\; f_x(${x0},${y0}) = ${fx.tex()},\\; f_y(${x0},${y0}) = ${fy.tex()}`), D(`dx = ${dec(h)}, \\; dy = ${dec(k)} \\;\\Rightarrow\\; dz = (${fx.tex()})(${dec(h)}) + (${fy.tex()})(${dec(k)}) = ${dec(dz)}`), D(`z \\approx ${z0.tex()} + ${paren(dec(dz))} = ${dec(L)}`)], ans: `${M(`dz = ${dec(dz)}`)}, ${M(`z \\approx ${dec(L)}`)}` };
+}
+
+function gTanPlaneLevel() {
+  for (;;) {
+    let F;
+    if (chance(0.6)) F = P.from([[nz(-3, 4), { x: 2 }], [nz(-3, 4), { y: 2 }], [nz(-3, 4), { z: 2 }]]);
+    else F = randPoly(['x', 'y', 'z'], 3, 3, 3, 2);
+    const P0 = [nz(-2, 2), nz(-2, 2), nz(-2, 2)]; const v = { x: P0[0], y: P0[1], z: P0[2] };
+    const c = F.ev(v); const g = ['x', 'y', 'z'].map((w) => F.d(w).ev(v).n);
+    if (isZeroV(g)) continue;
+    const n = reduceV(g); const d = dot(n, P0);
+    return {
+      lec: 9,
+      q: `Find the tangent plane and the normal line to the surface ${M(`${F.tex()} = ${c.tex()}`)} at ${M(ptex(P0))}.`,
+      hint: `The gradient ${M('\\nabla F(P)')} is normal to the level surface ${M('F = c')}.`,
+      steps: [D(`\\nabla F = \\langle ${F.d('x').tex()},\\; ${F.d('y').tex()},\\; ${F.d('z').tex()} \\rangle`), D(`\\nabla F${ptex(P0)} = ${vtex(g)}${vgcd(g) !== 1 || n[0] !== g[0] ? `\\;\\to\\; \\mathbf n = ${vtex(n)}` : ''}`), D(`\\text{Plane: } ${sumTex([cmono(n[0], shiftTex('x', P0[0])), cmono(n[1], shiftTex('y', P0[1])), cmono(n[2], shiftTex('z', P0[2]))])} = 0 \\;\\iff\\; ${planeTex(n, d)}`), D(`\\text{Normal line: } ${lineTex(P0, n)}`)],
+      ans: `Plane ${M(planeTex(n, d))}, normal line ${M(lineTex(P0, n))}`,
+    };
+  }
+}
+
+// =====================================================================
+// LECTURE 10 — Chain rule & implicit differentiation
+// =====================================================================
+function gChainT() {
+  if (chance(0.3)) {
+    const f = randPoly(['x', 'y'], ri(2, 3), 3, 4); const which = pick([[0, '0', 1, 0, 0, 1], [1, '\\tfrac{\\pi}{2}', 0, 1, -1, 0], [2, '\\pi', -1, 0, 0, -1]]);
+    const [, ts, xv, yv, dx, dy] = which; const v = { x: xv, y: yv };
+    const fx = f.d('x').ev(v), fy = f.d('y').ev(v); const ans = fx.mul(dx).add(fy.mul(dy));
+    return { lec: 10, q: `Let ${M(`z = ${f.tex()}`)} with ${M('x = \\cos t')}, ${M('y = \\sin t')}. Find ${M('\\dfrac{dz}{dt}')} at ${M(`t = ${ts}`)}.`, hint: M('\\dfrac{dz}{dt} = \\dfrac{\\partial z}{\\partial x}\\dfrac{dx}{dt} + \\dfrac{\\partial z}{\\partial y}\\dfrac{dy}{dt}'), steps: [D(`t = ${ts}: \\; (x,y) = (${xv},${yv}), \\quad \\tfrac{dx}{dt} = -\\sin t = ${dx}, \\quad \\tfrac{dy}{dt} = \\cos t = ${dy}`), D(`z_x = ${evq(f.d('x'), fx)}, \\quad z_y = ${evq(f.d('y'), fy)}`), D(`\\frac{dz}{dt} = ${pr(fx, dx)} + ${pr(fy, dy)} = ${ans.tex()}`)], ans: M(`\\dfrac{dz}{dt} = ${ans.tex()}`) };
+  }
+  const f = randPoly(['x', 'y'], ri(2, 3), 3, 4); const xt = randPolyT(2, 3), yt = randPolyT(2, 3); const t0 = pick([0, 1, -1, 2]);
+  const x0 = xt.ev({ t: t0 }), y0 = yt.ev({ t: t0 }), v = { x: x0, y: y0 };
+  const fx = f.d('x').ev(v), fy = f.d('y').ev(v), xp = xt.d('t').ev({ t: t0 }), yp = yt.d('t').ev({ t: t0 });
+  const ans = fx.mul(xp).add(fy.mul(yp));
+  chk(f.subs({ x: xt, y: yt }).d('t').ev({ t: t0 }).eq(ans), 'chainT');
+  return {
+    lec: 10,
+    q: `Let ${M(`z = ${f.tex()}`)} with ${M(`x = ${xt.tex()}`)} and ${M(`y = ${yt.tex()}`)}. Use the chain rule to find ${M('\\dfrac{dz}{dt}')} at ${M(`t = ${t0}`)}.`,
+    hint: M('\\dfrac{dz}{dt} = \\dfrac{\\partial z}{\\partial x}\\dfrac{dx}{dt} + \\dfrac{\\partial z}{\\partial y}\\dfrac{dy}{dt}'),
+    steps: [D(`t = ${t0}: \\; x = ${x0.tex()}, \\; y = ${y0.tex()}, \\quad \\tfrac{dx}{dt} = ${evq(xt.d('t'), xp)}, \\quad \\tfrac{dy}{dt} = ${evq(yt.d('t'), yp)}`), D(`z_x = ${evq(f.d('x'), fx)}, \\quad z_y = ${evq(f.d('y'), fy)}`), D(`\\frac{dz}{dt} = ${pr(fx, xp)} + ${pr(fy, yp)} = ${ans.tex()}`)],
+    ans: M(`\\dfrac{dz}{dt} = ${ans.tex()}`),
+  };
+}
+
+function gChainST() {
+  const f = randPoly(['x', 'y'], ri(2, 3), 3, 3);
+  const opts = [P.from([[1, { s: 1, t: 1 }]]), P.from([[1, { s: 1 }], [1, { t: 1 }]]), P.from([[1, { s: 1 }], [-1, { t: 1 }]]), P.from([[1, { s: 2 }], [-1, { t: 1 }]]), P.from([[2, { s: 1 }], [-1, { t: 2 }]]), P.from([[1, { s: 1 }], [1, { t: 2 }]]), P.from([[1, { s: 2, t: 1 }]])];
+  const [xs, ys] = shuffle(opts).slice(0, 2); const s0 = pick([1, -1, 2]), t0 = pick([1, -1]); const st = { s: s0, t: t0 };
+  const x0 = xs.ev(st), y0 = ys.ev(st), v = { x: x0, y: y0 };
+  const fx = f.d('x').ev(v), fy = f.d('y').ev(v);
+  const xs_ = xs.d('s').ev(st), xt_ = xs.d('t').ev(st), ys_ = ys.d('s').ev(st), yt_ = ys.d('t').ev(st);
+  const zs = fx.mul(xs_).add(fy.mul(ys_)), zt = fx.mul(xt_).add(fy.mul(yt_));
+  const comp = f.subs({ x: xs, y: ys }); chk(comp.d('s').ev(st).eq(zs) && comp.d('t').ev(st).eq(zt), 'chainST');
+  return {
+    lec: 10,
+    q: `Let ${M(`z = ${f.tex()}`)}, where ${M(`x = ${xs.tex()}`)} and ${M(`y = ${ys.tex()}`)}. Find ${M('\\dfrac{\\partial z}{\\partial s}')} and ${M('\\dfrac{\\partial z}{\\partial t}')} at ${M(`(s,t) = (${s0},${t0})`)}.`,
+    hint: M('z_s = z_x x_s + z_y y_s,\\quad z_t = z_x x_t + z_y y_t'),
+    steps: [D(`(s,t)=(${s0},${t0}) \\Rightarrow (x,y) = (${x0.tex()},${y0.tex()})`), D(`z_x = ${evq(f.d('x'), fx)}, \\quad z_y = ${evq(f.d('y'), fy)}`), D(`x_s = ${evq(xs.d('s'), xs_)},\\; x_t = ${evq(xs.d('t'), xt_)},\\; y_s = ${evq(ys.d('s'), ys_)},\\; y_t = ${evq(ys.d('t'), yt_)}`), D(`z_s = ${pr(fx, xs_)} + ${pr(fy, ys_)} = ${zs.tex()}, \\qquad z_t = ${pr(fx, xt_)} + ${pr(fy, yt_)} = ${zt.tex()}`)],
+    ans: `${M(`z_s = ${zs.tex()}`)}, ${M(`z_t = ${zt.tex()}`)}`,
+  };
+}
+
+function gImplicit() {
+  if (chance(0.5)) {
+    for (;;) {
+      const F = randPoly(['x', 'y'], 3, 3, 4, 1); const x0 = nz(-2, 2), y0 = nz(-2, 2); const v = { x: x0, y: y0 };
+      const c = F.ev(v), Fx = F.d('x').ev(v), Fy = F.d('y').ev(v); if (Fy.isZero()) continue;
+      const slope = Fx.neg().div(Fy);
+      return { lec: 10, q: `The curve ${M(`${F.tex()} = ${c.tex()}`)} passes through ${M(`(${x0},${y0})`)}. Find ${M('\\dfrac{dy}{dx}')} there, and the equation of the tangent line.`, hint: M('\\dfrac{dy}{dx} = -\\dfrac{F_x}{F_y}'), steps: [D(`F_x = ${evq(F.d('x'), Fx)}, \\quad F_y = ${evq(F.d('y'), Fy)} \\quad \\text{at } (${x0},${y0})`), D(`\\frac{dy}{dx} = -\\frac{${Fx.tex()}}{${Fy.tex()}} = ${slope.tex()}`), D(`y - ${paren(y0)} = ${cmono(slope, shiftTex('x', x0))}`)], ans: `${M(`\\dfrac{dy}{dx} = ${slope.tex()}`)}, tangent line ${M(`y = ${sumTex([cmono(slope, 'x'), slope.mul(-x0).add(y0)])}`)}` };
+    }
+  }
+  for (;;) {
+    const F = randPoly(['x', 'y', 'z'], 3, 3, 3, 2); const P0 = [nz(-2, 2), nz(-2, 2), nz(-2, 2)]; const v = { x: P0[0], y: P0[1], z: P0[2] };
+    const c = F.ev(v), Fx = F.d('x').ev(v), Fy = F.d('y').ev(v), Fz = F.d('z').ev(v); if (Fz.isZero()) continue;
+    const zx = Fx.neg().div(Fz), zy = Fy.neg().div(Fz);
+    return { lec: 10, q: `The equation ${M(`${F.tex()} = ${c.tex()}`)} defines ${M('z')} implicitly as a function of ${M('x, y')} near ${M(ptex(P0))}. Find ${M('\\dfrac{\\partial z}{\\partial x}')} and ${M('\\dfrac{\\partial z}{\\partial y}')} there.`, hint: M('\\dfrac{\\partial z}{\\partial x} = -\\dfrac{F_x}{F_z},\\quad \\dfrac{\\partial z}{\\partial y} = -\\dfrac{F_y}{F_z}'), steps: [D(`F_x = ${F.d('x').tex()},\\; F_y = ${F.d('y').tex()},\\; F_z = ${F.d('z').tex()}`), D(`\\text{At } ${ptex(P0)}: \\; F_x = ${Fx.tex()},\\; F_y = ${Fy.tex()},\\; F_z = ${Fz.tex()}`), D(`z_x = -\\frac{${Fx.tex()}}{${Fz.tex()}} = ${zx.tex()}, \\qquad z_y = -\\frac{${Fy.tex()}}{${Fz.tex()}} = ${zy.tex()}`)], ans: `${M(`z_x = ${zx.tex()}`)}, ${M(`z_y = ${zy.tex()}`)}` };
+  }
+}
+
+// ---------- registry ----------
+const LECTURES = [
+  { n: 1, name: 'Coordinates & Vectors', sec: '§12.1–2', gens: [gVecArith, gSphere, gQuadric] },
+  { n: 2, name: 'Dot, Cross & Projection', sec: '§12.3–4', gens: [gAngle, gProj, gArea, gTriple, gOrthoK] },
+  { n: 3, name: 'Lines & Planes', sec: '§12.5', gens: [gPlane3, gPlaneInter, gDistPlane, gLinePlane, gPlaneAngle, gLines] },
+  { n: 4, name: 'Space Curves', sec: '§13.1–2', gens: [gTangentLine, gTangentLine, gVecIntegral] },
+  { n: 5, name: 'Velocity & Acceleration', sec: '§13.4', gens: [gAccel, gTanNormal] },
+  { n: 6, name: 'Arc Length & Curvature', sec: '§13.3', gens: [gArcLength, gCurvature, gReparam] },
+  { n: 7, name: 'Limits & Continuity', sec: '§14.1–2', gens: [gLimitPath, gLimitPath, gLimitAlg] },
+  { n: 8, name: 'Partial Derivatives', sec: '§14.3', gens: [gPartialPoly, gPartialTpl, gPartialTpl, gPartialEval] },
+  { n: 9, name: 'Tangent Planes & Linearization', sec: '§14.4', gens: [gTanPlane, gLinApprox, gTanPlaneLevel] },
+  { n: 10, name: 'The Chain Rule', sec: '§14.5', gens: [gChainT, gChainST, gImplicit] },
+];
+function generate(lec) {
+  const L = LECTURES.find((l) => l.n === lec);
+  for (let i = 0; i < 40; i++) {
+    try { const g = pick(L.gens); const o = g(); o.kind = g.name; return o; } catch (e) { if (typeof console !== 'undefined') console.warn(e.message); }
+  }
+  throw new Error('could not generate');
+}
+if (typeof module !== 'undefined') module.exports = { LECTURES, generate, Q, P };
+
+</script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  };
+  let stats = store.get('e2000-stats', {});
+  let selected = new Set(store.get('e2000-sel', LECTURES.map((l) => l.n)));
+  let mode = 'drill';
+  let weak = store.get('e2000-weak', false);
+  let current = [];
+  let timerStart = 0, timerId = null;
+  $('weak').checked = weak;
+
+  const lecOf = (n) => LECTURES.find((l) => l.n === n);
+  const st = (n) => stats[n] || { got: 0, miss: 0 };
+
+  function renderChips() {
+    const el = $('chips'); el.innerHTML = '<span class="label">Lectures</span>';
+    const all = document.createElement('button'); all.className = 'chip'; all.textContent = 'All';
+    all.setAttribute('aria-pressed', selected.size === LECTURES.length ? 'true' : 'false');
+    all.onclick = () => { selected = new Set(selected.size === LECTURES.length ? [] : LECTURES.map((l) => l.n)); if (!selected.size) selected.add(1); save(); renderChips(); };
+    el.appendChild(all);
+    for (const L of LECTURES) {
+      const b = document.createElement('button'); b.className = 'chip';
+      b.innerHTML = `<span class="n">${L.n}</span>${L.name}`;
+      b.setAttribute('aria-pressed', selected.has(L.n) ? 'true' : 'false');
+      b.title = `Lecture ${L.n} · Stewart ${L.sec}`;
+      b.onclick = () => { if (selected.has(L.n)) { if (selected.size > 1) selected.delete(L.n); } else selected.add(L.n); save(); renderChips(); };
+      el.appendChild(b);
+    }
+  }
+  function save() { store.set('e2000-sel', [...selected]); store.set('e2000-stats', stats); store.set('e2000-weak', weak); }
+
+  function weightOf(n) { if (!weak) return 1; const s = st(n); return 1 + 4 * (s.miss + 1) / (s.got + s.miss + 2); }
+  function pickLec(exclude = new Set()) {
+    const pool = [...selected].filter((n) => !exclude.has(n));
+    const list = pool.length ? pool : [...selected];
+    const w = list.map(weightOf); let r = Math.random() * w.reduce((a, b) => a + b, 0);
+    for (let i = 0; i < list.length; i++) { r -= w[i]; if (r <= 0) return list[i]; }
+    return list[list.length - 1];
+  }
+
+  async function typeset(el) { if (window.MathJax && MathJax.typesetPromise) { try { await MathJax.typesetPromise([el]); } catch (e) { console.warn(e); } } }
+
+  function card(p, idx, total) {
+    const L = lecOf(p.lec);
+    const d = document.createElement('article'); d.className = 'prob enter';
+    d.innerHTML = `
+      <div class="meta"><span class="num">${total > 1 ? `Problem ${idx + 1} of ${total}` : `Lecture ${L.n}`}</span><span>${total > 1 ? `L${L.n} · ` : ''}${L.name}</span><span class="sec">Stewart ${L.sec}</span><span class="result" hidden></span></div>
+      <div class="qtext"></div>
+      <div class="actions"><button class="btn act-hint">Hint${total === 1 ? '<span class="kbd">H</span>' : ''}</button><button class="btn act-sol">Show solution${total === 1 ? '<span class="kbd">S</span>' : ''}</button></div>
+      <div class="panel hintp" hidden><h3>Hint</h3><div class="hbody"></div></div>
+      <div class="panel solp" hidden><h3>Answer</h3><div class="answer"></div><h3 style="margin-top:4px">Worked solution</h3><ol class="steps"></ol>
+        <div class="grade"><span>Did you get it?</span><button class="btn got">Got it</button><button class="btn miss">Missed it</button></div></div>`;
+    d.querySelector('.qtext').innerHTML = p.q;
+    d.querySelector('.hbody').innerHTML = p.hint;
+    d.querySelector('.answer').innerHTML = p.ans;
+    d.querySelector('.steps').innerHTML = p.steps.map((s) => `<li>${s}</li>`).join('');
+    const hintP = d.querySelector('.hintp'), solP = d.querySelector('.solp');
+    let hintDone = false, solDone = false, graded = false;
+    p.showHint = async () => { hintP.hidden = !hintP.hidden; if (!hintDone) { hintDone = true; await typeset(hintP); } };
+    p.showSol = async () => { solP.hidden = !solP.hidden; d.querySelector('.act-sol').firstChild.textContent = solP.hidden ? 'Show solution' : 'Hide solution'; if (!solDone) { solDone = true; await typeset(solP); } };
+    d.querySelector('.act-hint').onclick = p.showHint;
+    d.querySelector('.act-sol').onclick = p.showSol;
+    const mark = (ok) => {
+      if (graded) return; graded = true;
+      const s = st(p.lec); ok ? s.got++ : s.miss++; stats[p.lec] = s; save(); renderLedger();
+      const r = d.querySelector('.result'); r.hidden = false; r.className = 'result ' + (ok ? 'got' : 'miss'); r.textContent = ok ? 'Got it' : 'Missed';
+      d.querySelector('.grade').innerHTML = `<span>Recorded. ${mode === 'drill' ? 'Press N for another.' : ''}</span>`;
+      if (mode === 'exam' && current.every((c) => c.graded)) stopTimer();
+    };
+    Object.defineProperty(p, 'graded', { get: () => graded });
+    d.querySelector('.btn.got').onclick = () => mark(true);
+    d.querySelector('.btn.miss').onclick = () => mark(false);
+    return d;
+  }
+
+  async function next() {
+    const sheet = $('sheet'); sheet.innerHTML = '';
+    if (mode === 'drill') {
+      current = [generate(pickLec())];
+    } else {
+      const used = new Set(); current = [];
+      for (let i = 0; i < 6; i++) { const n = pickLec(used); used.add(n); current.push(generate(n)); }
+      current.sort((a, b) => a.lec - b.lec);
+      startTimer();
+    }
+    const nodes = current.map((p, i) => card(p, i, current.length));
+    nodes.forEach((n) => sheet.appendChild(n));
+    await typeset(sheet);
+    if (mode === 'drill') window.scrollTo({ top: Math.min(window.scrollY, sheet.offsetTop - 16), behavior: 'auto' });
+  }
+
+  function startTimer() {
+    stopTimer(); timerStart = Date.now(); const t = $('timer'); t.hidden = false;
+    const tick = () => { const s = Math.floor((Date.now() - timerStart) / 1000); t.textContent = `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')} elapsed`; };
+    tick(); timerId = setInterval(tick, 1000);
+  }
+  function stopTimer() { if (timerId) clearInterval(timerId); timerId = null; }
+
+  function renderLedger() {
+    const t = $('table'); t.innerHTML = '';
+    let G = 0, Mi = 0; let worst = null, worstRate = 2;
+    for (const L of LECTURES) {
+      const s = st(L.n); G += s.got; Mi += s.miss; const tot = s.got + s.miss;
+      const rate = tot ? s.got / tot : null;
+      if (tot >= 2 && rate < worstRate) { worstRate = rate; worst = L; }
+      const row = document.createElement('div'); row.className = 'trow';
+      row.innerHTML = `<span class="n">${L.n}</span><span class="name" title="${L.name}">${L.name}</span>
+        <span class="bar" aria-label="${s.got} got, ${s.miss} missed">${tot ? `<i class="g" style="width:${100 * s.got / tot}%"></i><i class="m" style="width:${100 * s.miss / tot}%"></i>` : ''}</span>
+        <span class="pct">${tot ? `${s.got}/${tot}` : '—'}</span>`;
+      row.dataset.n = L.n; t.appendChild(row);
+    }
+    if (worst && worstRate < 0.75) t.querySelector(`[data-n="${worst.n}"]`).classList.add('weak');
+    $('summary').textContent = G + Mi ? `${G + Mi} attempted · ${Math.round(100 * G / (G + Mi))}% correct${worst && worstRate < 0.75 ? ` · weakest: ${worst.name}` : ''}` : 'No problems marked yet.';
+  }
+
+  $('next').onclick = next;
+  $('weak').onchange = (e) => { weak = e.target.checked; save(); };
+  $('reset').onclick = () => {
+    const b = $('reset');
+    if (b.dataset.confirm) { stats = {}; save(); renderLedger(); b.textContent = 'Reset'; delete b.dataset.confirm; }
+    else { b.dataset.confirm = '1'; b.textContent = 'Click again to clear'; setTimeout(() => { b.textContent = 'Reset'; delete b.dataset.confirm; }, 3000); }
+  };
+  const setMode = (m) => {
+    mode = m; $('mode-drill').setAttribute('aria-pressed', m === 'drill'); $('mode-exam').setAttribute('aria-pressed', m === 'exam');
+    $('next').firstChild.textContent = m === 'drill' ? 'New problem' : 'New mock exam';
+    if (m === 'drill') { stopTimer(); $('timer').hidden = true; }
+    next();
+  };
+  $('mode-drill').onclick = () => setMode('drill');
+  $('mode-exam').onclick = () => setMode('exam');
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    const k = e.key.toLowerCase();
+    if (k === 'n') next();
+    else if (k === 'h' && current.length === 1) current[0].showHint();
+    else if (k === 's' && current.length === 1) current[0].showSol();
+  });
+
+  renderChips(); renderLedger();
+  let started = false;
+  const go = () => { if (!started) { started = true; next(); } };
+  window.__mjReady = () => { if (started) typeset($('sheet')); else go(); };
+  if (window.MathJax && MathJax.startup && MathJax.startup.promise && MathJax.typesetPromise) MathJax.startup.promise.then(go);
+  setTimeout(go, 4000); // render even if the math CDN is slow
+})();
+</script>
+
+</body></html>
